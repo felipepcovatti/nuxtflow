@@ -10,6 +10,7 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
+    "@nuxt/eslint": "1.13.0",
     "@tailwindcss/vite": "^4.1.18",
     "flowbite-homepage-vue": "link:",
     "nuxt": "^4.3.0",
@@ -17,5 +18,13 @@
     "tailwindcss": "^4.1.18",
     "vue": "^3.5.27",
     "vue-router": "^4.6.4"
-  }
+  },
+  "devDependencies": {
+    "@nuxt/icon": "^2.2.1",
+    "@nuxtjs/i18n": "^10.2.1",
+    "prettier": "^3.8.1",
+    "prettier-plugin-tailwindcss": "^0.7.2",
+    "typescript": "^5.9.3"
+  },
+  "packageManager": "pnpm@10.28.2"
 }
