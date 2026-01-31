@@ -15,7 +15,7 @@ const isMenuOpen = ref(true);
       <div class="relative flex max-w-100 flex-1 items-center">
         <input
           v-model="searchTerm"
-          name="search field"
+          name="search_field"
           class="h-10.5 w-full rounded-lg border border-gray-600 bg-gray-700 pr-4 pl-11 text-sm text-gray-400"
           :placeholder="t('search')"
         />
