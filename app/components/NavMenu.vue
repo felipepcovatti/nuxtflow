@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import {
+  AccordionRoot,
   NavigationMenuContent,
   NavigationMenuItem,
   NavigationMenuLink,
@@ -55,58 +56,51 @@ function isActive(item: MenuItem) {
 
 <template>
   <div class="w-64 p-3 text-white">
-    <NavigationMenuRoot
-      orientation="vertical"
-      disable-hover-trigger
-      disable-pointer-leave-close
-    >
-      <NavigationMenuList class="flex flex-col gap-2">
-        <NavigationMenuItem
-          v-for="item in items"
-          :key="item.path"
-          class="overflow-clip rounded-lg"
-        >
-          <NavigationMenuTrigger
+    <AccordionRoot type="multiple">
+      <div class="flex flex-col gap-2">
+        <div v-for="item in items" :key="item.path">
+          <AccordionItem
             v-if="item.subItems"
-            class="group w-full cursor-pointer p-2"
+            :value="item.path"
+            class="group w-ful"
           >
-            <div class="flex w-full items-center gap-3">
-              <Icon :name="item.icon" />
-              {{ t(`itemPath.${item.path}`) }}
-              <Icon
-                name="radix-icons:caret-down"
-                size="1.25rem"
-                class="ml-auto transition-transform duration-150 ease-in group-data-[state=open]:-rotate-180"
-              />
-            </div>
-            <NavigationMenuContent class="pt-2 pl-7">
-              <NavigationMenuLink
-                v-for="subItem in item.subItems"
-                :key="subItem"
-                as-child
-                :active="isActive(item)"
-              >
-                <NuxtLink
-                  :to="`${item.path}/${subItem}`"
-                  class="flex w-full p-2"
-                >
-                  {{ t(`subitemPath.${subItem}`) }}
-                </NuxtLink>
-              </NavigationMenuLink>
-            </NavigationMenuContent>
-          </NavigationMenuTrigger>
-          <NavigationMenuLink v-else as-child :active="isActive(item)">
-            <NuxtLink
-              :to="item.path"
-              class="flex w-full items-center gap-3 p-2 data-active:bg-gray-700"
+            <AccordionHeader
+              class="flex w-full cursor-pointer items-center gap-3 rounded-lg p-2 hover:bg-gray-900"
+              as-child
             >
-              <Icon :name="item.icon" />
-              {{ t(`itemPath.${item.path}`) }}
-            </NuxtLink>
-          </NavigationMenuLink>
-        </NavigationMenuItem>
-      </NavigationMenuList>
-    </NavigationMenuRoot>
+              <AccordionTrigger>
+                <Icon :name="item.icon" class="text-gray-400" />
+                {{ t(`itemPath.${item.path}`) }}
+                <Icon
+                  name="radix-icons:caret-down"
+                  size="1.25rem"
+                  class="ml-auto transition-transform duration-150 ease-in group-data-[state=open]:-rotate-180"
+                />
+              </AccordionTrigger>
+            </AccordionHeader>
+            <AccordionContent class="pt-2 pl-7">
+              <NuxtLink
+                v-for="subItem in item.subItems"
+                :to="`${item.path}/${subItem}`"
+                active-class="bg-gray-700!"
+                class="flex w-full p-2 hover:bg-gray-900"
+              >
+                {{ t(`subitemPath.${subItem}`) }}
+              </NuxtLink>
+            </AccordionContent>
+          </AccordionItem>
+          <NuxtLink
+            v-else
+            :to="item.path"
+            active-class="bg-gray-700!"
+            class="flex w-full items-center gap-3 rounded-lg p-2 hover:bg-gray-900"
+          >
+            <Icon :name="item.icon" class="text-gray-400" />
+            {{ t(`itemPath.${item.path}`) }}
+          </NuxtLink>
+        </div>
+      </div>
+    </AccordionRoot>
   </div>
 </template>
 <i18n lang="json">
