@@ -1,15 +1,4 @@
 <script setup lang="ts">
-import {
-  AccordionRoot,
-  NavigationMenuContent,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-  NavigationMenuRoot,
-  NavigationMenuTrigger,
-} from "reka-ui";
-import { ref } from "vue";
-
 interface MenuItem {
   path: string;
   icon: string;
@@ -42,34 +31,55 @@ const items: ReadonlyArray<MenuItem> = [
   },
 ];
 
+const open = defineModel<boolean>("open", { required: true });
+
 const { t } = useI18n();
 
 const route = useRoute();
 
-function isActive(item: MenuItem) {
+function getItemState(item: MenuItem): "active" | "inactive" {
   if (item.subItems) {
-    return item.subItems.some((item) => route.path.includes(item));
+    return item.subItems.some((item) => route.path.includes(item))
+      ? "active"
+      : "inactive";
   }
-  return route.path.includes(item.path);
+  return route.path.includes(item.path) ? "active" : "inactive";
 }
+
+const expandedItems = ref<string[]>([]);
+
+function collapseAll() {
+  expandedItems.value = [];
+}
+
+watch(open, (isOpen) => {
+  if (!isOpen) {
+    collapseAll();
+  }
+});
 </script>
 
 <template>
-  <div class="w-64 p-3 text-white">
-    <AccordionRoot type="multiple">
-      <div class="flex flex-col gap-2">
+  <div
+    :data-expanded="open"
+    @mouseleave="!open && collapseAll()"
+    class="group fixed top-16 bottom-0 w-0 overflow-x-hidden bg-gray-800 text-white transition-[width] ease-in-out focus-within:w-64 data-[expanded=true]:w-64 sm:static sm:w-14 hover:sm:w-64"
+  >
+    <AccordionRoot type="multiple" v-model="expandedItems">
+      <div class="flex flex-col gap-2 p-3">
         <div v-for="item in items" :key="item.path">
           <AccordionItem
             v-if="item.subItems"
             :value="item.path"
             class="group w-ful"
           >
-            <AccordionHeader
-              class="flex w-full cursor-pointer items-center gap-3 rounded-lg p-2 hover:bg-gray-900"
-              as-child
-            >
+            <AccordionHeader class="menu-item" as-child>
               <AccordionTrigger>
-                <Icon :name="item.icon" class="text-gray-400" />
+                <Icon
+                  :name="item.icon"
+                  :data-state="getItemState(item)"
+                  class="item-icon"
+                />
                 {{ t(`itemPath.${item.path}`) }}
                 <Icon
                   name="radix-icons:caret-down"
@@ -82,7 +92,7 @@ function isActive(item: MenuItem) {
               <NuxtLink
                 v-for="subItem in item.subItems"
                 :to="`${item.path}/${subItem}`"
-                active-class="bg-gray-700!"
+                active-class="bg-gray-700"
                 class="flex w-full p-2 hover:bg-gray-900"
               >
                 {{ t(`subitemPath.${subItem}`) }}
@@ -92,10 +102,14 @@ function isActive(item: MenuItem) {
           <NuxtLink
             v-else
             :to="item.path"
-            active-class="bg-gray-700!"
-            class="flex w-full items-center gap-3 rounded-lg p-2 hover:bg-gray-900"
+            active-class="bg-gray-700"
+            class="menu-item"
           >
-            <Icon :name="item.icon" class="text-gray-400" />
+            <Icon
+              :name="item.icon"
+              :data-state="getItemState(item)"
+              class="item-icon"
+            />
             {{ t(`itemPath.${item.path}`) }}
           </NuxtLink>
         </div>
@@ -103,6 +117,16 @@ function isActive(item: MenuItem) {
     </AccordionRoot>
   </div>
 </template>
+<style scoped>
+@reference "@/assets/css/main.css";
+.menu-item {
+  @apply flex min-h-9 w-full cursor-pointer items-center gap-3 overflow-x-hidden rounded-lg px-2 py-1.5 whitespace-nowrap hover:bg-gray-900;
+}
+.item-icon {
+  @apply flex-none text-gray-400 data-[state=active]:text-white;
+}
+</style>
+
 <i18n lang="json">
 {
   "en": {

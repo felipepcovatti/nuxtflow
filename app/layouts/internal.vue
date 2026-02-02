@@ -7,11 +7,12 @@ const isMenuOpen = ref(true);
 </script>
 <template>
   <div class="flex min-h-screen flex-col bg-gray-900">
-    <div class="flex min-h-16 items-center gap-4 bg-gray-800 px-4 py-3">
+    <div class="flex h-16 items-center gap-4 bg-gray-800 px-4">
       <img src="../assets/img/logo.svg" alt="Logo image" class="w-8" />
       <button
         @click="isMenuOpen = !isMenuOpen"
         class="flex cursor-pointer items-center p-2"
+        aria-controls="nav-menu"
       >
         <Icon name="mdi-menu" class="text-gray-400" size="1.5rem" />
       </button>
@@ -45,14 +46,10 @@ const isMenuOpen = ref(true);
       </div>
     </div>
     <div class="flex flex-1">
-      <div
-        :data-state="isMenuOpen ? 'open' : 'closed'"
-        class="bg-gray-800 transition-all data-[state=closed]:w-12 data-[state=closed]:overflow-x-hidden data-[state=open]:w-64"
-      >
-        <NavMenu />
+      <NavMenu id="nav-menu" v-model:open="isMenuOpen" />
+      <div class="p-4">
+        <slot />
       </div>
-      {{ isMenuOpen }}
-      <slot />
     </div>
   </div>
 </template>

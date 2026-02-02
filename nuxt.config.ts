@@ -13,6 +13,7 @@ export default defineNuxtConfig({
     "@nuxt/icon",
     "@nuxtjs/i18n",
     "@nuxt/eslint",
+    "@nuxt/fonts",
   ],
   i18n: {
     defaultLocale: "en",
