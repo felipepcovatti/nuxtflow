@@ -14,6 +14,7 @@ export default defineNuxtConfig({
     "@nuxtjs/i18n",
     "@nuxt/eslint",
     "@nuxt/fonts",
+    "@vueuse/nuxt",
   ],
   i18n: {
     defaultLocale: "en",
@@ -23,5 +24,8 @@ export default defineNuxtConfig({
         language: "en-US",
       },
     ],
+  },
+  experimental: {
+    typedPages: true,
   },
 });

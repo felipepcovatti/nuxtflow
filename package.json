@@ -13,6 +13,7 @@
     "@nuxt/eslint": "1.13.0",
     "@nuxt/fonts": "0.13.0",
     "@tailwindcss/vite": "^4.1.18",
+    "@vueuse/nuxt": "14.2.0",
     "flowbite-homepage-vue": "link:",
     "nuxt": "^4.3.0",
     "reka-ui": "^2.8.0",

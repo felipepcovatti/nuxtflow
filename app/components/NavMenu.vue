@@ -13,7 +13,7 @@ const items: ReadonlyArray<MenuItem> = [
   {
     path: "pages",
     icon: "mdi:file",
-    subItems: ["kanban", "calendar", "chatRoom"],
+    subItems: ["kanban", "calendar", "chat-room"],
   },
   {
     path: "e-commerce",
@@ -31,7 +31,7 @@ const items: ReadonlyArray<MenuItem> = [
   },
 ];
 
-const open = defineModel<boolean>("open", { required: true });
+const pinned = defineModel<boolean>("pinned", { required: true });
 
 const { t } = useI18n();
 
@@ -48,38 +48,73 @@ function getItemState(item: MenuItem): "active" | "inactive" {
 
 const expandedItems = ref<string[]>([]);
 
-function collapseAll() {
+const isExpanded = ref(true);
+
+function collapseAllItems() {
   expandedItems.value = [];
 }
 
-watch(open, (isOpen) => {
-  if (!isOpen) {
-    collapseAll();
+watch(pinned, (pinned) => {
+  isExpanded.value = pinned;
+});
+
+const activeItem = computed(() =>
+  items.find((item) => getItemState(item) === "active"),
+);
+
+watch(isExpanded, (expanded) => {
+  if (!expanded) {
+    collapseAllItems();
+  } else {
+    setTimeout(
+      () => {
+        if (activeItem.value?.subItems && isExpanded.value) {
+          expandedItems.value = [activeItem.value.path];
+        }
+      },
+      pinned.value ? 0 : 200,
+    );
+  }
+});
+
+const menu = useTemplateRef("menu");
+
+const { focused } = useFocusWithin(menu);
+
+watch(focused, (focused) => {
+  if (!pinned.value) {
+    isExpanded.value = focused;
   }
 });
 </script>
 
 <template>
   <div
-    :data-expanded="open"
-    @mouseleave="!open && collapseAll()"
-    class="group fixed top-16 bottom-0 w-0 overflow-x-hidden bg-gray-800 text-white transition-[width] ease-in-out focus-within:w-64 data-[expanded=true]:w-64 sm:static sm:w-14 hover:sm:w-64"
+    :data-expanded="isExpanded"
+    ref="menu"
+    @mouseleave="!pinned && (isExpanded = false)"
+    @mouseenter="!pinned && (isExpanded = true)"
+    class="group fixed top-16 bottom-0 w-0 overflow-x-hidden bg-gray-800 text-white transition-[width] duration-200 ease-in-out hover:delay-200 data-[expanded=true]:w-64 sm:static sm:w-14"
   >
     <AccordionRoot type="multiple" v-model="expandedItems">
       <div class="flex flex-col gap-2 p-3">
-        <div v-for="item in items" :key="item.path">
+        <div
+          v-for="item in items"
+          :key="item.path"
+          class="group/item"
+          :data-state="getItemState(item)"
+        >
           <AccordionItem
             v-if="item.subItems"
             :value="item.path"
             class="group w-ful"
           >
-            <AccordionHeader class="menu-item" as-child>
+            <AccordionHeader
+              class="menu-item group-data-[state=open]:bg-transparent!"
+              as-child
+            >
               <AccordionTrigger>
-                <Icon
-                  :name="item.icon"
-                  :data-state="getItemState(item)"
-                  class="item-icon"
-                />
+                <Icon :name="item.icon" class="item-icon" />
                 {{ t(`itemPath.${item.path}`) }}
                 <Icon
                   name="radix-icons:caret-down"
@@ -88,28 +123,21 @@ watch(open, (isOpen) => {
                 />
               </AccordionTrigger>
             </AccordionHeader>
-            <AccordionContent class="pt-2 pl-7">
+            <AccordionContent
+              class="menu-subitems flex flex-col gap-1 overflow-hidden pt-1 pb-2"
+            >
               <NuxtLink
                 v-for="subItem in item.subItems"
-                :to="`${item.path}/${subItem}`"
+                :to="`/${item.path}/${subItem}`"
                 active-class="bg-gray-700"
-                class="flex w-full p-2 hover:bg-gray-900"
+                class="flex w-full rounded-lg py-1.5 pr-2 pl-9 whitespace-nowrap hover:bg-gray-900"
               >
                 {{ t(`subitemPath.${subItem}`) }}
               </NuxtLink>
             </AccordionContent>
           </AccordionItem>
-          <NuxtLink
-            v-else
-            :to="item.path"
-            active-class="bg-gray-700"
-            class="menu-item"
-          >
-            <Icon
-              :name="item.icon"
-              :data-state="getItemState(item)"
-              class="item-icon"
-            />
+          <NuxtLink v-else :to="`/${item.path}`" class="menu-item">
+            <Icon :name="item.icon" class="item-icon" />
             {{ t(`itemPath.${item.path}`) }}
           </NuxtLink>
         </div>
@@ -120,10 +148,35 @@ watch(open, (isOpen) => {
 <style scoped>
 @reference "@/assets/css/main.css";
 .menu-item {
-  @apply flex min-h-9 w-full cursor-pointer items-center gap-3 overflow-x-hidden rounded-lg px-2 py-1.5 whitespace-nowrap hover:bg-gray-900;
+  @apply flex min-h-9 w-full cursor-pointer items-center gap-3 overflow-x-hidden rounded-lg px-2 py-1.5 whitespace-nowrap group-data-[state=active]/item:bg-gray-700 hover:bg-gray-900;
 }
 .item-icon {
-  @apply flex-none text-gray-400 data-[state=active]:text-white;
+  @apply flex-none text-gray-400 group-data-[state=active]/item:text-white;
+}
+
+.menu-subitems[data-state="open"] {
+  animation: slideDownSubitems 200ms ease-out;
+}
+.menu-subitems[data-state="closed"] {
+  animation: slideUpSubitems 200ms ease-out;
+}
+
+@keyframes slideDownSubitems {
+  from {
+    height: 0;
+  }
+  to {
+    height: var(--reka-accordion-content-height);
+  }
+}
+
+@keyframes slideUpSubitems {
+  from {
+    height: var(--reka-accordion-content-height);
+  }
+  to {
+    height: 0;
+  }
 }
 </style>
 
@@ -140,7 +193,7 @@ watch(open, (isOpen) => {
     "subitemPath": {
       "kanban": "Kanban",
       "calendar": "Calendar",
-      "chatRoom": "Chat Room",
+      "chat-room": "Chat Room",
       "product-list": "Product List",
       "billing": "Billing",
       "invoice": "Invoice",

@@ -111,3 +111,15 @@
   --color-pink-800: #99154b;
   --color-pink-900: #751a3d;
 }
+
+@layer base {
+  html {
+    font-size: 87.5%;
+  }
+
+  @media (width >= theme(--breakpoint-sm)) {
+    html {
+      font-size: 100%;
+    }
+  }
+}

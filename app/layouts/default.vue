@@ -3,20 +3,22 @@ const searchTerm = ref("");
 
 const { t } = useI18n();
 
-const isMenuOpen = ref(true);
+const isMenuPinned = ref(true);
 </script>
 <template>
-  <div class="flex min-h-screen flex-col bg-gray-900">
+  <div class="flex min-h-screen flex-col bg-gray-900 text-white">
     <div class="flex h-16 items-center gap-4 bg-gray-800 px-4">
-      <img src="../assets/img/logo.svg" alt="Logo image" class="w-8" />
+      <NuxtLink to="/">
+        <img src="../assets/img/logo.svg" alt="Logo image" class="w-8" />
+      </NuxtLink>
       <button
-        @click="isMenuOpen = !isMenuOpen"
-        class="flex cursor-pointer items-center p-2"
+        @click="isMenuPinned = !isMenuPinned"
+        class="icon-button"
         aria-controls="nav-menu"
       >
         <Icon name="mdi-menu" class="text-gray-400" size="1.5rem" />
       </button>
-      <div class="relative flex max-w-100 flex-1 items-center">
+      <div class="relative hidden max-w-100 flex-1 items-center sm:flex">
         <input
           v-model="searchTerm"
           name="search_field"
@@ -30,13 +32,18 @@ const isMenuOpen = ref(true);
         />
       </div>
       <div class="ml-auto flex items-center gap-3">
-        <button class="flex cursor-pointer items-center p-2">
+        <div class="sm:hidden">
+          <button class="icon-button">
+            <Icon name="mdi:magnify" class="text-gray-400" size="1.75rem" />
+          </button>
+        </div>
+        <button class="icon-button">
           <Icon name="mdi:bell" class="text-gray-400" size="1.5rem" />
         </button>
-        <button class="flex cursor-pointer items-center p-2">
+        <button class="icon-button">
           <Icon name="mdi:apps" class="text-gray-400" size="1.5rem" />
         </button>
-        <button class="flex cursor-pointer items-center p-2">
+        <button class="icon-button">
           <img
             src="https://avatars.githubusercontent.com/u/22751969"
             alt="Profile picture"
@@ -46,13 +53,19 @@ const isMenuOpen = ref(true);
       </div>
     </div>
     <div class="flex flex-1">
-      <NavMenu id="nav-menu" v-model:open="isMenuOpen" />
+      <NavMenu id="nav-menu" v-model:pinned="isMenuPinned" />
       <div class="p-4">
         <slot />
       </div>
     </div>
   </div>
 </template>
+<style scoped>
+@reference "@/assets/css/main.css";
+.icon-button {
+  @apply flex cursor-pointer items-center rounded-full p-2 focus:bg-gray-700/60;
+}
+</style>
 <i18n lang="json">
 {
   "en": {
