@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import type MenuItems from "./MenuItems.vue";
-
 const isOpen = defineModel<boolean>("open", { required: true });
 
 const menuItemsRef =
@@ -9,6 +8,14 @@ const menuItemsRef =
 whenever(isOpen, () => menuItemsRef.value?.expandActiveItem(), {
   flush: "post",
 });
+
+const route = useRoute();
+watch(
+  () => route.path,
+  () => {
+    isOpen.value = false;
+  },
+);
 </script>
 
 <template>

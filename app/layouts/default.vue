@@ -8,7 +8,7 @@ const isDesktopMenuPinned = ref(true);
 const isMobileMenuOpen = ref(false);
 </script>
 <template>
-  <div class="flex min-h-screen flex-col bg-gray-900 text-white">
+  <div class="flex min-h-dvh min-w-xs flex-col bg-gray-900 text-white">
     <MainHeader
       @toggle-desktop-menu-pin="isDesktopMenuPinned = !isDesktopMenuPinned"
       @open-mobile-menu="isMobileMenuOpen = true"
@@ -22,9 +22,3 @@ const isMobileMenuOpen = ref(false);
     <MobileMenu id="mobile-menu" v-model:open="isMobileMenuOpen" />
   </div>
 </template>
-<style scoped>
-@reference "@/assets/css/main.css";
-.icon-button {
-  @apply flex cursor-pointer items-center rounded-full p-2 text-gray-400 focus:bg-gray-700/60;
-}
-</style>

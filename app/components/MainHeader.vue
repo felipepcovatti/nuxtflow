@@ -1,5 +1,8 @@
 <script lang="ts" setup>
-defineEmits(["toggle-desktop-menu-pin", "open-mobile-menu"]);
+defineEmits<{
+  toggleDesktopMenuPin: [];
+  openMobileMenu: [];
+}>();
 
 const searchTerm = ref("");
 
@@ -10,7 +13,7 @@ const { t } = useI18n();
   <div class="flex h-16 items-center gap-4 bg-gray-800 px-4">
     <div class="hidden sm:flex">
       <button
-        @click="$emit('toggle-desktop-menu-pin')"
+        @click="$emit('toggleDesktopMenuPin')"
         class="icon-button"
         aria-controls="desktop-menu"
       >
@@ -19,7 +22,7 @@ const { t } = useI18n();
     </div>
     <div class="flex sm:hidden">
       <button
-        @click="$emit('open-mobile-menu')"
+        @click="$emit('openMobileMenu')"
         class="icon-button"
         aria-controls="mobile-menu"
       >
@@ -64,6 +67,13 @@ const { t } = useI18n();
     </div>
   </div>
 </template>
+<style scoped>
+@reference "@/assets/css/main.css";
+.icon-button {
+  @apply flex cursor-pointer items-center rounded-full p-2 text-gray-400 focus:bg-gray-700/60;
+}
+</style>
+
 <i18n lang="json">
 {
   "en": {
