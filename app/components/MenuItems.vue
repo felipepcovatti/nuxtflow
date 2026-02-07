@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { useMenu } from "~/composable/useMenu";
 import { MENU_ITEMS } from "~/constants/menu";
+
+defineEmits(["select"]);
 
 const { t } = useI18n();
 
@@ -50,15 +51,22 @@ defineExpose({
         >
           <NuxtLink
             v-for="subItem in item.subItems"
+            :key="subItem"
             :to="`/${item.path}/${subItem}`"
             active-class="bg-gray-700"
             class="flex w-full rounded-lg py-1.5 pr-2 pl-9 whitespace-nowrap hover:bg-gray-900"
+            @click="$emit('select')"
           >
             {{ t(`subitemPath.${subItem}`) }}
           </NuxtLink>
         </AccordionContent>
       </AccordionItem>
-      <NuxtLink v-else :to="`/${item.path}`" class="menu-item">
+      <NuxtLink
+        v-else
+        :to="`/${item.path}`"
+        class="menu-item"
+        @click="$emit('select')"
+      >
         <Icon :name="item.icon" class="item-icon" />
         {{ t(`itemPath.${item.path}`) }}
       </NuxtLink>

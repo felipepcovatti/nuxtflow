@@ -34,7 +34,7 @@ watch(isPinned, (fixed) => {
     ref="menu"
     @mouseleave="!isPinned && (isExpanded = false)"
     @mouseenter="!isPinned && (isExpanded = true)"
-    class="hidden w-14 overflow-x-hidden bg-gray-800 text-white transition-[width] duration-200 ease-in-out hover:delay-200 data-[expanded=true]:w-64 sm:flex pointer-fine:w-20"
+    class="hidden w-14 overflow-x-hidden bg-gray-800 text-white transition-[width] duration-200 ease-in-out hover:delay-200 data-[expanded=true]:w-64 sm:flex"
   >
     <MenuItems ref="menu-items" />
   </div>

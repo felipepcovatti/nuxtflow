@@ -15,15 +15,17 @@ whenever(isOpen, () => menuItemsRef.value?.expandActiveItem(), {
   <DialogRoot v-model:open="isOpen">
     <div class="sm:hidden">
       <DialogOverlay
-        class="overlay data-[state=open]:animate-fade-in data-[state=closed]:animate-fade-out fixed inset-0 z-30 bg-black/30"
+        class="data-[state=open]:animate-fade-in data-[state=closed]:animate-fade-out fixed inset-0 z-30 bg-black/30"
       />
       <DialogContent
-        class="content data-[state=open]:animate-slide-from-left data-[state=closed]:animate-slide-to-left fixed top-0 bottom-0 left-0 z-31 w-64 bg-gray-800"
+        class="data-[state=open]:animate-slide-from-left data-[state=closed]:animate-slide-to-left fixed top-0 bottom-0 left-0 z-31 flex w-64 flex-col items-start bg-gray-800"
       >
-        <DialogClose>
-          <Icon name="mdi-close" />
+        <DialogClose
+          class="mx-4 my-3 flex size-10 cursor-pointer items-center justify-center"
+        >
+          <Icon name="mdi-close" size="1.25rem" />
         </DialogClose>
-        <MenuItems ref="menu-items" />
+        <MenuItems ref="menu-items" @select="isOpen = false" />
       </DialogContent>
     </div>
   </DialogRoot>
