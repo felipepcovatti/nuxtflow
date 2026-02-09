@@ -37,6 +37,9 @@
 }
 
 @theme {
+  /* Custom variables */
+  --header-height: 4rem;
+
   /* Simple animations */
   --animate-fade-in: fade-in 200ms ease-out;
   --animate-fade-out: fade-out 150ms ease-out;
@@ -155,14 +158,14 @@
   --color-pink-900: #751a3d;
 }
 
-@layer base {
-  html {
-    font-size: 87.5%;
-  }
+@layer components {
+  .icon-button {
+    @apply relative flex size-9 cursor-pointer items-center justify-center rounded-full text-gray-400 focus:bg-gray-700/60;
 
-  @media (width >= theme(--breakpoint-sm)) {
-    html {
-      font-size: 100%;
+    /* to make sure the is enough touchable area */
+    &::before {
+      content: "";
+      @apply absolute top-1/2 left-1/2 size-12 translate-[-50%] pointer-fine:hidden;
     }
   }
 }

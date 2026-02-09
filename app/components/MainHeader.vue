@@ -10,42 +10,44 @@ const { t } = useI18n();
 </script>
 
 <template>
-  <div class="flex h-16 items-center gap-4 bg-gray-800 px-4">
-    <div class="hidden sm:flex">
-      <button
-        @click="$emit('toggleDesktopMenuPin')"
-        class="icon-button"
-        aria-controls="desktop-menu"
-      >
-        <Icon name="mdi-menu" size="1.5rem" />
-      </button>
+  <div class="flex h-(--header-height) items-center gap-3 bg-gray-800 px-4">
+    <div class="flex flex-1 items-center gap-3">
+      <div class="hidden sm:flex">
+        <button
+          @click="$emit('toggleDesktopMenuPin')"
+          class="icon-button"
+          aria-controls="desktop-menu"
+        >
+          <Icon name="mdi-menu" size="1.5rem" />
+        </button>
+      </div>
+      <div class="flex sm:hidden">
+        <button
+          @click="$emit('openMobileMenu')"
+          class="icon-button"
+          aria-controls="mobile-menu"
+        >
+          <Icon name="mdi-menu" size="1.5rem" />
+        </button>
+      </div>
+      <NuxtLink to="/" class="icon-button">
+        <img src="../assets/img/logo.svg" alt="Logo image" class="w-8" />
+      </NuxtLink>
+      <div class="relative hidden max-w-100 flex-1 items-center sm:flex">
+        <input
+          v-model="searchTerm"
+          name="search_field"
+          class="h-10.5 w-full rounded-lg border border-gray-600 bg-gray-700 pr-4 pl-11 text-sm text-gray-400"
+          :placeholder="t('search')"
+        />
+        <Icon
+          name="mdi:magnify"
+          class="absolute left-4 text-gray-400"
+          size="1.25rem"
+        />
+      </div>
     </div>
-    <div class="flex sm:hidden">
-      <button
-        @click="$emit('openMobileMenu')"
-        class="icon-button"
-        aria-controls="mobile-menu"
-      >
-        <Icon name="mdi-menu" size="1.5rem" />
-      </button>
-    </div>
-    <NuxtLink to="/">
-      <img src="../assets/img/logo.svg" alt="Logo image" class="w-8" />
-    </NuxtLink>
-    <div class="relative hidden max-w-100 flex-1 items-center sm:flex">
-      <input
-        v-model="searchTerm"
-        name="search_field"
-        class="h-10.5 w-full rounded-lg border border-gray-600 bg-gray-700 pr-4 pl-11 text-sm text-gray-400"
-        :placeholder="t('search')"
-      />
-      <Icon
-        name="mdi:magnify"
-        class="absolute left-4 text-gray-400"
-        size="1.25rem"
-      />
-    </div>
-    <div class="ml-auto flex items-center gap-3">
+    <div class="flex items-center gap-3">
       <div class="sm:hidden">
         <button class="icon-button">
           <Icon name="mdi:magnify" size="1.75rem" />
@@ -67,13 +69,6 @@ const { t } = useI18n();
     </div>
   </div>
 </template>
-<style scoped>
-@reference "@/assets/css/main.css";
-.icon-button {
-  @apply flex cursor-pointer items-center rounded-full p-2 text-gray-400 focus:bg-gray-700/60;
-}
-</style>
-
 <i18n lang="json">
 {
   "en": {

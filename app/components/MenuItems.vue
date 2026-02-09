@@ -19,7 +19,7 @@ defineExpose({
     as="nav"
     type="multiple"
     v-model="expandedItems"
-    class="flex w-full flex-col gap-2 p-3"
+    class="flex w-full flex-col gap-2 overflow-x-auto p-3 pointer-coarse:gap-1"
   >
     <div
       v-for="item in MENU_ITEMS"
@@ -27,13 +27,9 @@ defineExpose({
       class="group/item"
       :data-state="getItemState(item)"
     >
-      <AccordionItem
-        v-if="item.subItems"
-        :value="item.path"
-        class="group w-ful"
-      >
+      <AccordionItem v-if="item.subItems" :value="item.path" class="group">
         <AccordionHeader
-          class="menu-item group-data-[state=open]:bg-transparent!"
+          class="menu-item group-data-[state=active]/item:bg-gray-700 group-data-[state=open]:bg-transparent!"
           as-child
         >
           <AccordionTrigger>
@@ -54,7 +50,7 @@ defineExpose({
             :key="subItem"
             :to="`/${item.path}/${subItem}`"
             active-class="bg-gray-700"
-            class="flex w-full rounded-lg py-1.5 pr-2 pl-9 whitespace-nowrap hover:bg-gray-900"
+            class="menu-item pl-9!"
             @click="$emit('select')"
           >
             {{ t(`subitemPath.${subItem}`) }}
@@ -64,7 +60,7 @@ defineExpose({
       <NuxtLink
         v-else
         :to="`/${item.path}`"
-        class="menu-item"
+        class="menu-item group-data-[state=active]/item:bg-gray-700"
         @click="$emit('select')"
       >
         <Icon :name="item.icon" class="item-icon" />
@@ -76,7 +72,7 @@ defineExpose({
 <style scoped>
 @reference "@/assets/css/main.css";
 .menu-item {
-  @apply flex min-h-9 w-full cursor-pointer items-center gap-3 overflow-x-hidden rounded-lg px-2 py-1.5 whitespace-nowrap group-data-[state=active]/item:bg-gray-700 hover:bg-gray-900;
+  @apply flex min-h-11 w-full cursor-pointer items-center gap-3 overflow-x-hidden rounded-lg px-2 py-1.5 whitespace-nowrap hover:bg-gray-900 pointer-fine:min-h-9;
 }
 .item-icon {
   @apply flex-none text-gray-400 group-data-[state=active]/item:text-white;
