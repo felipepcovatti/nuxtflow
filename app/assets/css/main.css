@@ -1,6 +1,50 @@
 @import "tailwindcss";
 
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fade-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes slide-from-left {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes slide-to-left {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}
+
 @theme {
+  /* Custom variables */
+  --header-height: 4rem;
+
+  /* Simple animations */
+  --animate-fade-in: fade-in 200ms ease-out;
+  --animate-fade-out: fade-out 150ms ease-out;
+  --animate-slide-to-left: slide-to-left 150ms ease-out;
+  --animate-slide-from-left: slide-from-left 200ms ease-out;
 
   /* Colors */
   --color-primary-50: #ebf5ff;
@@ -112,4 +156,16 @@
   --color-pink-700: #bf125d;
   --color-pink-800: #99154b;
   --color-pink-900: #751a3d;
+}
+
+@layer components {
+  .icon-button {
+    @apply relative flex size-9 cursor-pointer items-center justify-center rounded-full text-gray-400 focus:bg-gray-700/60;
+
+    /* to make sure there is enough touchable area in pointer-fine devices */
+    &::before {
+      content: "";
+      @apply absolute top-1/2 left-1/2 size-12 translate-[-50%] pointer-fine:hidden;
+    }
+  }
 }
