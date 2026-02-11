@@ -15,6 +15,7 @@ export default defineNuxtConfig({
     "@nuxt/eslint",
     "@nuxt/fonts",
     "@vueuse/nuxt",
+    "@nuxt/test-utils/module",
   ],
   i18n: {
     defaultLocale: "en",
