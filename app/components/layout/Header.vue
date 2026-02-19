@@ -10,7 +10,9 @@ const { t } = useI18n();
 </script>
 
 <template>
-  <div class="flex h-(--header-height) items-center gap-3 bg-gray-800 px-4">
+  <div
+    class="sticky top-0 z-1 flex h-(--header-height) items-center gap-3 bg-gray-800 px-4"
+  >
     <div class="flex flex-1 items-center gap-3">
       <div class="hidden sm:flex">
         <button

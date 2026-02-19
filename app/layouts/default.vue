@@ -11,7 +11,7 @@ const isNavigationDrawerOpen = ref(false);
       "
       @open-navigation-drawer="isNavigationDrawerOpen = true"
     />
-    <div class="flex flex-1">
+    <div class="grid flex-1 grid-cols-1 sm:grid-cols-[auto_minmax(0,1fr)]">
       <LayoutNavigationSidebar
         id="navigation-sidebar"
         v-model:pinned="isNavigationSidebarPinned"
