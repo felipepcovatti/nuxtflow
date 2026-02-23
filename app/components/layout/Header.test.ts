@@ -2,15 +2,12 @@ import { describe, it, expect } from "vitest";
 import { mountSuspended } from "@nuxt/test-utils/runtime";
 import Header from "./Header.vue";
 
-describe("Header.vue", () => {
+describe("Header", () => {
   describe("rendering", () => {
     it("renders the search input with translated placeholder", async () => {
       const wrapper = await mountSuspended(Header);
 
-      const input = wrapper.find('input[name="search_field"]');
-      if (!input.exists()) {
-        throw new Error("Expected search input to exist");
-      }
+      const input = wrapper.get('input[name="search_field"]');
 
       expect(input.attributes("placeholder")).toBe("Search");
     });
@@ -18,15 +15,11 @@ describe("Header.vue", () => {
     it("contains a logo linking to home", async () => {
       const wrapper = await mountSuspended(Header);
 
-      const logoLink = wrapper.findComponent({ name: "NuxtLink" });
-      if (!logoLink.exists()) {
-        throw new Error("Expected NuxtLink logo to exist");
-      }
+      const homeLink = wrapper.find('a[href="/"]');
 
-      expect(logoLink.props("to")).toBe("/");
+      expect(homeLink.exists()).toBe(true);
 
-      const logoImg = wrapper.find('img[alt="Logo image"]');
-      expect(logoImg.exists()).toBe(true);
+      expect(homeLink.find('img[alt="Logo image"]').exists()).toBe(true);
     });
   });
 
@@ -34,13 +27,7 @@ describe("Header.vue", () => {
     it("emits 'toggleNavigationSidebarPin' when desktop menu button is clicked", async () => {
       const wrapper = await mountSuspended(Header);
 
-      const button = wrapper.find('button[aria-controls="navigation-sidebar"]');
-
-      if (!button.exists()) {
-        throw new Error(
-          "Expected desktop menu button (navigation-sidebar) to exist",
-        );
-      }
+      const button = wrapper.get('button[aria-controls="navigation-sidebar"]');
 
       await button.trigger("click");
 
@@ -50,13 +37,7 @@ describe("Header.vue", () => {
     it("emits 'openNavigationDrawer' when mobile menu button is clicked", async () => {
       const wrapper = await mountSuspended(Header);
 
-      const button = wrapper.find('button[aria-controls="navigation-drawer"]');
-
-      if (!button.exists()) {
-        throw new Error(
-          "Expected mobile menu button (navigation-drawer) to exist",
-        );
-      }
+      const button = wrapper.get('button[aria-controls="navigation-drawer"]');
 
       await button.trigger("click");
 
@@ -66,10 +47,7 @@ describe("Header.vue", () => {
     it("updates the input value when typing", async () => {
       const wrapper = await mountSuspended(Header);
 
-      const input = wrapper.find('input[name="search_field"]');
-      if (!input.exists()) {
-        throw new Error("Expected search input to exist");
-      }
+      const input = wrapper.get('input[name="search_field"]');
 
       await input.setValue("Nuxt");
 

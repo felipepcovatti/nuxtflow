@@ -20,7 +20,7 @@ vi.mock("~/components/layout/navigation/Items.vue", () => ({
   },
 }));
 
-describe("Sidebar navigation", () => {
+describe("Sidebar", () => {
   beforeEach(() => {
     vi.useFakeTimers();
     expandActiveItem.mockClear();

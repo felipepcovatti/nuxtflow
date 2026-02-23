@@ -3,7 +3,7 @@ import { mountSuspended } from "@nuxt/test-utils/runtime";
 import { NAVIGATION_ITEMS } from "~/constants/navigation";
 import Items from "./Items.vue";
 
-describe("Items.vue", () => {
+describe("Items", () => {
   describe("rendering", () => {
     it("renders one entry per navigation item", async () => {
       const wrapper = await mountSuspended(Items);
@@ -24,11 +24,7 @@ describe("Items.vue", () => {
     it("emits 'select' when a navigation link is clicked", async () => {
       const wrapper = await mountSuspended(Items);
 
-      const link = wrapper.find("a");
-
-      if (!link.exists()) {
-        throw new Error("Expected at least one navigation link to exist");
-      }
+      const link = wrapper.get("a");
 
       await link.trigger("click");
 
@@ -57,21 +53,13 @@ describe("Items.vue", () => {
       const subPath = `/${parent.path}/${subItem}`;
       const wrapper = await mountSuspended(Items, { route: subPath });
 
-      const activeGroup = wrapper.find(
+      const activeGroup = wrapper.get(
         `.group\\/item:has(a[href="${subPath}"])`,
       );
 
-      if (!activeGroup.exists()) {
-        throw new Error(`Expected group containing ${subPath} to exist`);
-      }
-
       expect(activeGroup.attributes("data-state")).toBe("active");
 
-      const trigger = activeGroup.find("button[data-state]");
-
-      if (!trigger.exists()) {
-        throw new Error("Expected accordion trigger button to exist");
-      }
+      const trigger = activeGroup.get("button[data-state]");
 
       expect(trigger.attributes("data-state")).toBe("open");
     });
