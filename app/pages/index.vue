@@ -7,6 +7,7 @@ definePageMeta({
 });
 </script>
 <template>
-  <h1 class="text-lg">Overview</h1>
-  [not implemented]
+  <div class="flex w-full">
+    <OverviewRevenueChart />
+  </div>
 </template>

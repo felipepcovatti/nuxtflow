@@ -162,6 +162,15 @@
 }
 
 @layer components {
+  .heading-1 {
+    @apply mb-2 text-3xl/tight font-bold text-white;
+  }
+  .heading-2 {
+    @apply mb-1 text-2xl/tight font-bold text-white;
+  }
+  .heading-3 {
+    @apply mb-0.5 text-base/tight font-semibold text-white;
+  }
   .icon-button {
     @apply relative flex size-9 cursor-pointer items-center justify-center rounded-full text-gray-400 focus:bg-gray-700/60;
 
@@ -176,5 +185,6 @@
 @layer base {
   body {
     font-family: var(--font-sans);
+    --vis-axis-tick-label-font-size: 0.875rem;
   }
 }
