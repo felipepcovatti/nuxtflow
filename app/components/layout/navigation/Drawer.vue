@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import type LayoutNavigationItems from "~/components/layout/navigation/Items.vue";
-import { breakpointsTailwind } from "@vueuse/core";
 
 const isOpen = defineModel<boolean>("open", { required: true });
 
@@ -22,11 +21,14 @@ watch(
   },
 );
 
-const { greaterOrEqual } = useBreakpoints(breakpointsTailwind);
+const { isExtraSmall } = useIsExtraSmall();
 
-whenever(greaterOrEqual("sm"), () => {
-  isOpen.value = false;
-});
+whenever(
+  () => !isExtraSmall.value,
+  () => {
+    isOpen.value = false;
+  },
+);
 
 const { t } = useI18n();
 </script>

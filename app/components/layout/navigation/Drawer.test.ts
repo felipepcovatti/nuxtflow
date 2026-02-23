@@ -1,6 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { mountSuspended, mockNuxtImport } from "@nuxt/test-utils/runtime";
-import { ref } from "vue";
 import Drawer from "./Drawer.vue";
 
 const { expandActiveItem } = vi.hoisted(() => ({
@@ -13,17 +12,11 @@ mockNuxtImport("useRoute", () => {
   return () => mRoute;
 });
 
-const isBreakpointSm = ref(false);
-
-vi.mock("@vueuse/core", async (importOriginal) => {
-  const actual = await importOriginal<typeof import("@vueuse/core")>();
-
-  return {
-    ...actual,
-    useBreakpoints: () => ({
-      greaterOrEqual: () => computed(() => isBreakpointSm.value),
-    }),
-  };
+const isExtraSmall = ref(true);
+mockNuxtImport("useIsExtraSmall", () => {
+  return () => ({
+    isExtraSmall,
+  });
 });
 
 vi.mock("~/components/layout/navigation/Items.vue", () => ({
@@ -36,20 +29,22 @@ vi.mock("~/components/layout/navigation/Items.vue", () => ({
   },
 }));
 
-/* -------------------------------------------------- */
+async function mountDrawer(props: { open: boolean }) {
+  return mountSuspended(Drawer, {
+    props,
+    attachTo: document.body,
+  });
+}
 
-describe("Navigation Drawer", () => {
+describe("Drawer", () => {
   beforeEach(() => {
     expandActiveItem.mockClear();
     mRoute.path = "/home";
-    isBreakpointSm.value = false;
+    isExtraSmall.value = true;
   });
 
   it("expands active item when opened", async () => {
-    const wrapper = await mountSuspended(Drawer, {
-      props: { open: false },
-    });
-
+    const wrapper = await mountDrawer({ open: false });
     await wrapper.setProps({ open: true });
 
     await nextTick();
@@ -58,9 +53,7 @@ describe("Navigation Drawer", () => {
   });
 
   it("closes when route changes", async () => {
-    const wrapper = await mountSuspended(Drawer, {
-      props: { open: true },
-    });
+    const wrapper = await mountDrawer({ open: true });
 
     mRoute.path = "/admin";
 
@@ -70,11 +63,9 @@ describe("Navigation Drawer", () => {
   });
 
   it("closes when breakpoint becomes ≥ sm", async () => {
-    const wrapper = await mountSuspended(Drawer, {
-      props: { open: true },
-    });
+    const wrapper = await mountDrawer({ open: true });
 
-    isBreakpointSm.value = true;
+    isExtraSmall.value = false;
 
     await nextTick();
 
@@ -82,11 +73,9 @@ describe("Navigation Drawer", () => {
   });
 
   it("closes when navigation item emits select", async () => {
-    const wrapper = await mountSuspended(Drawer, {
-      props: { open: true },
-    });
+    const wrapper = await mountDrawer({ open: true });
 
-    const nav = wrapper.findComponent({ name: "LayoutNavigationItems" });
+    const nav = wrapper.getComponent({ name: "LayoutNavigationItems" });
 
     nav.vm.$emit("select");
 
