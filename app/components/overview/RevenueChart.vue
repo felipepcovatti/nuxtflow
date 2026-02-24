@@ -107,9 +107,7 @@ const { t } = useI18n();
     :title="data ? formattedDollars(data.total) : ''"
     :subtitle="t('subtitle')"
   >
-    <div v-if="pending" class="flex flex-1 items-center justify-center">
-      <Icon name="i-mdi-loading" class="animate-spin text-4xl text-gray-400" />
-    </div>
+    <UiSpinner v-if="pending" />
     <div
       v-else-if="error"
       class="flex flex-1 flex-col items-center justify-center gap-1 text-center"

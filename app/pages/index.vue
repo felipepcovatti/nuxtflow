@@ -7,7 +7,8 @@ definePageMeta({
 });
 </script>
 <template>
-  <div class="flex w-full">
+  <div class="flex flex-col gap-4">
     <OverviewRevenueChart />
+    <OverviewBalance />
   </div>
 </template>
