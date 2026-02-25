@@ -18,10 +18,13 @@ const { color, evolution, arrowIcon } = useBalanceEvolution(
   },
 );
 
+const { formatAsCompactMoney } = useMoneyFormatter();
+const { formatAsNumber } = useNumberFormatter();
+
 const total = computed(() => {
   return props.money
-    ? formattedDollars(props.currentMonthTotal, { compact: true })
-    : formattedNumber(props.currentMonthTotal);
+    ? formatAsCompactMoney(props.currentMonthTotal)
+    : formatAsNumber(props.currentMonthTotal);
 });
 
 const { t } = useI18n();

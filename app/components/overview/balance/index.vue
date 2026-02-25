@@ -34,7 +34,9 @@ const { t } = useI18n();
       icon="flowbite:users-group-solid"
     />
   </div>
-  <UiSpinner v-else class="h-38" />
+  <UiCard v-else class="min-h-41.75">
+    <UiSpinner />
+  </UiCard>
 </template>
 <i18n lang="json">
 {

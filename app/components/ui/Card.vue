@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 defineProps<{
-  title?: string;
+  title?: string | number;
   subtitle?: string;
 }>();
 </script>
@@ -9,10 +9,10 @@ defineProps<{
     class="flex w-full flex-col gap-6 rounded-lg bg-gray-800 p-6 text-base text-gray-400"
   >
     <header
-      v-if="title || subtitle || $slots.headerEnd"
+      v-if="title !== undefined || subtitle || $slots.headerEnd"
       class="flex flex-wrap items-center justify-between gap-6"
     >
-      <div v-if="title || subtitle">
+      <div v-if="title !== undefined || subtitle">
         <div v-if="title" class="heading-2 mb-1">
           {{ title }}
         </div>

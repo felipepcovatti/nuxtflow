@@ -6,16 +6,15 @@ import {
   VisTooltip,
 } from "@unovis/vue";
 import { GroupedBar } from "@unovis/ts";
-import { formattedDollars } from "~/utils/format";
 import { render } from "vue";
 import ChartTooltipContent from "../chart/tooltip/Content.vue";
 import type { LegendItem, RevenueRecord } from "~/types/chart";
 
 const { data, error, refresh, pending } = useFetch("/api/revenue");
 
-const x = ({ dayOfTheWeek }: RevenueRecord) => dayOfTheWeek;
+const dayOfTheWeekGetter = ({ dayOfTheWeek }: RevenueRecord) => dayOfTheWeek;
 
-const y = computed(() =>
+const revenueGetters = computed(() =>
   products.value.map(
     (product) => (record: RevenueRecord) => record[product.id],
   ),
@@ -98,13 +97,15 @@ watch(hoveredProductIndex, (hovered) =>
 
 const { isExtraSmall } = useIsExtraSmall();
 
+const { formatAsMoney } = useMoneyFormatter();
+
 const { t } = useI18n();
 </script>
 
 <template>
   <UiCard
     class="min-h-149"
-    :title="data ? formattedDollars(data.total) : ''"
+    :title="data ? formatAsMoney(data.total) : ''"
     :subtitle="t('subtitle')"
   >
     <UiSpinner v-if="pending" />
@@ -127,8 +128,8 @@ const { t } = useI18n();
       <div ref="chartWrapper" class="flex-1">
         <VisXYContainer :data="revenueRecords" :height="418" :x-domain="[0, 6]">
           <VisGroupedBar
-            :x="x"
-            :y="y"
+            :x="dayOfTheWeekGetter"
+            :y="revenueGetters"
             :rounded-corners="4"
             :data-step="1"
             :attributes="{
