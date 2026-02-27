@@ -4,6 +4,29 @@ export interface CountryVisitsRecord {
 }
 
 export interface VisitsByCountry {
-  countries: CountryVisitsRecord[];
-  total_visits: number;
+  data: {
+    countries: CountryVisitsRecord[];
+    total_visits: number;
+  };
+  meta: {
+    period: string;
+  };
 }
+
+export type Device = "mobile" | "desktop" | "tablet";
+
+export type DevicesVisitRecord = {
+  name: Device;
+  visits: number;
+};
+
+export type VisitsByDevice = {
+  data: {
+    devices: DevicesVisitRecord[];
+    total_visits: number;
+    previous_total_visits: number;
+  };
+  meta: {
+    period: string;
+  };
+};

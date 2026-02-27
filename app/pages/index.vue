@@ -8,13 +8,17 @@ definePageMeta({
 </script>
 <template>
   <div class="flex flex-col gap-4">
-    <OverviewRevenueChart />
+    <OverviewRevenueOverTheWeek />
     <OverviewBalance />
-    <div class="grid gap-4 sm:grid-cols-3">
-      <div class="sm:col-span-2">
-        <OverviewVisitMap />
+    <div class="grid grid-cols-1 gap-4 lg:grid lg:grid-cols-3">
+      <div class="lg:col-span-2">
+        <OverviewVisitsByCountry />
       </div>
-      <div></div>
+      <div class="flex flex-col gap-4">
+        <OverviewVisitsByDevice />
+        <OverviewProductsByRevenue />
+      </div>
     </div>
+    <OverviewTransactions />
   </div>
 </template>

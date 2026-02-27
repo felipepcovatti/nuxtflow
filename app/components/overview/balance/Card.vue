@@ -39,7 +39,7 @@ const { t } = useI18n();
       </div>
       <div class="leading-5">
         <span :style="{ color }">
-          <Icon v-if="arrowIcon" :name="arrowIcon" class="translate-y-0.5" />
+          <Icon v-if="arrowIcon" :name="arrowIcon" class="translate-y-0.75" />
           <span class="text-sm font-semibold">
             {{ evolution.result }}
           </span>

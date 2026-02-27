@@ -1,0 +1,40 @@
+{
+  "data": {
+    "total_visits": 541382,
+    "countries": [
+      { "country": "US", "visits": 48291 },
+      { "country": "BR", "visits": 39402 },
+      { "country": "IN", "visits": 35187 },
+      { "country": "DE", "visits": 31923 },
+      { "country": "JP", "visits": 28554 },
+      { "country": "GB", "visits": 27109 },
+      { "country": "FR", "visits": 24882 },
+      { "country": "CN", "visits": 22341 },
+      { "country": "MX", "visits": 20118 },
+      { "country": "CA", "visits": 19475 },
+      { "country": "AU", "visits": 17822 },
+      { "country": "NG", "visits": 16904 },
+      { "country": "ID", "visits": 15732 },
+      { "country": "ZA", "visits": 14921 },
+      { "country": "ES", "visits": 13556 },
+      { "country": "IT", "visits": 12894 },
+      { "country": "RU", "visits": 12456 },
+      { "country": "KR", "visits": 11903 },
+      { "country": "AR", "visits": 10762 },
+      { "country": "TR", "visits": 9845 },
+      { "country": "EG", "visits": 9431 },
+      { "country": "TH", "visits": 8219 },
+      { "country": "NL", "visits": 7443 },
+      { "country": "PL", "visits": 6827 },
+      { "country": "CO", "visits": 6120 },
+      { "country": "CL", "visits": 5489 },
+      { "country": "VN", "visits": 5012 },
+      { "country": "PH", "visits": 4738 },
+      { "country": "SE", "visits": 4129 },
+      { "country": "CH", "visits": 3564 }
+    ]
+  },
+  "meta": {
+    "period": "last-30-days"
+  }
+}

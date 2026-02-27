@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
 import type { WeekRecord } from "~/types/revenue";
-import type { RevenueRecord } from "~/types/chart";
+import type { RevenueChartRecord } from "~/types/chart";
 
 describe("mapRevenueToChartData", () => {
   it("maps a single record correctly", () => {
@@ -16,7 +16,7 @@ describe("mapRevenueToChartData", () => {
 
     const result = mapRevenueToChartData(input);
 
-    const expected: RevenueRecord[] = [
+    const expected: RevenueChartRecord[] = [
       {
         dayOfTheWeek: 0,
         p1: 100,

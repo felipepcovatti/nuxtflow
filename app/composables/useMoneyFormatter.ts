@@ -1,7 +1,7 @@
 export const useMoneyFormatter = ({
   currency = "USD",
 }: { currency?: "USD" } = {}) => {
-  const { locale } = useI18n();
+  const { locale } = useI18n({ useScope: "global" });
 
   const moneyFormatter = computed(
     () =>

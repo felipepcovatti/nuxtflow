@@ -8,19 +8,20 @@ import {
 import { GroupedBar } from "@unovis/ts";
 import { render } from "vue";
 import ChartTooltipContent from "../chart/tooltip/Content.vue";
-import type { LegendItem, RevenueRecord } from "~/types/chart";
+import type { LegendItem, RevenueChartRecord } from "~/types/chart";
 
 const { data, error, refresh, pending } = useFetch("/api/revenue");
 
-const dayOfTheWeekGetter = ({ dayOfTheWeek }: RevenueRecord) => dayOfTheWeek;
+const dayOfTheWeekGetter = ({ dayOfTheWeek }: RevenueChartRecord) =>
+  dayOfTheWeek;
 
 const revenueGetters = computed(() =>
   products.value.map(
-    (product) => (record: RevenueRecord) => record[product.id],
+    (product) => (record: RevenueChartRecord) => record[product.id],
   ),
 );
 
-const revenueRecords = computed<RevenueRecord[]>(() =>
+const revenueRecords = computed<RevenueChartRecord[]>(() =>
   mapRevenueToChartData(data.value?.week_records || []),
 );
 
@@ -38,7 +39,7 @@ const hoveredProductIndex = ref<number | null>(null);
 
 const events = {
   [GroupedBar.selectors.barGroup]: {
-    mouseenter: (record: RevenueRecord) => {
+    mouseenter: (record: RevenueChartRecord) => {
       hoveredDayOfTheWeek.value = record.dayOfTheWeek;
     },
     mouseleave: () => (hoveredDayOfTheWeek.value = null),
@@ -49,7 +50,7 @@ const triggers = {
   [GroupedBar.selectors.barGroup]: ({
     dayOfTheWeek,
     ...productIds
-  }: RevenueRecord) => {
+  }: RevenueChartRecord) => {
     const items = Object.entries(productIds).flatMap<Required<LegendItem>>(
       ([productId, amount]) => {
         const product = products.value.find(({ id }) => id === productId);
@@ -60,13 +61,13 @@ const triggers = {
         ];
       },
     );
-    const container = document.createElement("div");
+    const tooltip = document.createElement("div");
     const content: VNode = h(ChartTooltipContent, {
       items,
       title: t(`dayOfTheWeekLong.${dayOfTheWeek}`),
     });
-    render(content, container);
-    return container;
+    render(content, tooltip);
+    return tooltip;
   },
 };
 
@@ -134,15 +135,16 @@ const { t } = useI18n();
             :data-step="1"
             :attributes="{
               [GroupedBar.selectors.barGroup]: {
-                'data-day-of-the-week': ({ dayOfTheWeek }: RevenueRecord) =>
+                'data-day-of-the-week': ({
                   dayOfTheWeek,
+                }: RevenueChartRecord) => dayOfTheWeek,
               },
               [GroupedBar.selectors.bar]: {
-                'data-product-index': (_: RevenueRecord, index: number) =>
+                'data-product-index': (_: RevenueChartRecord, index: number) =>
                   index % products.length,
               },
             }"
-            :color="(_: RevenueRecord, index: number) => colors[index]"
+            :color="(_: RevenueChartRecord, index: number) => colors[index]"
             :events="events"
           />
           <VisAxis
@@ -175,7 +177,7 @@ const { t } = useI18n();
         </VisXYContainer>
       </div>
 
-      <div class="flex flex-wrap justify-center gap-4">
+      <div class="flex flex-wrap justify-center gap-x-4 gap-y-2">
         <div
           v-for="(product, index) in products"
           :key="product.id"
@@ -193,7 +195,7 @@ const { t } = useI18n();
 @reference "@/assets/css/main.css";
 div {
   :deep([data-selector="tooltip"]) {
-    @apply rounded border-0 bg-gray-700 p-2 text-sm/loose text-white;
+    @apply tooltip;
   }
   :deep([data-day-of-the-week]),
   :deep([data-product-index]) {
