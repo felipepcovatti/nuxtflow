@@ -37,6 +37,12 @@ const { arrowIcon, evolution, color } = useBalanceEvolution(() => ({
 
 const { formatAsCompactNumber } = useNumberFormatter();
 
+const ICON_BY_DEVICE: Record<Device, string> = {
+  desktop: "flowbite:desktop-pc-solid",
+  mobile: "flowbite:mobile-phone-solid",
+  tablet: "flowbite:tablet-solid",
+};
+
 const { t } = useI18n();
 </script>
 
@@ -55,7 +61,7 @@ const { t } = useI18n();
     <div class="flex flex-wrap justify-between gap-3" v-if="data">
       <div v-for="device in devices" :key="device.name">
         <header class="flex items-center gap-1">
-          <Icon name="flowbite:desktop-pc-solid" />
+          <Icon :name="ICON_BY_DEVICE[device.name]" />
           <div class="text-white">
             {{ t(`device.` + device.name) }}
           </div>

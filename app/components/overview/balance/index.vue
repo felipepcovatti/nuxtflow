@@ -4,7 +4,7 @@ const { data, error, refresh, pending } = useFetch("/api/balance");
 const { t } = useI18n();
 </script>
 <template>
-  <div v-if="data" class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+  <div v-if="data" class="grid gap-4 @2xl:grid-cols-2 @5xl:grid-cols-4">
     <OverviewBalanceCard
       :title="t('totalIncome')"
       :current-month-total="data.current_month.income"

@@ -7,11 +7,11 @@ definePageMeta({
 });
 </script>
 <template>
-  <div class="flex flex-col gap-4">
+  <div class="@container flex flex-col gap-4">
     <OverviewRevenueOverTheWeek />
     <OverviewBalance />
-    <div class="grid grid-cols-1 gap-4 lg:grid lg:grid-cols-3">
-      <div class="lg:col-span-2">
+    <div class="grid grid-cols-1 gap-4 @5xl:grid @5xl:grid-cols-3">
+      <div class="@5xl:col-span-2">
         <OverviewVisitsByCountry />
       </div>
       <div class="flex flex-col gap-4">

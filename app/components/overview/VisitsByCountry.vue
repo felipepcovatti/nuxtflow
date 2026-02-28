@@ -90,7 +90,7 @@ function getPercentageOfMaximumVisits(visits: number) {
 
 <template>
   <UiCard :title="total" :subtitle="t('visitsByCountry')">
-    <div ref="mapWrapper" class="[--map-height:40vw] lg:[--map-height:24rem]">
+    <div ref="mapWrapper" class="[--map-height:40vw] @5xl:[--map-height:24rem]">
       <UiSpinner v-if="pending" class="h-(--map-height)" />
       <VisSingleContainer
         v-else
@@ -102,6 +102,7 @@ function getPercentageOfMaximumVisits(visits: number) {
           :topojson="WorldMapTopoJSON"
           :area-color="getCountryColor"
           :area-id="countryGetter"
+          :zoom-extent="[1, 6]"
         />
         <VisTooltip
           :triggers="triggers"

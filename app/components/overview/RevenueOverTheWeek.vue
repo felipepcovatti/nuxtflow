@@ -127,39 +127,45 @@ const { t } = useI18n();
     </div>
     <template v-else>
       <div ref="chartWrapper" class="flex-1">
-        <VisXYContainer :data="revenueRecords" :height="418" :x-domain="[0, 6]">
-          <VisGroupedBar
-            :x="dayOfTheWeekGetter"
-            :y="revenueGetters"
-            :rounded-corners="4"
-            :data-step="1"
-            :attributes="{
-              [GroupedBar.selectors.barGroup]: {
-                'data-day-of-the-week': ({
-                  dayOfTheWeek,
-                }: RevenueChartRecord) => dayOfTheWeek,
-              },
-              [GroupedBar.selectors.bar]: {
-                'data-product-index': (_: RevenueChartRecord, index: number) =>
-                  index % products.length,
-              },
-            }"
-            :color="(_: RevenueChartRecord, index: number) => colors[index]"
-            :events="events"
-          />
-          <VisAxis
-            type="x"
-            :grid-line="false"
-            :tick-line="undefined"
-            :tick-values="
-              revenueRecords.map(({ dayOfTheWeek }) => dayOfTheWeek)
-            "
-            :tick-format="
-              (dayOfTheWeek: number) => t(`dayOfTheWeek.${dayOfTheWeek}`)
-            "
-            :domain-line="false"
-          />
-          <ClientOnly>
+        <ClientOnly>
+          <VisXYContainer
+            :data="revenueRecords"
+            :height="418"
+            :x-domain="[0, 6]"
+          >
+            <VisGroupedBar
+              :x="dayOfTheWeekGetter"
+              :y="revenueGetters"
+              :rounded-corners="4"
+              :data-step="1"
+              :attributes="{
+                [GroupedBar.selectors.barGroup]: {
+                  'data-day-of-the-week': ({
+                    dayOfTheWeek,
+                  }: RevenueChartRecord) => dayOfTheWeek,
+                },
+                [GroupedBar.selectors.bar]: {
+                  'data-product-index': (
+                    _: RevenueChartRecord,
+                    index: number,
+                  ) => index % products.length,
+                },
+              }"
+              :color="(_: RevenueChartRecord, index: number) => colors[index]"
+              :events="events"
+            />
+            <VisAxis
+              type="x"
+              :grid-line="false"
+              :tick-line="undefined"
+              :tick-values="
+                revenueRecords.map(({ dayOfTheWeek }) => dayOfTheWeek)
+              "
+              :tick-format="
+                (dayOfTheWeek: number) => t(`dayOfTheWeek.${dayOfTheWeek}`)
+              "
+              :domain-line="false"
+            />
             <VisAxis
               v-if="!isExtraSmall"
               type="y"
@@ -167,14 +173,14 @@ const { t } = useI18n();
               :tick-line="undefined"
               :domain-line="false"
             />
-          </ClientOnly>
-          <VisTooltip
-            :triggers="triggers"
-            :attributes="{ 'data-selector': 'tooltip' }"
-            vertical-placement="bottom"
-            :vertical-shift="16"
-          />
-        </VisXYContainer>
+            <VisTooltip
+              :triggers="triggers"
+              :attributes="{ 'data-selector': 'tooltip' }"
+              vertical-placement="bottom"
+              :vertical-shift="16"
+            />
+          </VisXYContainer>
+        </ClientOnly>
       </div>
 
       <div class="flex flex-wrap justify-center gap-x-4 gap-y-2">
