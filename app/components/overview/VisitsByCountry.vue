@@ -17,7 +17,7 @@ const colors = [
   "var(--color-primary-900)",
 ];
 
-const { data, pending } = useFetch("/api/visits/by-country");
+const { data, pending } = useFetch("/api/visits/countries");
 
 const countryGetter = ({ country }: CountryVisitsRecord) => country;
 

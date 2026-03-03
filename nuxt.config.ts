@@ -16,15 +16,22 @@ export default defineNuxtConfig({
     "@nuxt/fonts",
     "@vueuse/nuxt",
     "@nuxt/test-utils/module",
+    "@nuxt/image",
   ],
   i18n: {
     defaultLocale: "en",
+    langDir: "locales",
     locales: [
       {
         code: "en",
         language: "en-US",
+        file: "en.json",
       },
     ],
+    bundle: {
+      fullInstall: true,
+      runtimeOnly: false,
+    },
   },
   experimental: {
     typedPages: true,

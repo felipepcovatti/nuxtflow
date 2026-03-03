@@ -3,7 +3,7 @@ import { VisStackedBar, VisXYContainer } from "@unovis/vue";
 import type { DevicesChartRecord } from "~/types/chart";
 import type { Device, DevicesVisitRecord } from "~/types/visits";
 
-const { data, pending } = useFetch("/api/visits/by-device");
+const { data, pending } = useFetch("/api/visits/devices");
 const colors = [
   "var(--color-primary-700)",
   "var(--color-orange-300)",

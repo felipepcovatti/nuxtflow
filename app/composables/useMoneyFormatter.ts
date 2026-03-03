@@ -8,8 +8,8 @@ export const useMoneyFormatter = ({
       new Intl.NumberFormat(locale.value, {
         style: "currency",
         currency,
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2,
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 0,
       }),
   );
 

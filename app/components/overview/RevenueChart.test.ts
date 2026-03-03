@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, afterEach, beforeEach } from "vitest";
 import { mountSuspended, mockNuxtImport } from "@nuxt/test-utils/runtime";
-import RevenueChart from "./RevenueOverTheWeek.vue";
+import RevenueChart from "./RevenueByDepartment.vue";
 
 vi.mock("@unovis/vue", () => ({
   VisXYContainer: true,

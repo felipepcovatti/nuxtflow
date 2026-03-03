@@ -1,0 +1,20 @@
+{
+  "revenueTopProducts": "Top products by revenue",
+  "department": {
+    "electronics": "Electronics",
+    "home_living": "Home & Living",
+    "clothing_accessories": "Clothing & Accessories"
+  },
+  "category": {
+    "audio": "Audio",
+    "peripherals": "Peripherals",
+    "charging": "Charging & Power",
+    "furniture": "Furniture",
+    "kitchen": "Kitchen & Dining",
+    "devices": "Devices",
+    "lighting": "Lighting",
+    "footwear": "Footwear",
+    "tops": "Tops & Apparel",
+    "bags": "Bags & Luggage"
+  }
+}

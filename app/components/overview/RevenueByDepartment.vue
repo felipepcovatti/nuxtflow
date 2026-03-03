@@ -10,7 +10,7 @@ import { render } from "vue";
 import ChartTooltipContent from "../chart/tooltip/Content.vue";
 import type { LegendItem, RevenueChartRecord } from "~/types/chart";
 
-const { data, error, refresh, pending } = useFetch("/api/revenue");
+const { data, error, refresh, pending } = useFetch("/api/revenue/departments");
 
 const dayOfTheWeekGetter = ({ dayOfTheWeek }: RevenueChartRecord) =>
   dayOfTheWeek;

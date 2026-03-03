@@ -13,6 +13,7 @@
   "dependencies": {
     "@nuxt/eslint": "1.13.0",
     "@nuxt/fonts": "0.13.0",
+    "@nuxt/image": "2.0.0",
     "@tailwindcss/vite": "^4.1.18",
     "@unovis/ts": "^1.6.4",
     "@unovis/vue": "^1.6.4",
