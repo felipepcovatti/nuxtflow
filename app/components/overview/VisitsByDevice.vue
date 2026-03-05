@@ -4,7 +4,7 @@ import type { DevicesChartRecord } from "~/types/chart";
 import type { Device, DevicesVisitRecord } from "~/types/visits";
 
 const { data, pending } = useFetch("/api/visits/devices");
-const colors = [
+const COLORS: ReadonlyArray<string> = [
   "var(--color-primary-700)",
   "var(--color-orange-300)",
   "var(--color-teal-400)",
@@ -63,7 +63,7 @@ const { t } = useI18n();
         <header class="flex items-center gap-1">
           <Icon :name="ICON_BY_DEVICE[device.name]" />
           <div class="text-white">
-            {{ t(`device.` + device.name) }}
+            {{ $t(`device.${device.name}`) }}
           </div>
         </header>
         <div class="heading-2">{{ getVisitsPercentage(device.visits) }}</div>
@@ -88,8 +88,8 @@ const { t } = useI18n();
         @mouseleave="hoveredDeviceIndex = null"
       >
         <ChartLegendItem
-          :color="colors[index] ?? ''"
-          :label="t(`device.` + device.name)"
+          :color="COLORS[index] ?? ''"
+          :label="$t(`device.${device.name}`)"
         />
       </div>
     </div>
@@ -106,12 +106,7 @@ div {
 <i18n lang="json">
 {
   "en": {
-    "visitsByDevice": "Visits by device",
-    "device": {
-      "mobile": "Mobile",
-      "desktop": "Desktop",
-      "tablet": "Tablet"
-    }
+    "visitsByDevice": "Visits by device"
   }
 }
 </i18n>

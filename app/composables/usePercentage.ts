@@ -4,12 +4,13 @@ export const usePercentage = (
   getValue: () => number,
   { invertedSentiment }: { invertedSentiment?: boolean } = {},
 ) => {
-  const { formatAsNumber } = useNumberFormatter();
-  const percentage = computed(() => getValue());
+  const value = computed(() => getValue());
+
+  const percentage = computed(() => Math.abs(value.value).toFixed(1) + "%");
 
   const trend = computed<Trend>(() => {
-    if (!percentage.value) return "constant";
-    return percentage.value > 0 ? "increase" : "decrease";
+    if (!value.value) return "constant";
+    return value.value > 0 ? "increase" : "decrease";
   });
 
   const colorByTrend: Record<Trend, string> = {
@@ -33,7 +34,7 @@ export const usePercentage = (
 
   return {
     color,
-    percentage: formatAsNumber(percentage.value),
+    percentage,
     arrowIcon,
   };
 };

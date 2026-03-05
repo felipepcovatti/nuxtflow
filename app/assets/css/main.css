@@ -191,4 +191,13 @@
     font-family: var(--font-sans);
     --vis-axis-tick-label-font-size: 0.875rem;
   }
+
+  thead {
+    @apply uppercase;
+  }
+
+  td,
+  th {
+    @apply p-4 text-sm;
+  }
 }

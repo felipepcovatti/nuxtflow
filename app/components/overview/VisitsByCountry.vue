@@ -6,7 +6,7 @@ import { TopoJSONMap } from "@unovis/ts";
 import { render } from "vue";
 import { MapTooltipContent, Icon } from "#components";
 
-const colors = [
+const COLORS: ReadonlyArray<string> = [
   "var(--color-primary-200)",
   "var(--color-primary-300)",
   "var(--color-primary-400)",
@@ -33,9 +33,9 @@ function getCountryColor({ visits }: CountryVisitsRecord) {
   const max = maxVisits.value;
   if (visits === 0) return "var(--vis-map-feature-color)";
 
-  const colorSteps = colors.length;
+  const colorSteps = COLORS.length;
 
-  if (max === min) return colors[Math.floor(colorSteps / 2)];
+  if (max === min) return COLORS[Math.floor(colorSteps / 2)];
 
   const colorBucketSize = (max - min) / colorSteps;
 
@@ -44,7 +44,7 @@ function getCountryColor({ visits }: CountryVisitsRecord) {
     Math.floor((visits - min) / colorBucketSize),
   );
 
-  return colors[index];
+  return COLORS[index];
 }
 
 const { formatAsNumber } = useNumberFormatter();
@@ -70,7 +70,7 @@ const triggers = {
     const tooltip = document.createElement("div");
     const content: VNode = h(MapTooltipContent, {
       title: getCountryName(id),
-      label: t("visits"),
+      label: $t("visits"),
       value: formatAsNumber(data?.visits ?? 0),
     });
     render(content, tooltip);
@@ -79,7 +79,7 @@ const triggers = {
 };
 
 const mostVisitCountries = computed(() =>
-  countries.value.toSorted((a, b) => b.visits - a.visits).slice(0, 10),
+  countries.value.toSorted((a, b) => b.visits - a.visits).slice(0, 11),
 );
 
 function getPercentageOfMaximumVisits(visits: number) {
@@ -148,8 +148,7 @@ div {
 <i18n lang="json">
 {
   "en": {
-    "visitsByCountry": "Visits by country",
-    "visits": "Visits"
+    "visitsByCountry": "Visits by country"
   }
 }
 </i18n>

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { usePercentage } from "~/composables/usePercentage";
 
-const { t } = useI18n({ useScope: "global" });
+const { t } = useI18n();
 
 const { data } = useFetch("/api/revenue/products");
 
@@ -20,27 +20,33 @@ const { formatAsMoney } = useMoneyFormatter();
     class="min-h-120"
   >
     <template #header-end>
-      <Icon v-if="arrowIcon" :name="arrowIcon" />
-      {{ percentage }}
-    </template>
-    <div
-      v-for="product in products"
-      :key="product.product.id"
-      class="grid grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-2"
-    >
-      <NuxtImg :src="product.product.image_url" width="40" height="40" />
-      <div>
-        <div class="truncate font-semibold text-white">
-          {{ product.product.name }}
-        </div>
-        <div class="truncate text-xs">
-          {{ t(`department.${product.department}`) }}/{{
-            t(`category.${product.category}`)
-          }}
-        </div>
+      <div :style="{ color }" class="flex items-center">
+        <Icon v-if="arrowIcon" :name="arrowIcon" />
+        <span class="text-sm font-semibold">
+          {{ percentage }}
+        </span>
       </div>
-      <div class="ml-auto font-semibold text-white">
-        {{ formatAsMoney(product.revenue) }}
+    </template>
+    <div class="divide-y divide-gray-700">
+      <div
+        v-for="product in products"
+        :key="product.product.id"
+        class="grid grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-2 py-3"
+      >
+        <NuxtImg :src="product.product.image_url" width="40" height="40" />
+        <div>
+          <div class="truncate font-semibold text-white">
+            {{ product.product.name }}
+          </div>
+          <div class="truncate text-xs">
+            {{ $t(`department.${product.department}`) }}/{{
+              $t(`category.${product.category}`)
+            }}
+          </div>
+        </div>
+        <div class="ml-auto font-semibold text-white">
+          {{ formatAsMoney(product.revenue) }}
+        </div>
       </div>
     </div>
   </UiCard>

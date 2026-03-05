@@ -1,0 +1,91 @@
+import { TransactionResponse } from "~/types/transactions";
+
+export default {
+  data: {
+    transactions: [
+      {
+        id: "TX-8821",
+        type: "payment_from",
+        actor: "Marcus Thorne",
+        amount: 250.0,
+        status: "completed",
+        date: "2026-03-04T14:10:00Z",
+      },
+      {
+        id: "TX-8822",
+        type: "refund_to",
+        actor: "Elena Rodriguez",
+        amount: -45.0,
+        status: "completed",
+        date: "2026-03-04T11:45:00Z",
+      },
+      {
+        id: "TX-8823",
+        type: "payout_to",
+        actor: "Artisan Leather Works",
+        amount: -1200.0,
+        status: "in_progress",
+        date: "2026-03-04T09:30:00Z",
+      },
+      {
+        id: "TX-8824",
+        type: "fee_logistic",
+        actor: "Global Express",
+        amount: -22.5,
+        status: "completed",
+        date: "2026-03-03T18:20:00Z",
+      },
+      {
+        id: "TX-8825",
+        type: "payment_from",
+        actor: "Leo Takahashi",
+        amount: 4300.0,
+        status: "pending",
+        date: "2026-03-03T15:05:00Z",
+      },
+      {
+        id: "TX-8826",
+        type: "payment_from",
+        actor: "Sarah Jenkins",
+        amount: 120.0,
+        status: "completed",
+        date: "2026-03-02T10:00:00Z",
+      },
+      {
+        id: "TX-8827",
+        type: "adjustment_dispute",
+        actor: "Case #09",
+        amount: 15.0,
+        status: "completed",
+        date: "2026-03-02T08:15:00Z",
+      },
+      {
+        id: "TX-8828",
+        type: "purchase_supply",
+        actor: "Bulk Paper Inc",
+        amount: -312.4,
+        status: "completed",
+        date: "2026-03-01T16:45:00Z",
+      },
+      {
+        id: "TX-8829",
+        type: "payment_from",
+        actor: "Miriam Al-Fayed",
+        amount: 2800.0,
+        status: "failed",
+        date: "2026-03-01T11:30:00Z",
+      },
+      {
+        id: "TX-8830",
+        type: "refund_to",
+        actor: "Alistair Cook",
+        amount: -150.0,
+        status: "completed",
+        date: "2026-02-28T17:00:00Z",
+      },
+    ],
+  },
+  meta: {
+    period: "last-30-days",
+  },
+} satisfies TransactionResponse;

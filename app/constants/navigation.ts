@@ -29,3 +29,12 @@ export const NAVIGATION_ITEMS: ReadonlyArray<NavigationItem> = [
     subItems: ["sign-in", "sign-up", "forgot-password", "reset-password"],
   },
 ];
+
+export const FOOTER_NAVIGATION_ITEMS: ReadonlyArray<string> = [
+  "about",
+  "pricing",
+  "help",
+  "terms-and-conditions",
+  "cookies",
+  "contact",
+];

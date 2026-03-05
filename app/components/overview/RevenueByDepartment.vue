@@ -25,7 +25,7 @@ const revenueRecords = computed<RevenueChartRecord[]>(() =>
   mapRevenueToChartData(data.value?.week_records || []),
 );
 
-const colors = [
+const COLORS: ReadonlyArray<string> = [
   "var(--color-primary-700)",
   "var(--color-orange-300)",
   "var(--color-teal-400)",
@@ -57,14 +57,14 @@ const triggers = {
         if (!product) return [];
         const index = products.value.indexOf(product);
         return [
-          { color: colors[index] || "", label: product.name, value: amount },
+          { color: COLORS[index] || "", label: product.name, value: amount },
         ];
       },
     );
     const tooltip = document.createElement("div");
     const content: VNode = h(ChartTooltipContent, {
       items,
-      title: t(`dayOfTheWeekLong.${dayOfTheWeek}`),
+      title: $t(`dayOfTheWeekLong.${dayOfTheWeek}`),
     });
     render(content, tooltip);
     return tooltip;
@@ -122,7 +122,7 @@ const { t } = useI18n();
         @click="() => refresh()"
         class="mt-2 cursor-pointer rounded bg-gray-700 p-2"
       >
-        {{ t("tryAgain") }}
+        {{ $t("tryAgain") }}
       </button>
     </div>
     <template v-else>
@@ -151,7 +151,7 @@ const { t } = useI18n();
                   ) => index % products.length,
                 },
               }"
-              :color="(_: RevenueChartRecord, index: number) => colors[index]"
+              :color="(_: RevenueChartRecord, index: number) => COLORS[index]"
               :events="events"
             />
             <VisAxis
@@ -162,7 +162,7 @@ const { t } = useI18n();
                 revenueRecords.map(({ dayOfTheWeek }) => dayOfTheWeek)
               "
               :tick-format="
-                (dayOfTheWeek: number) => t(`dayOfTheWeek.${dayOfTheWeek}`)
+                (dayOfTheWeek: number) => $t(`dayOfTheWeek.${dayOfTheWeek}`)
               "
               :domain-line="false"
             />
@@ -191,7 +191,7 @@ const { t } = useI18n();
           @mouseenter="hoveredProductIndex = index"
           @mouseleave="hoveredProductIndex = null"
         >
-          <ChartLegendItem :color="colors[index] ?? ''" :label="product.name" />
+          <ChartLegendItem :color="COLORS[index] ?? ''" :label="product.name" />
         </div>
       </div>
     </template>
@@ -219,27 +219,8 @@ div {
 <i18n lang="json">
 {
   "en": {
-    "subtitle": "Total revenue for example.com",
-    "dayOfTheWeek": {
-      "0": "Mon",
-      "1": "Tue",
-      "2": "Wed",
-      "3": "Thu",
-      "4": "Fri",
-      "5": "Sat",
-      "6": "Sun"
-    },
-    "dayOfTheWeekLong": {
-      "0": "Monday",
-      "1": "Tuesday",
-      "2": "Wednesday",
-      "3": "Thursday",
-      "4": "Friday",
-      "5": "Saturday",
-      "6": "Sunday"
-    },
-    "loadError": "Error during chart data load",
-    "tryAgain": "Try again"
+    "totalRevenue": "Total revenue for example.com",
+    "loadError": "Error during chart data load"
   }
 }
 </i18n>

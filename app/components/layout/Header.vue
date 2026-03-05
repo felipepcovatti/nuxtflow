@@ -1,12 +1,10 @@
 <script lang="ts" setup>
+import SearchBox from "../ui/SearchBox.vue";
+
 defineEmits<{
   toggleNavigationSidebarPin: [];
   openNavigationDrawer: [];
 }>();
-
-const searchTerm = ref("");
-
-const { t } = useI18n();
 </script>
 
 <template>
@@ -35,19 +33,7 @@ const { t } = useI18n();
       <NuxtLink to="/" class="icon-button">
         <img src="~/assets/img/logo.svg" alt="Logo image" class="w-8" />
       </NuxtLink>
-      <div class="relative hidden max-w-100 flex-1 items-center sm:flex">
-        <input
-          v-model="searchTerm"
-          name="search_field"
-          class="h-10.5 w-full rounded-lg border border-gray-600 bg-gray-700 pr-4 pl-11 text-sm text-gray-400"
-          :placeholder="t('search')"
-        />
-        <Icon
-          name="mdi:magnify"
-          class="absolute left-4 text-gray-400"
-          size="1.25rem"
-        />
-      </div>
+      <SearchBox large class="hidden sm:block" />
     </div>
     <div class="flex items-center gap-3">
       <div class="sm:hidden">
@@ -71,10 +57,3 @@ const { t } = useI18n();
     </div>
   </div>
 </template>
-<i18n lang="json">
-{
-  "en": {
-    "search": "Search"
-  }
-}
-</i18n>

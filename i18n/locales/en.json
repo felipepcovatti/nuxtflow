@@ -1,5 +1,4 @@
 {
-  "revenueTopProducts": "Top products by revenue",
   "department": {
     "electronics": "Electronics",
     "home_living": "Home & Living",
@@ -16,5 +15,79 @@
     "footwear": "Footwear",
     "tops": "Tops & Apparel",
     "bags": "Bags & Luggage"
+  },
+  "search": "Search",
+  "last30Days": "Last 30 days",
+  "navigation": "Navigation",
+  "navigationItem": {
+    "overview": "Overview",
+    "pages": "Pages",
+    "e-commerce": "E-commerce",
+    "messages": "Messages",
+    "authentication": "Authentication"
+  },
+  "navigationSubitem": {
+    "kanban": "Kanban",
+    "calendar": "Calendar",
+    "chat-room": "Chat Room",
+    "product-list": "Product List",
+    "billing": "Billing",
+    "invoice": "Invoice",
+    "sign-in": "Sign In",
+    "sign-up": "Sign Up",
+    "forgot-password": "Forgot Password",
+    "reset-password": "Reset Password"
+  },
+  "footerNavigationItem": {
+    "about": "About",
+    "pricing": "Pricing",
+    "help": "Help",
+    "terms-and-conditions": "Terms & conditions",
+    "cookies": "Cookies",
+    "contact": "Contact"
+  },
+  "dayOfTheWeek": {
+    "0": "Mon",
+    "1": "Tue",
+    "2": "Wed",
+    "3": "Thu",
+    "4": "Fri",
+    "5": "Sat",
+    "6": "Sun"
+  },
+  "dayOfTheWeekLong": {
+    "0": "Monday",
+    "1": "Tuesday",
+    "2": "Wednesday",
+    "3": "Thursday",
+    "4": "Friday",
+    "5": "Saturday",
+    "6": "Sunday"
+  },
+  "tryAgain": "Try again",
+  "visits": "Visits",
+  "device": {
+    "mobile": "Mobile",
+    "desktop": "Desktop",
+    "tablet": "Tablet"
+  },
+  "amount": "Amount",
+  "transaction": "Transaction",
+  "date": "Date",
+  "status": "Status",
+  "transactionStatus": {
+    "completed": "Complete",
+    "cancelled": "Cancelled",
+    "in_progress": "In progress",
+    "failed": "Cancelled",
+    "pending": "Pending"
+  },
+  "transactionDescription": {
+    "payment_from": "Payment from {actor}",
+    "refund_to": "Refund to {actor}",
+    "payout_to": "Payout to {actor}",
+    "fee_logistic": "Logistic Fee: {actor}",
+    "adjustment_dispute": "Adjustment: {actor}",
+    "purchase_supply": "Supply Purchase: {actor}"
   }
 }
