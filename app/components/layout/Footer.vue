@@ -7,7 +7,10 @@ import { FOOTER_NAVIGATION_ITEMS } from "~/constants/navigation";
       <nav>
         <ul class="flex flex-wrap gap-x-4 gap-y-2">
           <li v-for="item in FOOTER_NAVIGATION_ITEMS">
-            <NuxtLink :to="item" class="p-2 font-semibold text-white underline">
+            <NuxtLink
+              :to="`/${item}`"
+              class="p-2 font-semibold text-white underline"
+            >
               {{ $t(`footerNavigationItem.${item}`) }}
             </NuxtLink>
           </li>

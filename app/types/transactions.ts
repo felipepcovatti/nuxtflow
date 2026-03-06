@@ -10,7 +10,7 @@ export type TransactionStatus =
   | "completed"
   | "in_progress"
   | "pending"
-  | "failed";
+  | "cancelled";
 
 export interface Transaction {
   id: string;

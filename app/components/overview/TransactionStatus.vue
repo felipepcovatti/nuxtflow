@@ -8,7 +8,7 @@ defineProps<{
 <template>
   <div
     :data-status="status"
-    class="inline-flex rounded-lg px-2.5 py-0.75 text-xs font-semibold"
+    class="inline-flex rounded-lg px-2.5 py-0.75 text-xs font-semibold whitespace-nowrap"
   >
     {{ $t(`transactionStatus.${status}`) }}
   </div>
@@ -25,7 +25,7 @@ div {
   &[data-status="in_progress"] {
     @apply bg-pink-900 text-pink-300;
   }
-  &[data-status="failed"] {
+  &[data-status="cancelled"] {
     @apply bg-red-900 text-red-300;
   }
 }

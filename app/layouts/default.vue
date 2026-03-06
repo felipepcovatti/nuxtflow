@@ -16,7 +16,7 @@ const isNavigationDrawerOpen = ref(false);
         id="navigation-sidebar"
         v-model:pinned="isNavigationSidebarPinned"
       />
-      <div class="flex flex-col gap-4 p-4">
+      <div class="grid grid-rows-[1fr_auto] gap-4 p-4">
         <main>
           <slot />
         </main>

@@ -21,9 +21,11 @@ const devicesRecords = computed(() =>
 );
 
 const xGetter = ({ index }: DevicesChartRecord) => index;
-const yGetter = (devices.value || []).map(
-  (device) => (record: DevicesChartRecord) => record[device.name],
-);
+const yGetters = computed(() => {
+  return (devices.value || []).map(
+    (device) => (record: DevicesChartRecord) => record[device.name],
+  );
+});
 
 function getVisitsPercentage(visits: number) {
   if (!data.value?.data.total_visits) return "";
@@ -58,41 +60,49 @@ const { t } = useI18n();
         <span class="text-sm font-semibold"> {{ evolution.result }} </span>
       </div>
     </template>
-    <div class="flex flex-wrap justify-between gap-3" v-if="data">
-      <div v-for="device in devices" :key="device.name">
-        <header class="flex items-center gap-1">
-          <Icon :name="ICON_BY_DEVICE[device.name]" />
-          <div class="text-white">
-            {{ $t(`device.${device.name}`) }}
+    <UiSpinner v-if="pending" class="h-(--map-height)" />
+    <template v-else-if="data">
+      <div class="flex flex-wrap justify-between gap-3">
+        <div v-for="device in devices" :key="device.name">
+          <header class="flex items-center gap-1">
+            <Icon :name="ICON_BY_DEVICE[device.name]" />
+            <div class="text-white">
+              {{ $t(`device.${device.name}`) }}
+            </div>
+          </header>
+          <div class="heading-2">{{ getVisitsPercentage(device.visits) }}</div>
+          <div>
+            {{ formatAsCompactNumber(device.visits) }}
           </div>
-        </header>
-        <div class="heading-2">{{ getVisitsPercentage(device.visits) }}</div>
-        <div>
-          {{ formatAsCompactNumber(device.visits) }}
         </div>
       </div>
-    </div>
-    <VisXYContainer
-      :data="devicesRecords"
-      height="var(--bar-height)"
-      class="overflow-clip rounded"
-    >
-      <VisStackedBar :x="xGetter" :y="yGetter" orientation="horizontal" />
-    </VisXYContainer>
-    <div class="flex flex-wrap justify-center gap-x-4 gap-y-2">
-      <div
-        v-for="(device, index) in devices"
-        :key="device.name"
-        class="cursor-default"
-        @mouseenter="hoveredDeviceIndex = index"
-        @mouseleave="hoveredDeviceIndex = null"
+      <VisXYContainer
+        :data="devicesRecords"
+        height="var(--bar-height)"
+        class="overflow-clip rounded"
       >
-        <ChartLegendItem
-          :color="COLORS[index] ?? ''"
-          :label="$t(`device.${device.name}`)"
+        <VisStackedBar
+          :x="xGetter"
+          :y="yGetters"
+          orientation="horizontal"
+          :color="(_: DevicesChartRecord, index: number) => COLORS[index]"
         />
+      </VisXYContainer>
+      <div class="flex flex-wrap justify-center gap-x-4 gap-y-2">
+        <div
+          v-for="(device, index) in devices"
+          :key="device.name"
+          class="cursor-default"
+          @mouseenter="hoveredDeviceIndex = index"
+          @mouseleave="hoveredDeviceIndex = null"
+        >
+          <ChartLegendItem
+            :color="COLORS[index] ?? ''"
+            :label="$t(`device.${device.name}`)"
+          />
+        </div>
       </div>
-    </div>
+    </template>
   </UiCard>
 </template>
 <style scoped>

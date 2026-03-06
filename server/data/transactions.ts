@@ -72,7 +72,7 @@ export default {
         type: "payment_from",
         actor: "Miriam Al-Fayed",
         amount: 2800.0,
-        status: "failed",
+        status: "cancelled",
         date: "2026-03-01T11:30:00Z",
       },
       {
