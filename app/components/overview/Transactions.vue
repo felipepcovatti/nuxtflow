@@ -60,6 +60,7 @@ const { groupState, isSelected, toggle } = useCheckboxGroup(transactions);
           </tr>
         </tbody>
       </table>
+      <UiPagination :total="100" :per-page="10" :page="1" />
     </div>
   </UiCard>
 </template>

@@ -5,7 +5,7 @@
       <NuxtLink to="/" class="font-semibold text-green-400 underline"
         >Overview page</NuxtLink
       >
-      content is currently implemented.
+      content is currently available.
     </p>
   </UiCard>
 </template>
