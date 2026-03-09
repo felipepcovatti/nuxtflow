@@ -90,6 +90,9 @@ function getPercentageOfMaximumVisits(visits: number) {
 
 <template>
   <UiCard :title="total" :subtitle="t('visitsByCountry')">
+    <template #header-end>
+      <button>{{ $t("last30Days") }}</button>
+    </template>
     <div ref="mapWrapper" class="[--map-height:40vw] @5xl:[--map-height:24rem]">
       <UiSpinner v-if="pending" class="h-(--map-height)" />
       <VisSingleContainer
@@ -133,6 +136,11 @@ function getPercentageOfMaximumVisits(visits: number) {
         </div>
       </div>
     </div>
+    <template #footer>
+      <NuxtLink>
+        {{ $t("seeFullReport") }}
+      </NuxtLink>
+    </template>
   </UiCard>
 </template>
 <style scoped>

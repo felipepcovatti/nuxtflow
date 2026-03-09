@@ -17,7 +17,9 @@
     "bags": "Bags & Luggage"
   },
   "search": "Search",
-  "last30Days": "Last 30 days",
+  "filterPeriod": {
+    "lastNumberOfDays": "Last { days } days"
+  },
   "navigation": "Navigation",
   "navigationItem": {
     "overview": "Overview",
@@ -89,5 +91,10 @@
     "fee_logistic": "Logistic Fee: {actor}",
     "adjustment_dispute": "Adjustment: {actor}",
     "purchase_supply": "Supply Purchase: {actor}"
+  },
+  "pagination": {
+    "next": "Next page",
+    "previous": "Previous page",
+    "itemsInfo": "Showing {from}-{to} of {total}"
   }
 }

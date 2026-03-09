@@ -109,6 +109,7 @@ const { t } = useI18n();
     :title="data ? formatAsMoney(data.total) : ''"
     :subtitle="t('subtitle')"
   >
+    <template #header-end> Filter </template>
     <UiSpinner v-if="pending" />
     <div
       v-else-if="error"

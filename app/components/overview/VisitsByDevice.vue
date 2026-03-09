@@ -103,6 +103,14 @@ const { t } = useI18n();
         </div>
       </div>
     </template>
+    <template #footer>
+      <button>
+        {{ $t("last7days") }}
+      </button>
+      <NuxtLink>
+        {{ $t("usersReport") }}
+      </NuxtLink>
+    </template>
   </UiCard>
 </template>
 <style scoped>

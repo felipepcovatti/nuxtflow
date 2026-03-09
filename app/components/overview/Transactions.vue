@@ -18,7 +18,7 @@ const { groupState, isSelected, toggle } = useCheckboxGroup(transactions);
       <table class="w-full">
         <thead class="bg-gray-700">
           <tr class="text-left">
-            <th class="w-16">
+            <th class="sticky left-0 w-16 bg-gray-700">
               <div class="flex justify-center">
                 <UiCheckbox v-model="groupState" />
               </div>
@@ -33,9 +33,11 @@ const { groupState, isSelected, toggle } = useCheckboxGroup(transactions);
           <tr
             v-for="transaction in transactions"
             :key="transaction.id"
-            class="has-data-[state=checked]:bg-primary-700 transition-colors hover:bg-gray-700"
+            class="group has-data-[state=checked]:bg-primary-700 transition-colors hover:bg-gray-700"
           >
-            <td class="w-16">
+            <td
+              class="group-has-data-[state=checked]:bg-primary-700 sticky left-0 w-16 bg-gray-800 transition-colors group-hover:bg-gray-700"
+            >
               <div class="flex justify-center">
                 <UiCheckbox
                   :model-value="isSelected(transaction.id)"
@@ -50,7 +52,7 @@ const { groupState, isSelected, toggle } = useCheckboxGroup(transactions);
                 </template>
               </i18n-t>
             </td>
-            <td>
+            <td class="min-w-30">
               {{ formatAsDate(transaction.date) }}
             </td>
             <td class="font-semibold text-white">
@@ -60,7 +62,9 @@ const { groupState, isSelected, toggle } = useCheckboxGroup(transactions);
           </tr>
         </tbody>
       </table>
-      <UiPagination :total="100" :per-page="10" :page="1" />
     </div>
+    <template #footer>
+      <UiPagination :total="100" :per-page="10" :page="1" />
+    </template>
   </UiCard>
 </template>

@@ -12,9 +12,10 @@ export default defineEventHandler(async (): Promise<Revenue> => {
     () => faker.commerce.productName(),
     3,
   );
-  const products: Product[] = productNames.map(() => ({
+  const products = productNames.map(() => ({
     id: faker.string.uuid(),
     name: faker.commerce.product(),
+    image_url: "",
   }));
 
   const week_records: WeekRecord[] = Array.from(new Array(7)).map(
