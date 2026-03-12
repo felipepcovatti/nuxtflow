@@ -1,5 +1,10 @@
 import { faker } from "@faker-js/faker";
-import { Product, ProductRevenue, Revenue, WeekRecord } from "~/types/revenue";
+import {
+  Product,
+  DepartmentRevenue,
+  Revenue,
+  WeekRecord,
+} from "~/types/revenue";
 
 export default defineEventHandler(async (): Promise<Revenue> => {
   faker.seed(123);

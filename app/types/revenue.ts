@@ -1,17 +1,21 @@
+type DataPeriod = "7D" | "30D" | "90D" | "1Y";
+
 export interface Product {
   id: string;
   name: string;
-  image_url: string;
+  slug: string;
+  department: DepartmentSlug;
+  category: CategorySlug;
 }
 
-export interface ProductRevenue {
+export interface DepartmentRevenue {
   product_id: string;
   amount: number;
 }
 
 export interface WeekRecord {
   day_of_the_week: number;
-  product_revenues: ProductRevenue[];
+  product_revenues: DepartmentRevenue[];
 }
 
 export interface Revenue {
@@ -20,9 +24,6 @@ export interface Revenue {
   products: Product[];
 }
 
-// types/revenue.ts
-
-// These are 'Slugs' - The Frontend holds the translation keys for these
 export type DepartmentSlug =
   | "electronics"
   | "home_living"
@@ -35,43 +36,63 @@ export type CategorySlug =
   | "devices"
   | "charging"
 
-  // Home
+  // Home & Office
   | "furniture"
   | "kitchen"
   | "lighting"
+  | "stationery"
+  | "decor"
+  | "wellness"
 
-  // Clothing
+  // Clothing & Lifestyle
   | "footwear"
   | "tops"
-  | "bags";
-export interface ProductStat {
-  product: Product;
-  department: DepartmentSlug;
-  category: CategorySlug;
-  revenue: number;
-  previous_revenue: number;
+  | "bags"
+  | "outerwear";
+
+export interface PeriodProductRevenue {
+  revenues: {
+    product_id: string;
+    revenue: number;
+  }[];
+  total_revenue: number;
+  total_revenue_growth_percentage: number;
 }
 
-export interface RevenueByProduct {
-  data: {
-    products: ProductStat[];
-    total_revenue: number;
-    previous_total_revenue: number;
-  };
-  meta: {
-    period: string;
-    locale: string;
-  };
+export type ProductRevenuesInPeriod = Map<DataPeriod, PeriodProductRevenue>;
+
+export interface ProductRevenue {
+  revenue: number;
+  product: Product;
+}
+
+export interface PeriodProductRevenueData {
+  revenues: ProductRevenue[];
+  total_revenue: number;
+  total_revenue_growth_percentage: number;
 }
 
 export interface RevenueByProductResponse {
-  data: {
-    products: ProductStat[];
-    total_revenue: number;
-    total_growth_percentage: number;
-  };
+  data: PeriodProductRevenueData;
   meta: {
-    period: string;
+    period: DataPeriod;
     locale: string;
   };
+}
+
+export interface DepartmentValue {
+  department_id: string;
+  amount: number;
+}
+
+export interface RevenueApiRecord {
+  timestamp: number;
+  date: string;
+  point_info: {
+    year: number;
+    month: number;
+    day?: number;
+    week?: number;
+  };
+  values: DepartmentValue[];
 }

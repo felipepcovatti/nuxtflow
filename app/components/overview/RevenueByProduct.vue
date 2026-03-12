@@ -1,54 +1,59 @@
 <script setup lang="ts">
-import { usePercentage } from "~/composables/usePercentage";
+import type { DataPeriod } from "~/constants/api";
 
 const { t } = useI18n();
 
-const { data } = useFetch("/api/revenue/products");
+const period = ref<DataPeriod>("90D");
 
-const products = computed(() => data.value?.data.products || []);
+const { data } = useFetch("/api/revenue/products", {
+  query: {
+    period,
+  },
+});
 
-const { arrowIcon, color, percentage } = usePercentage(
-  () => data.value?.data.total_growth_percentage ?? 0,
-);
+const revenues = computed(() => data.value?.data.revenues.slice(0, 10) || []);
 
 const { formatAsMoney } = useMoneyFormatter();
+
+const total = computed(() =>
+  formatAsMoney(data.value?.data.total_revenue || 0),
+);
 </script>
 <template>
-  <UiCard
-    :title="formatAsMoney(23423)"
-    :subtitle="t('revenueTopProducts')"
-    class="min-h-120"
-  >
+  <UiCard :title="total" :subtitle="t('revenueTopProducts')" class="min-h-120">
     <template #header-end>
-      <div :style="{ color }" class="flex items-center">
-        <Icon v-if="arrowIcon" :name="arrowIcon" />
-        <span class="text-sm font-semibold">
-          {{ percentage }}
-        </span>
-      </div>
+      <UiGrowthPercentage
+        :percentage="data?.data.total_revenue_growth_percentage || 0"
+      />
     </template>
     <div class="divide-y divide-gray-700">
       <div
-        v-for="product in products"
-        :key="product.product.id"
+        v-for="revenue in revenues"
+        :key="revenue.product.id"
         class="grid grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-2 py-3"
       >
-        <NuxtImg :src="product.product.image_url" width="40" height="40" />
+        <NuxtImg
+          :src="`/images/products/${revenue.product.slug}.png`"
+          width="40"
+          height="40"
+          :alt="revenue.product.name"
+        />
         <div>
           <div class="truncate font-semibold text-white">
-            {{ product.product.name }}
+            {{ revenue.product.name }}
           </div>
           <div class="truncate text-xs">
-            {{ $t(`department.${product.department}`) }}/{{
-              $t(`category.${product.category}`)
+            {{ $t(`department.${revenue.product.department}`) }}/{{
+              $t(`category.${revenue.product.category}`)
             }}
           </div>
         </div>
         <div class="ml-auto font-semibold text-white">
-          {{ formatAsMoney(product.revenue) }}
+          {{ formatAsMoney(revenue.revenue) }}
         </div>
       </div>
     </div>
+    <template #footer>asdf</template>
   </UiCard>
 </template>
 <i18n lang="json">

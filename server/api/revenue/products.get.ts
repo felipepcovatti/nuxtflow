@@ -1,24 +1,35 @@
-import { RevenueByProduct, RevenueByProductResponse } from "~/types/revenue";
-import revenueByProduct from "~~/server/data/revenue-by-product";
+import { ProductRevenue, RevenueByProductResponse } from "~/types/revenue";
+import { DATA_PERIODS } from "~/constants/api";
+import products from "~~/server/data/products";
+import productRevenuesByPeriod from "~~/server/data/productRevenuesByPeriod";
 
 export default defineEventHandler(
-  async (): Promise<RevenueByProductResponse> => {
-    const { total_revenue, previous_total_revenue, products } =
-      revenueByProduct.data;
+  async (event): Promise<RevenueByProductResponse> => {
+    const query = getQuery(event);
 
-    const total_growth_percentage =
-      previous_total_revenue === 0
-        ? 0
-        : ((total_revenue - previous_total_revenue) / previous_total_revenue) *
-          100;
+    const period = DATA_PERIODS.find((period) => period === query.period);
+
+    if (!period) throw Error("Invalid period requested");
+
+    const periodData = productRevenuesByPeriod.get(period);
+
+    if (!periodData) throw Error("Period data not found");
+
+    const revenues: ProductRevenue[] =
+      periodData.revenues.flatMap<ProductRevenue>(({ product_id, revenue }) => {
+        const product = products.find((product) => product.id === product_id);
+        return product ? [{ product, revenue }] : [];
+      });
 
     return {
       data: {
-        products,
-        total_revenue,
-        total_growth_percentage,
+        ...periodData,
+        revenues,
       },
-      meta: revenueByProduct.meta,
+      meta: {
+        locale: "en-US",
+        period,
+      },
     };
   },
 );

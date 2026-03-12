@@ -11,7 +11,7 @@ const to = computed(() => Math.min(page.value * props.perPage, props.total));
 </script>
 
 <template>
-  <div class="flex flex-wrap items-center justify-between gap-4">
+  <div class="flex w-full flex-wrap items-center justify-between gap-4">
     <div class="text-sm">
       <i18n-t keypath="pagination.itemsInfo">
         <template #from>

@@ -14,11 +14,18 @@
     "lighting": "Lighting",
     "footwear": "Footwear",
     "tops": "Tops & Apparel",
-    "bags": "Bags & Luggage"
+    "bags": "Bags & Luggage",
+    "outerwear": "Outerwear",
+    "stationary": "Stationery",
+    "wellness": "Wellness",
+    "decor": "Decor"
   },
   "search": "Search",
-  "filterPeriod": {
-    "lastNumberOfDays": "Last { days } days"
+  "dataPeriod": {
+    "7D": "Last 7 days",
+    "30D": "Last 30 days",
+    "90D": "Last 90 days",
+    "1Y": "Last year"
   },
   "navigation": "Navigation",
   "navigationItem": {
