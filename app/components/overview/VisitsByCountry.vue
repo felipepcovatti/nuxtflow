@@ -30,7 +30,7 @@ const countryGetter = ({ country }: CountryVisitsRecord) => country;
 
 const visits = computed(() => data.value?.data.visits || []);
 
-const visitsList = computed(() => visits.value.slice(0, 10));
+const visitsList = computed(() => visits.value.slice(0, 12));
 
 const countryVisits = computed(() => visits.value.map(({ visits }) => visits));
 
@@ -96,7 +96,10 @@ function getVisitsPercentage(visits: number) {
     <template #header-end>
       <PeriodSelect v-model="period" bordered />
     </template>
-    <div ref="mapWrapper" class="[--map-height:40vw] @5xl:[--map-height:24rem]">
+    <div
+      ref="mapWrapper"
+      class="[--map-height:40vw] @5xl:[--map-height:29.75rem]"
+    >
       <UiSpinner v-if="pending" class="h-(--map-height)" />
       <VisSingleContainer
         v-else
