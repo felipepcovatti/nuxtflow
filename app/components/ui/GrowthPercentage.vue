@@ -11,7 +11,7 @@ const { arrowIcon, color, percentage } = usePercentage(() => props.percentage, {
 
 <template>
   <span :style="{ color }" class="text-sm">
-    <Icon v-if="arrowIcon" :name="arrowIcon" class="translate-y-0.75" />
+    <Icon v-if="arrowIcon" :name="arrowIcon" class="translate-y-0.5" />
     <span class="font-semibold">
       {{ percentage }}
     </span>

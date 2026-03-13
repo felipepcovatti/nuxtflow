@@ -99,15 +99,13 @@ watch(hoveredProductIndex, (hovered) =>
 const { isExtraSmall } = useIsExtraSmall();
 
 const { formatAsMoney } = useMoneyFormatter();
-
-const { t } = useI18n();
 </script>
 
 <template>
   <UiCard
     class="min-h-149"
     :title="data ? formatAsMoney(data.total) : ''"
-    :subtitle="t('subtitle')"
+    :subtitle="$t('siteTotalRevenue', { site: 'example.com' })"
   >
     <template #header-end> Filter </template>
     <UiSpinner v-if="pending" />
@@ -216,12 +214,3 @@ div {
   }
 }
 </style>
-
-<i18n lang="json">
-{
-  "en": {
-    "totalRevenue": "Total revenue for example.com",
-    "loadError": "Error during chart data load"
-  }
-}
-</i18n>

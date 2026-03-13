@@ -1,5 +1,11 @@
 <script setup lang="ts">
-const { data } = useFetch("/api/transactions");
+import type { DataPeriod } from "~/constants/api";
+
+const period = ref<DataPeriod>("7D");
+
+const { data } = useFetch("/api/transactions", {
+  query: { period },
+});
 const transactions = computed(() => data.value?.data.transactions || []);
 
 const { formatAsDate } = useDateTimeFormatter();
@@ -11,7 +17,7 @@ const { groupState, isSelected, toggle } = useCheckboxGroup(transactions);
 <template>
   <UiCard>
     <header class="flex justify-between">
-      <div>{{ $t("last30Days") }}</div>
+      <PeriodSelect v-model="period" bordered />
       <UiSearchBox />
     </header>
     <div class="-mx-6 overflow-x-auto">
@@ -46,7 +52,7 @@ const { groupState, isSelected, toggle } = useCheckboxGroup(transactions);
               </div>
             </td>
             <td class="text-white">
-              <i18n-t :keypath="`transactionDescription.${transaction.type}`">
+              <i18n-t :keypath="`transactionDescriptions.${transaction.type}`">
                 <template #actor>
                   <span class="font-semibold">{{ transaction.actor }}</span>
                 </template>

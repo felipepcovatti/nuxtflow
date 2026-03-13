@@ -26,8 +26,6 @@ const total = computed(() => {
     ? formatAsCompactMoney(props.currentMonthTotal)
     : formatAsNumber(props.currentMonthTotal);
 });
-
-const { t } = useI18n();
 </script>
 <template>
   <UiCard>
@@ -45,16 +43,9 @@ const { t } = useI18n();
           </span>
         </span>
         <span class="ml-1">
-          {{ t("vsLast3Months") }}
+          {{ $t("vsLast3Months") }}
         </span>
       </div>
     </div>
   </UiCard>
 </template>
-<i18n lang="json">
-{
-  "en": {
-    "vsLast3Months": "vs last 3 months"
-  }
-}
-</i18n>

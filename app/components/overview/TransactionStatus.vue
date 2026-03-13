@@ -10,7 +10,7 @@ defineProps<{
     :data-status="status"
     class="inline-flex rounded-lg px-2.5 py-0.75 text-xs font-semibold whitespace-nowrap"
   >
-    {{ $t(`transactionStatus.${status}`) }}
+    {{ $t(`transactionStatuses.${status}`) }}
   </div>
 </template>
 <style scoped>

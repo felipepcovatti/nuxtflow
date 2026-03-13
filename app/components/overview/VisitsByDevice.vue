@@ -1,9 +1,14 @@
 <script setup lang="ts">
 import { VisStackedBar, VisXYContainer } from "@unovis/vue";
+import type { DataPeriod } from "~/constants/api";
 import type { DevicesChartRecord } from "~/types/chart";
-import type { Device, DevicesVisitRecord } from "~/types/visits";
+import type { Device } from "~/types/visits";
 
-const { data, pending } = useFetch("/api/visits/devices");
+const period = ref<DataPeriod>("7D");
+
+const { data, pending } = useFetch("/api/visits/devices", {
+  query: { period },
+});
 const COLORS: ReadonlyArray<string> = [
   "var(--color-primary-700)",
   "var(--color-orange-300)",
@@ -12,30 +17,25 @@ const COLORS: ReadonlyArray<string> = [
 
 const hoveredDeviceIndex = ref<number | null>(null);
 
-const devices = computed(() =>
-  (data.value?.data.devices || []).toSorted((a, b) => b.visits - a.visits),
+const visits = computed(() =>
+  (data.value?.data.visits || []).toSorted((a, b) => b.visits - a.visits),
 );
 
 const devicesRecords = computed(() =>
-  mapVisitsByDeviceToChartData(devices.value),
+  mapVisitsByDeviceToChartData(visits.value),
 );
 
 const xGetter = ({ index }: DevicesChartRecord) => index;
 const yGetters = computed(() => {
-  return (devices.value || []).map(
-    (device) => (record: DevicesChartRecord) => record[device.name],
+  return (visits.value || []).map(
+    (device) => (record: DevicesChartRecord) => record[device.device],
   );
 });
 
 function getVisitsPercentage(visits: number) {
   if (!data.value?.data.total_visits) return "";
-  return ((visits / data.value.data.total_visits) * 100).toFixed(0) + "%";
+  return ((visits / data.value.data.total_visits) * 100).toFixed(1) + "%";
 }
-
-const { arrowIcon, evolution, color } = useBalanceEvolution(() => ({
-  before: data.value?.data.previous_total_visits ?? 0,
-  now: data.value?.data.total_visits ?? 0,
-}));
 
 const { formatAsCompactNumber } = useNumberFormatter();
 
@@ -44,35 +44,34 @@ const ICON_BY_DEVICE: Record<Device, string> = {
   mobile: "flowbite:mobile-phone-solid",
   tablet: "flowbite:tablet-solid",
 };
-
-const { t } = useI18n();
 </script>
 
 <template>
   <UiCard
     :title="formatAsCompactNumber(data?.data.total_visits ?? 0)"
-    :subtitle="t('visitsByDevice')"
+    :subtitle="$t('visitsByDevice')"
     class="[--bar-height:1.25rem]"
   >
     <template #header-end>
-      <div :style="{ color }" class="flex items-center">
-        <Icon v-if="arrowIcon" :name="arrowIcon" />
-        <span class="text-sm font-semibold"> {{ evolution.result }} </span>
-      </div>
+      <UiGrowthPercentage
+        :percentage="data?.data.total_visits_growth_percentage || 0"
+      />
     </template>
     <UiSpinner v-if="pending" class="h-(--map-height)" />
     <template v-else-if="data">
       <div class="flex flex-wrap justify-between gap-3">
-        <div v-for="device in devices" :key="device.name">
+        <div v-for="visit in visits" :key="visit.device">
           <header class="flex items-center gap-1">
-            <Icon :name="ICON_BY_DEVICE[device.name]" />
+            <Icon :name="ICON_BY_DEVICE[visit.device]" />
             <div class="text-white">
-              {{ $t(`device.${device.name}`) }}
+              {{ $t(`devices.${visit.device}`) }}
             </div>
           </header>
-          <div class="heading-2">{{ getVisitsPercentage(device.visits) }}</div>
+          <div class="heading-2">
+            {{ getVisitsPercentage(visit.visits) }}
+          </div>
           <div>
-            {{ formatAsCompactNumber(device.visits) }}
+            {{ formatAsCompactNumber(visit.visits) }}
           </div>
         </div>
       </div>
@@ -90,23 +89,21 @@ const { t } = useI18n();
       </VisXYContainer>
       <div class="flex flex-wrap justify-center gap-x-4 gap-y-2">
         <div
-          v-for="(device, index) in devices"
-          :key="device.name"
+          v-for="(visit, index) in visits"
+          :key="visit.device"
           class="cursor-default"
           @mouseenter="hoveredDeviceIndex = index"
           @mouseleave="hoveredDeviceIndex = null"
         >
           <ChartLegendItem
             :color="COLORS[index] ?? ''"
-            :label="$t(`device.${device.name}`)"
+            :label="$t(`devices.${visit.device}`)"
           />
         </div>
       </div>
     </template>
     <template #footer>
-      <button>
-        {{ $t("last7days") }}
-      </button>
+      <PeriodSelect v-model="period" />
       <NuxtLink>
         {{ $t("usersReport") }}
       </NuxtLink>
@@ -121,10 +118,3 @@ div {
   }
 }
 </style>
-<i18n lang="json">
-{
-  "en": {
-    "visitsByDevice": "Visits by device"
-  }
-}
-</i18n>

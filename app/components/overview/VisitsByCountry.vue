@@ -5,6 +5,7 @@ import type { CountryVisitsRecord } from "~/types/visits";
 import { TopoJSONMap } from "@unovis/ts";
 import { render } from "vue";
 import { MapTooltipContent, Icon } from "#components";
+import type { DataPeriod } from "~/constants/api";
 
 const COLORS: ReadonlyArray<string> = [
   "var(--color-primary-200)",
@@ -17,16 +18,24 @@ const COLORS: ReadonlyArray<string> = [
   "var(--color-primary-900)",
 ];
 
-const { data, pending } = useFetch("/api/visits/countries");
+const period = ref<DataPeriod>("30D");
+
+const { data, pending } = useFetch("/api/visits/countries", {
+  query: {
+    period,
+  },
+});
 
 const countryGetter = ({ country }: CountryVisitsRecord) => country;
 
-const countries = computed(() => data.value?.data.countries || []);
+const visits = computed(() => data.value?.data.visits || []);
 
-const visits = computed(() => countries.value.map(({ visits }) => visits));
+const visitsList = computed(() => visits.value.slice(0, 10));
 
-const minVisits = computed(() => Math.min(...visits.value));
-const maxVisits = computed(() => Math.max(...visits.value));
+const countryVisits = computed(() => visits.value.map(({ visits }) => visits));
+
+const minVisits = computed(() => Math.min(...countryVisits.value));
+const maxVisits = computed(() => Math.max(...countryVisits.value));
 
 function getCountryColor({ visits }: CountryVisitsRecord) {
   const min = minVisits.value;
@@ -55,8 +64,6 @@ const total = computed(
     formatAsNumber(data.value.data.total_visits),
 );
 
-const { t } = useI18n();
-
 const { getCountryName } = useCountryName();
 
 const triggers = {
@@ -78,26 +85,22 @@ const triggers = {
   },
 };
 
-const mostVisitCountries = computed(() =>
-  countries.value.toSorted((a, b) => b.visits - a.visits).slice(0, 11),
-);
-
-function getPercentageOfMaximumVisits(visits: number) {
-  if (!maxVisits.value) return 0;
-  return (visits / maxVisits.value) * 100 + "%";
+function getVisitsPercentage(visits: number) {
+  if (!data.value?.data.total_visits) return 0;
+  return ((visits / data.value?.data.total_visits) * 100).toFixed(1) + "%";
 }
 </script>
 
 <template>
-  <UiCard :title="total" :subtitle="t('visitsByCountry')">
+  <UiCard :title="total" :subtitle="$t('visitsByCountry')">
     <template #header-end>
-      <button>{{ $t("last30Days") }}</button>
+      <PeriodSelect v-model="period" bordered />
     </template>
     <div ref="mapWrapper" class="[--map-height:40vw] @5xl:[--map-height:24rem]">
       <UiSpinner v-if="pending" class="h-(--map-height)" />
       <VisSingleContainer
         v-else
-        :data="{ areas: countries }"
+        :data="{ areas: visits }"
         height="var(--map-height)"
         class="h-(--map-height)"
       >
@@ -116,17 +119,14 @@ function getPercentageOfMaximumVisits(visits: number) {
       </VisSingleContainer>
     </div>
     <div class="flex flex-col gap-6">
-      <div
-        v-for="country in mostVisitCountries"
-        class="flex items-center gap-3"
-      >
+      <div v-for="country in visitsList" class="flex items-center gap-3">
         <Icon :name="`flag:${country.country.toLowerCase()}-4x3`" />
         <div class="w-40 truncate text-white">
           {{ getCountryName(country.country) }}
         </div>
         <div class="flex flex-1 rounded-md bg-gray-700">
           <div
-            :style="{ width: getPercentageOfMaximumVisits(country.visits) }"
+            :style="{ width: getVisitsPercentage(country.visits) }"
             class="bg-primary-700 rounded-md text-right text-xs/relaxed text-white"
           >
             <span class="mx-2">
@@ -137,8 +137,9 @@ function getPercentageOfMaximumVisits(visits: number) {
       </div>
     </div>
     <template #footer>
-      <NuxtLink>
-        {{ $t("seeFullReport") }}
+      <NuxtLink class="button">
+        {{ $t("viewFullReport") }}
+        <Icon name="mdi:arrow-right" size="1.1rem" />
       </NuxtLink>
     </template>
   </UiCard>
@@ -153,10 +154,3 @@ div {
   }
 }
 </style>
-<i18n lang="json">
-{
-  "en": {
-    "visitsByCountry": "Visits by country"
-  }
-}
-</i18n>

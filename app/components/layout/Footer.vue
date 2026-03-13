@@ -11,7 +11,7 @@ import { FOOTER_NAVIGATION_ITEMS } from "~/constants/navigation";
               :to="`/${item}`"
               class="p-2 font-semibold text-white underline"
             >
-              {{ $t(`footerNavigationItem.${item}`) }}
+              {{ $t(`footerNavigationItems.${item}`) }}
             </NuxtLink>
           </li>
         </ul>

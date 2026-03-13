@@ -32,7 +32,7 @@ defineExpose({
         >
           <AccordionTrigger>
             <Icon :name="item.icon" class="item-icon" />
-            {{ $t(`navigationItem.${item.path}`) }}
+            {{ $t(`navigationItems.${item.path}`) }}
             <Icon
               name="radix-icons:caret-down"
               size="1.25rem"
@@ -51,7 +51,7 @@ defineExpose({
             class="menu-item pl-9!"
             @click="$emit('select')"
           >
-            {{ $t(`navigationSubitem.${subItem}`) }}
+            {{ $t(`navigationSubitems.${subItem}`) }}
           </NuxtLink>
         </AccordionContent>
       </AccordionItem>
@@ -62,7 +62,7 @@ defineExpose({
         @click="$emit('select')"
       >
         <Icon :name="item.icon" class="item-icon" />
-        {{ $t(`navigationItem.${item.path}`) }}
+        {{ $t(`navigationItems.${item.path}`) }}
       </NuxtLink>
     </div>
   </AccordionRoot>

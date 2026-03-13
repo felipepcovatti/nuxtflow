@@ -1,10 +1,10 @@
 {
-  "department": {
+  "departments": {
     "electronics": "Electronics",
     "home_living": "Home & Living",
     "clothing_accessories": "Clothing & Accessories"
   },
-  "category": {
+  "categories": {
     "audio": "Audio",
     "peripherals": "Peripherals",
     "charging": "Charging & Power",
@@ -16,26 +16,26 @@
     "tops": "Tops & Apparel",
     "bags": "Bags & Luggage",
     "outerwear": "Outerwear",
-    "stationary": "Stationery",
+    "stationery": "Stationery",
     "wellness": "Wellness",
     "decor": "Decor"
   },
   "search": "Search",
-  "dataPeriod": {
+  "dataPeriods": {
     "7D": "Last 7 days",
     "30D": "Last 30 days",
     "90D": "Last 90 days",
-    "1Y": "Last year"
+    "1Y": "Last 1 year"
   },
   "navigation": "Navigation",
-  "navigationItem": {
+  "navigationItems": {
     "overview": "Overview",
     "pages": "Pages",
     "e-commerce": "E-commerce",
     "messages": "Messages",
     "authentication": "Authentication"
   },
-  "navigationSubitem": {
+  "navigationSubitems": {
     "kanban": "Kanban",
     "calendar": "Calendar",
     "chat-room": "Chat Room",
@@ -47,7 +47,7 @@
     "forgot-password": "Forgot Password",
     "reset-password": "Reset Password"
   },
-  "footerNavigationItem": {
+  "footerNavigationItems": {
     "about": "About",
     "pricing": "Pricing",
     "help": "Help",
@@ -75,23 +75,33 @@
   },
   "tryAgain": "Try again",
   "visits": "Visits",
-  "device": {
+  "visitsByCountry": "Visits by country",
+  "visitsByDevice": "Visits by device",
+  "devices": {
     "mobile": "Mobile",
     "desktop": "Desktop",
     "tablet": "Tablet"
   },
+  "vsLast3Months": "vs last 3 months",
+  "siteTotalRevenue": "Total revenue for { site }",
   "amount": "Amount",
   "transaction": "Transaction",
   "date": "Date",
   "status": "Status",
-  "transactionStatus": {
+  "viewFullReport": "View full report",
+  "totalIncome": "Total Income",
+  "totalOutcome": "Total Outcome",
+  "totalProfit": "Total Profit",
+  "newCustomers": "New Customers",
+  "usersReport": "Users report",
+  "transactionStatuses": {
     "completed": "Complete",
     "cancelled": "Cancelled",
     "in_progress": "In progress",
     "failed": "Cancelled",
     "pending": "Pending"
   },
-  "transactionDescription": {
+  "transactionDescriptions": {
     "payment_from": "Payment from {actor}",
     "refund_to": "Refund to {actor}",
     "payout_to": "Payout to {actor}",
@@ -103,5 +113,9 @@
     "next": "Next page",
     "previous": "Previous page",
     "itemsInfo": "Showing {from}-{to} of {total}"
+  },
+  "products": {
+    "topRevenue": "Top products by revenue",
+    "report": "Products report"
   }
 }

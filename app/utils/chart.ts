@@ -1,6 +1,6 @@
 import type { DevicesChartRecord, RevenueChartRecord } from "~/types/chart";
 import type { WeekRecord } from "~/types/revenue";
-import type { DevicesVisitRecord } from "~/types/visits";
+import type { DeviceVisitsRecord } from "~/types/visits";
 
 export function mapRevenueToChartData(
   records: WeekRecord[],
@@ -19,14 +19,14 @@ export function mapRevenueToChartData(
 }
 
 export function mapVisitsByDeviceToChartData(
-  devices: DevicesVisitRecord[],
+  visits: DeviceVisitsRecord[],
 ): DevicesChartRecord[] {
   return [
     {
       index: 0,
-      desktop: devices.find((device) => device.name === "desktop")?.visits ?? 0,
-      mobile: devices.find((device) => device.name === "mobile")?.visits ?? 0,
-      tablet: devices.find((device) => device.name === "tablet")?.visits ?? 0,
+      desktop: visits.find((visit) => visit.device === "desktop")?.visits ?? 0,
+      mobile: visits.find((visit) => visit.device === "mobile")?.visits ?? 0,
+      tablet: visits.find((visit) => visit.device === "tablet")?.visits ?? 0,
     },
   ];
 }

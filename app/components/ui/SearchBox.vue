@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 const term = defineModel<string>();
-const { t } = useI18n();
 
 defineProps<{
   large?: boolean;
@@ -17,7 +16,7 @@ defineProps<{
       v-model="term"
       name="search_field"
       class="h-full w-full rounded-lg border border-gray-600 bg-gray-700 pr-4 pl-11 text-sm text-gray-400"
-      :placeholder="t('search')"
+      :placeholder="$t('search')"
     />
     <Icon
       name="mdi:magnify"

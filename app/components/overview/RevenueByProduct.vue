@@ -1,9 +1,7 @@
 <script setup lang="ts">
 import type { DataPeriod } from "~/constants/api";
 
-const { t } = useI18n();
-
-const period = ref<DataPeriod>("90D");
+const period = ref<DataPeriod>("7D");
 
 const { data } = useFetch("/api/revenue/products", {
   query: {
@@ -20,7 +18,11 @@ const total = computed(() =>
 );
 </script>
 <template>
-  <UiCard :title="total" :subtitle="t('revenueTopProducts')" class="min-h-120">
+  <UiCard
+    :title="total"
+    :subtitle="$t('products.topRevenue')"
+    class="min-h-120"
+  >
     <template #header-end>
       <UiGrowthPercentage
         :percentage="data?.data.total_revenue_growth_percentage || 0"
@@ -43,8 +45,8 @@ const total = computed(() =>
             {{ revenue.product.name }}
           </div>
           <div class="truncate text-xs">
-            {{ $t(`department.${revenue.product.department}`) }}/{{
-              $t(`category.${revenue.product.category}`)
+            {{ $t(`departments.${revenue.product.department}`) }}/{{
+              $t(`categories.${revenue.product.category}`)
             }}
           </div>
         </div>
@@ -53,13 +55,8 @@ const total = computed(() =>
         </div>
       </div>
     </div>
-    <template #footer>asdf</template>
+    <template #footer>
+      <PeriodSelect v-model="period" />
+    </template>
   </UiCard>
 </template>
-<i18n lang="json">
-{
-  "en": {
-    "revenueTopProducts": "Top products by revenue"
-  }
-}
-</i18n>

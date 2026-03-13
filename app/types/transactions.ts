@@ -1,3 +1,5 @@
+import type { DataPeriod } from "~/constants/api";
+
 export type TransactionType =
   | "payment_from"
   | "refund_to"
@@ -21,11 +23,13 @@ export interface Transaction {
   date: string;
 }
 
+export type TransactionsInPeriod = Map<DataPeriod, Transaction[]>;
+
 export interface TransactionResponse {
   data: {
     transactions: Transaction[];
   };
   meta: {
-    period: string;
+    period: DataPeriod;
   };
 }

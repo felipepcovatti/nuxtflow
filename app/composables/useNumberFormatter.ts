@@ -4,7 +4,6 @@ export const useNumberFormatter = () => {
   const compactNumberFormatter = computed(
     () =>
       new Intl.NumberFormat(locale.value, {
-        minimumFractionDigits: 1,
         maximumFractionDigits: 1,
         notation: "compact",
         compactDisplay: "short",

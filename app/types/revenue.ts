@@ -61,19 +61,17 @@ export interface PeriodProductRevenue {
 
 export type ProductRevenuesInPeriod = Map<DataPeriod, PeriodProductRevenue>;
 
-export interface ProductRevenue {
+export interface ProductRevenueRecord {
   revenue: number;
   product: Product;
 }
 
-export interface PeriodProductRevenueData {
-  revenues: ProductRevenue[];
-  total_revenue: number;
-  total_revenue_growth_percentage: number;
-}
-
 export interface RevenueByProductResponse {
-  data: PeriodProductRevenueData;
+  data: {
+    revenues: ProductRevenueRecord[];
+    total_revenue: number;
+    total_revenue_growth_percentage: number;
+  };
   meta: {
     period: DataPeriod;
     locale: string;

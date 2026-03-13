@@ -1,19 +1,17 @@
 <script setup lang="ts">
 const { data, error, refresh, pending } = useFetch("/api/stats");
-
-const { t } = useI18n();
 </script>
 <template>
   <div v-if="data" class="grid gap-4 @2xl:grid-cols-2 @5xl:grid-cols-4">
     <OverviewStatsCard
-      :title="t('totalIncome')"
+      :title="$t('totalIncome')"
       :current-month-total="data.current_month.income"
       :last-three-months-average="data.last_three_months_average.income"
       money
       icon="flowbite:chart-mixed-dollar-solid"
     />
     <OverviewStatsCard
-      :title="t('totalOutcome')"
+      :title="$t('totalOutcome')"
       :current-month-total="data.current_month.outcome"
       :last-three-months-average="data.last_three_months_average.outcome"
       money
@@ -21,14 +19,14 @@ const { t } = useI18n();
       icon="flowbite:chart-line-down-outline"
     />
     <OverviewStatsCard
-      :title="t('totalProfit')"
+      :title="$t('totalProfit')"
       :current-month-total="data.current_month.profit"
       :last-three-months-average="data.last_three_months_average.profit"
       money
       icon="flowbite:dollar-solid"
     />
     <OverviewStatsCard
-      :title="t('newCustomers')"
+      :title="$t('newCustomers')"
       :current-month-total="data.current_month.new_customers"
       :last-three-months-average="data.last_three_months_average.new_customers"
       icon="flowbite:users-group-solid"
@@ -38,13 +36,3 @@ const { t } = useI18n();
     <UiSpinner />
   </UiCard>
 </template>
-<i18n lang="json">
-{
-  "en": {
-    "totalIncome": "Total Income",
-    "totalOutcome": "Total Outcome",
-    "totalProfit": "Total Profit",
-    "newCustomers": "New Customers"
-  }
-}
-</i18n>
