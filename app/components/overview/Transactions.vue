@@ -1,12 +1,13 @@
 <script setup lang="ts">
 import type { DataPeriod } from "~/constants/api";
-
-const period = ref<DataPeriod>("7D");
+const PAGE_SIZE = 10;
+const period = ref<DataPeriod>("30D");
+const page = ref(1);
 
 const { data } = useFetch("/api/transactions", {
-  query: { period },
+  query: { period, pageSize: PAGE_SIZE, page },
 });
-const transactions = computed(() => data.value?.data.transactions || []);
+const transactions = computed(() => data.value?.data || []);
 
 const { formatAsDate } = useDateTimeFormatter();
 
@@ -21,7 +22,7 @@ const { groupState, isSelected, toggle } = useCheckboxGroup(transactions);
       <UiSearchBox />
     </header>
     <div class="-mx-6 overflow-x-auto">
-      <table class="w-full">
+      <table class="w-full min-w-150 table-fixed">
         <thead class="bg-gray-700">
           <tr class="text-left">
             <th class="sticky left-0 w-16 bg-gray-700">
@@ -69,8 +70,12 @@ const { groupState, isSelected, toggle } = useCheckboxGroup(transactions);
         </tbody>
       </table>
     </div>
-    <template #footer>
-      <UiPagination :total="100" :per-page="10" :page="1" />
+    <template v-if="data" #footer>
+      <UiPagination
+        :total="data.meta.total"
+        :per-page="PAGE_SIZE"
+        v-model:page="page"
+      />
     </template>
   </UiCard>
 </template>

@@ -5,13 +5,15 @@ import {
 import { DATA_PERIODS } from "~/constants/api";
 import products from "~~/server/data/products";
 import productRevenuesByPeriod from "~~/server/data/productRevenuesByPeriod";
-import { getPeriodData } from "~~/server/utils/api";
+import { getPeriod, getPeriodData } from "~~/server/utils/api";
 
 export default defineEventHandler(
   async (event): Promise<RevenueByProductResponse> => {
     const query = getQuery(event);
 
-    const { data, period } = getPeriodData(query, productRevenuesByPeriod);
+    const period = getPeriod(query);
+
+    const data = getPeriodData(query, productRevenuesByPeriod);
 
     const revenues: ProductRevenueRecord[] =
       data.revenues.flatMap<ProductRevenueRecord>(({ product_id, revenue }) => {

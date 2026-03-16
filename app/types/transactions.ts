@@ -23,13 +23,13 @@ export interface Transaction {
   date: string;
 }
 
-export type TransactionsInPeriod = Map<DataPeriod, Transaction[]>;
-
 export interface TransactionResponse {
-  data: {
-    transactions: Transaction[];
-  };
+  data: Transaction[];
   meta: {
     period: DataPeriod;
+    page: number;
+    pageSize: number;
+    total: number;
+    pageCount: number;
   };
 }
