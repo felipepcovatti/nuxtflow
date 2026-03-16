@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-const term = defineModel<string>();
+const term = defineModel<string>({ required: true });
 
 defineProps<{
   large?: boolean;

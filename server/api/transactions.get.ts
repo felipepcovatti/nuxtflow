@@ -1,6 +1,6 @@
 import { TransactionResponse } from "~/types/transactions";
 import transactions from "../data/transactions";
-import { filterByPeriod, getPeriod, toAbsoluteDateItems } from "../utils/api";
+import { filterByPeriod, getPeriod } from "../utils/api";
 
 export default defineEventHandler(
   async (event): Promise<TransactionResponse> => {
@@ -13,12 +13,18 @@ export default defineEventHandler(
 
     const filteredTransactions = filterByPeriod(transactions, period);
 
-    const total = filteredTransactions.length;
+    const search = String(query.search ?? "").toLowerCase();
+
+    const searchedTransactions = filteredTransactions.filter((transaction) =>
+      transaction.actor.toLowerCase().includes(search),
+    );
+
+    const total = searchedTransactions.length;
 
     const start = (page - 1) * pageSize;
     const end = start + pageSize;
 
-    const paginatedTransactions = filteredTransactions.slice(start, end);
+    const paginatedTransactions = searchedTransactions.slice(start, end);
 
     return {
       data: paginatedTransactions,

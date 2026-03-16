@@ -23,7 +23,7 @@ defineProps<{
     <slot />
     <footer
       v-if="$slots.footer"
-      class="flex items-center justify-between border-t border-gray-700 pt-5"
+      class="mt-auto flex items-center justify-between border-t border-gray-700 pt-5"
     >
       <slot name="footer" />
     </footer>

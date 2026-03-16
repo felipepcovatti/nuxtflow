@@ -2,11 +2,37 @@
 import type { DataPeriod } from "~/constants/api";
 const PAGE_SIZE = 10;
 const period = ref<DataPeriod>("30D");
+
 const page = ref(1);
 
-const { data } = useFetch("/api/transactions", {
-  query: { period, pageSize: PAGE_SIZE, page },
+const searchTerm = ref();
+
+const debouncedSearchTerm = refDebounced(searchTerm, 200);
+
+const query = computed(() => ({
+  period: period.value,
+  page: page.value,
+  pageSize: PAGE_SIZE,
+  search: debouncedSearchTerm.value,
+}));
+
+const { data, refresh } = useFetch("/api/transactions", {
+  query,
+  watch: false,
 });
+
+watch(query, (query, { page: previousPage }) => {
+  const samePage = previousPage === query.page;
+  if (samePage) {
+    groupState.value = false;
+  }
+  if (query.page !== 1 && samePage) {
+    page.value = 1;
+  } else {
+    refresh();
+  }
+});
+
 const transactions = computed(() => data.value?.data || []);
 
 const { formatAsDate } = useDateTimeFormatter();
@@ -16,13 +42,13 @@ const { formatAsMoney } = useMoneyFormatter();
 const { groupState, isSelected, toggle } = useCheckboxGroup(transactions);
 </script>
 <template>
-  <UiCard>
+  <UiCard class="min-h-198.5">
     <header class="flex justify-between">
-      <PeriodSelect v-model="period" bordered />
-      <UiSearchBox />
+      <PeriodSelect v-model="period" />
+      <UiSearchBox v-model="searchTerm" />
     </header>
-    <div class="-mx-6 overflow-x-auto">
-      <table class="w-full min-w-150 table-fixed">
+    <div class="-mx-6 overflow-x-auto" v-if="transactions.length">
+      <table class="w-full table-fixed">
         <thead class="bg-gray-700">
           <tr class="text-left">
             <th class="sticky left-0 w-16 bg-gray-700">
@@ -70,7 +96,18 @@ const { groupState, isSelected, toggle } = useCheckboxGroup(transactions);
         </tbody>
       </table>
     </div>
-    <template v-if="data" #footer>
+    <div v-else class="mt-6 flex flex-col items-center gap-6">
+      <div>
+        {{ $t("No transactions found") }} for "{{ debouncedSearchTerm }}" in the
+        {{ $t("dataPeriods." + period).toLowerCase() }}.
+      </div>
+      <button class="button" @click="searchTerm = ''">
+        <span>
+          {{ "Clear search" }}
+        </span>
+      </button>
+    </div>
+    <template v-if="transactions.length && data" #footer>
       <UiPagination
         :total="data.meta.total"
         :per-page="PAGE_SIZE"
