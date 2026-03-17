@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import type { DataPeriod } from "~/constants/api";
+import type { PeriodPreset } from "~/constants/api";
 const PAGE_SIZE = 10;
-const period = ref<DataPeriod>("30D");
+const period = ref<PeriodPreset>("30D");
 
 const page = ref(1);
 
@@ -12,7 +12,7 @@ const debouncedSearchTerm = refDebounced(searchTerm, 200);
 const query = computed(() => ({
   period: period.value,
   page: page.value,
-  pageSize: PAGE_SIZE,
+  page_size: PAGE_SIZE,
   search: debouncedSearchTerm.value,
 }));
 
@@ -86,7 +86,7 @@ const { groupState, isSelected, toggle } = useCheckboxGroup(transactions);
               </i18n-t>
             </td>
             <td class="min-w-30">
-              {{ formatAsDate(transaction.date) }}
+              {{ formatAsDate(transaction.datetime) }}
             </td>
             <td class="font-semibold text-white">
               {{ formatAsMoney(transaction.amount) }}
@@ -102,9 +102,7 @@ const { groupState, isSelected, toggle } = useCheckboxGroup(transactions);
         {{ $t("dataPeriods." + period).toLowerCase() }}.
       </div>
       <button class="button" @click="searchTerm = ''">
-        <span>
-          {{ "Clear search" }}
-        </span>
+        {{ "Clear search" }}
       </button>
     </div>
     <template v-if="transactions.length && data" #footer>

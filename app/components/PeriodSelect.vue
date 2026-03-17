@@ -1,15 +1,15 @@
 <script lang="ts" setup>
-import { DATA_PERIODS, type DataPeriod } from "~/constants/api";
+import { PERIOD_PRESETS, type PeriodPreset } from "~/constants/api";
 import type { SelectOption } from "./ui/Select.vue";
 
-const period = defineModel<DataPeriod>({ required: true });
+const period = defineModel<PeriodPreset>({ required: true });
 
 defineProps<{
   bordered?: boolean;
 }>();
 
 const periodOptions = computed<SelectOption[]>(() =>
-  DATA_PERIODS.map<SelectOption>((period) => ({
+  PERIOD_PRESETS.map<SelectOption>((period) => ({
     label: $t(`dataPeriods.${period}`),
     value: period,
   })),

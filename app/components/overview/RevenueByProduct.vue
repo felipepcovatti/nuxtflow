@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import type { DataPeriod } from "~/constants/api";
+import type { PeriodPreset } from "~/constants/api";
 
-const period = ref<DataPeriod>("7D");
+const period = ref<PeriodPreset>("7D");
 
 const { data } = useFetch("/api/revenue/products", {
   query: {
@@ -24,7 +24,7 @@ const total = computed(() =>
     class="min-h-120"
   >
     <template #header-end>
-      <UiGrowthPercentage
+      <GrowthPercentage
         :percentage="data?.data.total_revenue_growth_percentage || 0"
       />
     </template>

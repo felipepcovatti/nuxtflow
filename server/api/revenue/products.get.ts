@@ -2,7 +2,7 @@ import {
   ProductRevenueRecord,
   RevenueByProductResponse,
 } from "~/types/revenue";
-import { DATA_PERIODS } from "~/constants/api";
+import { PERIOD_PRESETS } from "~/constants/api";
 import products from "~~/server/data/products";
 import productRevenuesByPeriod from "~~/server/data/productRevenuesByPeriod";
 import { getPeriod, getPeriodData } from "~~/server/utils/api";

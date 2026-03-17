@@ -1,4 +1,4 @@
-import type { DataPeriod } from "~/constants/api";
+import type { PeriodPreset } from "~/constants/api";
 
 export type TransactionType =
   | "payment_from"
@@ -20,16 +20,16 @@ export interface Transaction {
   actor: string;
   amount: number;
   status: TransactionStatus;
-  date: string;
+  datetime: string;
 }
 
 export interface TransactionResponse {
   data: Transaction[];
   meta: {
-    period: DataPeriod;
+    period: PeriodPreset;
     page: number;
-    pageSize: number;
+    page_size: number;
     total: number;
-    pageCount: number;
+    page_count: number;
   };
 }

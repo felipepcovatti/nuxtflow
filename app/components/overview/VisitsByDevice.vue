@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { VisStackedBar, VisXYContainer } from "@unovis/vue";
-import type { DataPeriod } from "~/constants/api";
+import type { PeriodPreset } from "~/constants/api";
 import type { DevicesChartRecord } from "~/types/chart";
 import type { Device } from "~/types/visits";
 
-const period = ref<DataPeriod>("7D");
+const period = ref<PeriodPreset>("7D");
 
 const { data, pending } = useFetch("/api/visits/devices", {
   query: { period },
@@ -53,7 +53,7 @@ const ICON_BY_DEVICE: Record<Device, string> = {
     class="[--bar-height:1.25rem]"
   >
     <template #header-end>
-      <UiGrowthPercentage
+      <GrowthPercentage
         :percentage="data?.data.total_visits_growth_percentage || 0"
       />
     </template>

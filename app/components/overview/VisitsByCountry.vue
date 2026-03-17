@@ -5,7 +5,7 @@ import type { CountryVisitsRecord } from "~/types/visits";
 import { TopoJSONMap } from "@unovis/ts";
 import { render } from "vue";
 import { MapTooltipContent, Icon } from "#components";
-import type { DataPeriod } from "~/constants/api";
+import type { PeriodPreset } from "~/constants/api";
 
 const COLORS: ReadonlyArray<string> = [
   "var(--color-primary-200)",
@@ -18,7 +18,7 @@ const COLORS: ReadonlyArray<string> = [
   "var(--color-primary-900)",
 ];
 
-const period = ref<DataPeriod>("30D");
+const period = ref<PeriodPreset>("30D");
 
 const { data, pending } = useFetch("/api/visits/countries", {
   query: {

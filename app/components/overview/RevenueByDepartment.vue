@@ -9,15 +9,21 @@ import { GroupedBar } from "@unovis/ts";
 import { render } from "vue";
 import ChartTooltipContent from "../chart/tooltip/Content.vue";
 import type { LegendItem, RevenueChartRecord } from "~/types/chart";
+import type { Department } from "~/types/revenue";
 
 const { data, error, refresh, pending } = useFetch("/api/revenue/departments");
 
 const dayOfTheWeekGetter = ({ dayOfTheWeek }: RevenueChartRecord) =>
   dayOfTheWeek;
 
+const DEPARTMENTS: Department[] = [
+  "electronics",
+  "home_living",
+  "clothing_accessories",
+] as const;
 const revenueGetters = computed(() =>
-  products.value.map(
-    (product) => (record: RevenueChartRecord) => record[product.id],
+  DEPARTMENTS.map(
+    (department) => (record: RevenueChartRecord) => record[department],
   ),
 );
 
@@ -30,8 +36,6 @@ const COLORS: ReadonlyArray<string> = [
   "var(--color-orange-300)",
   "var(--color-teal-400)",
 ];
-
-const products = computed(() => data.value?.products || []);
 
 const hoveredDayOfTheWeek = ref<number | null>(null);
 
@@ -53,9 +57,9 @@ const triggers = {
   }: RevenueChartRecord) => {
     const items = Object.entries(productIds).flatMap<Required<LegendItem>>(
       ([productId, amount]) => {
-        const product = products.value.find(({ id }) => id === productId);
+        const product = DEPARTMENTS.value.find(({ id }) => id === productId);
         if (!product) return [];
-        const index = products.value.indexOf(product);
+        const index = DEPARTMENTS.value.indexOf(product);
         return [
           { color: COLORS[index] || "", label: product.name, value: amount },
         ];
@@ -147,7 +151,7 @@ const { formatAsMoney } = useMoneyFormatter();
                   'data-product-index': (
                     _: RevenueChartRecord,
                     index: number,
-                  ) => index % products.length,
+                  ) => index % DEPARTMENTS.length,
                 },
               }"
               :color="(_: RevenueChartRecord, index: number) => COLORS[index]"
@@ -184,7 +188,7 @@ const { formatAsMoney } = useMoneyFormatter();
 
       <div class="flex flex-wrap justify-center gap-x-4 gap-y-2">
         <div
-          v-for="(product, index) in products"
+          v-for="(product, index) in DEPARTMENTS"
           :key="product.id"
           class="cursor-default"
           @mouseenter="hoveredProductIndex = index"

@@ -1,35 +1,8 @@
-type DataPeriod = "7D" | "30D" | "90D" | "1Y";
+import type { PeriodPreset } from "~/constants/api";
 
-export interface Product {
-  id: string;
-  name: string;
-  slug: string;
-  department: DepartmentSlug;
-  category: CategorySlug;
-}
+export type Department = "electronics" | "home_living" | "clothing_accessories";
 
-export interface DepartmentRevenue {
-  product_id: string;
-  amount: number;
-}
-
-export interface WeekRecord {
-  day_of_the_week: number;
-  product_revenues: DepartmentRevenue[];
-}
-
-export interface Revenue {
-  total: number;
-  week_records: WeekRecord[];
-  products: Product[];
-}
-
-export type DepartmentSlug =
-  | "electronics"
-  | "home_living"
-  | "clothing_accessories";
-
-export type CategorySlug =
+export type Category =
   // Electronics
   | "audio"
   | "peripherals"
@@ -50,6 +23,35 @@ export type CategorySlug =
   | "bags"
   | "outerwear";
 
+export interface Product {
+  id: string;
+  name: string;
+  slug: string;
+  department: Department;
+  category: Category;
+}
+
+export type DepartmentRevenuesByDate = {
+  date: string;
+  revenues: {
+    department: Department;
+    amount: number;
+  }[];
+};
+
+export interface RevenuesByDepartmentResponse {
+  data: {
+    revenues: DepartmentRevenuesByDate[];
+    total_revenue: number;
+  };
+  meta: {
+    period: {
+      start: string;
+      end: string;
+    };
+  };
+}
+
 export interface PeriodProductRevenue {
   revenues: {
     product_id: string;
@@ -59,7 +61,7 @@ export interface PeriodProductRevenue {
   total_revenue_growth_percentage: number;
 }
 
-export type ProductRevenuesInPeriod = Map<DataPeriod, PeriodProductRevenue>;
+export type ProductRevenuesInPeriod = Map<PeriodPreset, PeriodProductRevenue>;
 
 export interface ProductRevenueRecord {
   revenue: number;
@@ -73,7 +75,7 @@ export interface RevenueByProductResponse {
     total_revenue_growth_percentage: number;
   };
   meta: {
-    period: DataPeriod;
+    period: PeriodPreset;
     locale: string;
   };
 }

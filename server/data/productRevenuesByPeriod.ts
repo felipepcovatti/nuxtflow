@@ -4,215 +4,227 @@ export default new Map([
   [
     "7D",
     {
-      total_revenue: 72448.92,
-      total_revenue_growth_percentage: 5.24,
+      total_revenue: 68_247.53,
+      total_revenue_growth_percentage: 3.17,
       revenues: [
         {
-          product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000001",
-          revenue: 8500.45,
+          product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000011",
+          revenue: 6_843.27,
         },
         {
-          product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000026",
-          revenue: 7200.12,
-        },
-        {
-          product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000012",
-          revenue: 5400.89,
-        },
-        {
-          product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000002",
-          revenue: 5100.34,
-        },
-        {
-          product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000009",
-          revenue: 4800.77,
-        },
-        {
-          product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000019",
-          revenue: 3900.21,
-        },
-        {
-          product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000027",
-          revenue: 3200.56,
-        },
-        { product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000014", revenue: 2800.9 },
-        {
-          product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000005",
-          revenue: 2500.15,
-        },
-        {
-          product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000020",
-          revenue: 1850.63,
-        },
-        {
-          product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000003",
-          revenue: 1700.44,
+          product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000006",
+          revenue: 5_912.49,
         },
         {
           product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000008",
-          revenue: 1650.28,
-        },
-        {
-          product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000010",
-          revenue: 1550.81,
-        },
-        {
-          product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000011",
-          revenue: 1500.99,
+          revenue: 5_104.83,
         },
         {
           product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000015",
-          revenue: 1400.32,
+          revenue: 4_788.61,
+        },
+        {
+          product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000001",
+          revenue: 4_391.14,
+        },
+        {
+          product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000002",
+          revenue: 3_974.52,
+        },
+        {
+          product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000004",
+          revenue: 3_612.38,
+        },
+        {
+          product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000013",
+          revenue: 3_287.91,
         },
         {
           product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000022",
-          revenue: 1350.55,
+          revenue: 2_956.74,
         },
-        { product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000006", revenue: 1300.7 },
-        { product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000028", revenue: 1250.4 },
         {
-          product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000018",
-          revenue: 1200.18,
+          product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000026",
+          revenue: 2_741.09,
+        },
+        {
+          product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000017",
+          revenue: 2_489.33,
+        },
+        {
+          product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000028",
+          revenue: 2_214.67,
+        },
+        {
+          product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000010",
+          revenue: 2_073.55,
+        },
+        {
+          product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000030",
+          revenue: 1_897.42,
+        },
+        {
+          product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000012",
+          revenue: 1_744.28,
+        },
+        {
+          product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000025",
+          revenue: 1_598.83,
+        },
+        {
+          product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000009",
+          revenue: 1_453.17,
         },
         {
           product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000023",
-          revenue: 1150.92,
+          revenue: 1_312.64,
         },
         {
-          product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000016",
-          revenue: 1100.37,
+          product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000019",
+          revenue: 1_187.49,
         },
-        { product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000025", revenue: 1050.5 },
         {
-          product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000030",
-          revenue: 1000.25,
+          product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000027",
+          revenue: 1_054.88,
         },
-        { product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000029", revenue: 950.11 },
-        { product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000021", revenue: 900.84 },
-        { product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000024", revenue: 850.49 },
-        { product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000004", revenue: 800.2 },
-        { product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000013", revenue: 750.16 },
-        { product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000017", revenue: 500.72 },
-        { product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000007", revenue: 400.05 },
+        { product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000029", revenue: 943.71 },
+        { product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000021", revenue: 867.34 },
+        { product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000024", revenue: 801.19 },
+        { product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000005", revenue: 724.56 },
+        { product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000018", revenue: 658.92 },
+        { product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000020", revenue: 587.43 },
+        { product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000003", revenue: 524.17 },
+        { product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000016", revenue: 448.61 },
+        { product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000014", revenue: 389.34 },
+        { product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000007", revenue: 353.02 },
       ],
     },
   ],
   [
     "30D",
     {
-      total_revenue: 284501.73,
-      total_revenue_growth_percentage: 12.85,
+      total_revenue: 279_834.18,
+      total_revenue_growth_percentage: 7.43,
       revenues: [
         {
-          product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000008",
-          revenue: 32000.45,
+          product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000011",
+          revenue: 27_614.39,
         },
         {
           product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000006",
-          revenue: 28500.89,
-        },
-        {
-          product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000002",
-          revenue: 24000.12,
-        },
-        {
-          product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000015",
-          revenue: 21000.67,
-        },
-        {
-          product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000011",
-          revenue: 19500.34,
-        },
-        {
-          product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000022",
-          revenue: 15400.91,
+          revenue: 24_381.17,
         },
         {
           product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000004",
-          revenue: 14200.56,
+          revenue: 21_053.84,
         },
         {
-          product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000010",
-          revenue: 12000.22,
+          product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000008",
+          revenue: 19_744.62,
         },
         {
-          product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000028",
-          revenue: 10500.78,
-        },
-        { product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000021", revenue: 8500.4 },
-        {
-          product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000001",
-          revenue: 8200.15,
-        },
-        {
-          product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000026",
-          revenue: 7800.93,
-        },
-        {
-          product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000012",
-          revenue: 7600.44,
-        },
-        {
-          product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000009",
-          revenue: 7400.27,
-        },
-        { product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000019", revenue: 7200.5 },
-        {
-          product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000030",
-          revenue: 6800.11,
+          product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000015",
+          revenue: 18_293.55,
         },
         {
           product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000013",
-          revenue: 6500.82,
+          revenue: 16_872.41,
         },
         {
-          product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000027",
-          revenue: 6100.39,
+          product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000001",
+          revenue: 15_487.23,
         },
         {
-          product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000005",
-          revenue: 5800.74,
+          product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000002",
+          revenue: 14_193.78,
+        },
+        {
+          product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000022",
+          revenue: 12_648.94,
         },
         {
           product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000017",
-          revenue: 5500.25,
+          revenue: 11_374.67,
         },
         {
-          product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000023",
-          revenue: 5200.98,
+          product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000028",
+          revenue: 10_127.53,
         },
         {
-          product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000029",
-          revenue: 4900.61,
+          product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000026",
+          revenue: 9_341.88,
         },
         {
-          product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000014",
-          revenue: 4500.19,
+          product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000030",
+          revenue: 8_584.31,
+        },
+        {
+          product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000010",
+          revenue: 7_923.16,
+        },
+        {
+          product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000012",
+          revenue: 7_214.74,
         },
         {
           product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000025",
-          revenue: 4200.52,
+          revenue: 6_538.49,
         },
         {
-          product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000020",
-          revenue: 3900.88,
-        },
-        { product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000018", revenue: 3500.3 },
-        {
-          product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000003",
-          revenue: 3200.71,
+          product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000009",
+          revenue: 5_874.23,
         },
         {
-          product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000007",
-          revenue: 2800.04,
+          product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000023",
+          revenue: 5_247.81,
+        },
+        {
+          product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000019",
+          revenue: 4_693.57,
+        },
+        {
+          product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000027",
+          revenue: 4_138.92,
+        },
+        {
+          product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000029",
+          revenue: 3_712.44,
+        },
+        {
+          product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000021",
+          revenue: 3_387.61,
         },
         {
           product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000024",
-          revenue: 2500.47,
+          revenue: 2_984.17,
+        },
+        {
+          product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000005",
+          revenue: 2_641.38,
+        },
+        {
+          product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000018",
+          revenue: 2_374.82,
+        },
+        {
+          product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000020",
+          revenue: 2_093.55,
+        },
+        {
+          product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000003",
+          revenue: 1_837.24,
         },
         {
           product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000016",
-          revenue: 2200.16,
+          revenue: 1_614.73,
+        },
+        {
+          product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000014",
+          revenue: 1_428.57,
+        },
+        {
+          product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000007",
+          revenue: 1_253.63,
         },
       ],
     },
@@ -220,125 +232,128 @@ export default new Map([
   [
     "90D",
     {
-      total_revenue: 894200.48,
-      total_revenue_growth_percentage: -4.12,
+      total_revenue: 853_612.74,
+      total_revenue_growth_percentage: -2.38,
       revenues: [
         {
-          product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000013",
-          revenue: 91000.15,
-        },
-        {
-          product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000004",
-          revenue: 84000.82,
-        },
-        {
           product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000011",
-          revenue: 78000.44,
+          revenue: 84_127.63,
         },
         {
           product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000006",
-          revenue: 71000.91,
+          revenue: 74_384.91,
         },
         {
-          product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000017",
-          revenue: 64000.33,
+          product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000004",
+          revenue: 64_893.47,
         },
         {
-          product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000030",
-          revenue: 51000.76,
+          product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000013",
+          revenue: 57_341.28,
         },
         {
           product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000008",
-          revenue: 49000.12,
+          revenue: 52_784.15,
         },
         {
           product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000015",
-          revenue: 46000.58,
+          revenue: 48_217.64,
         },
         {
-          product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000023",
-          revenue: 39000.27,
-        },
-        {
-          product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000025",
-          revenue: 34000.94,
+          product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000017",
+          revenue: 44_538.39,
         },
         {
           product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000001",
-          revenue: 31000.6,
+          revenue: 40_174.82,
         },
         {
           product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000002",
-          revenue: 28000.39,
-        },
-        {
-          product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000010",
-          revenue: 26000.21,
-        },
-        {
-          product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000028",
-          revenue: 24000.54,
+          revenue: 36_947.55,
         },
         {
           product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000022",
-          revenue: 22000.83,
+          revenue: 33_618.74,
+        },
+        {
+          product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000030",
+          revenue: 29_384.17,
+        },
+        {
+          product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000028",
+          revenue: 26_741.93,
         },
         {
           product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000026",
-          revenue: 21000.11,
+          revenue: 24_183.46,
         },
         {
-          product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000024",
-          revenue: 19000.47,
-        },
-        {
-          product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000029",
-          revenue: 17000.66,
-        },
-        {
-          product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000021",
-          revenue: 15500.3,
-        },
-        {
-          product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000005",
-          revenue: 14000.75,
+          product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000010",
+          revenue: 22_047.81,
         },
         {
           product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000012",
-          revenue: 12500.22,
+          revenue: 20_314.59,
         },
         {
-          product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000019",
-          revenue: 11000.88,
+          product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000025",
+          revenue: 18_573.28,
         },
         {
           product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000009",
-          revenue: 10000.41,
+          revenue: 16_841.74,
         },
         {
-          product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000007",
-          revenue: 9000.19,
+          product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000023",
+          revenue: 15_214.37,
+        },
+        {
+          product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000019",
+          revenue: 13_487.62,
         },
         {
           product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000027",
-          revenue: 7500.56,
-        },
-        { product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000018", revenue: 6500.9 },
-        {
-          product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000003",
-          revenue: 5500.35,
+          revenue: 11_934.48,
         },
         {
-          product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000016",
-          revenue: 4500.72,
+          product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000029",
+          revenue: 10_583.21,
         },
         {
-          product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000014",
-          revenue: 3500.18,
+          product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000021",
+          revenue: 9_247.84,
+        },
+        {
+          product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000024",
+          revenue: 8_134.57,
+        },
+        {
+          product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000005",
+          revenue: 7_218.93,
+        },
+        {
+          product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000018",
+          revenue: 6_374.61,
         },
         {
           product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000020",
-          revenue: 2500.25,
+          revenue: 5_641.38,
+        },
+        {
+          product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000003",
+          revenue: 4_987.24,
+        },
+        {
+          product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000016",
+          revenue: 4_312.81,
+        },
+        {
+          product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000014",
+          revenue: 3_748.53,
+        },
+        {
+          product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000007",
+          revenue: 3_354.19,
         },
       ],
     },
@@ -346,128 +361,128 @@ export default new Map([
   [
     "1Y",
     {
-      total_revenue: 3850005.12,
-      total_revenue_growth_percentage: 24.31,
+      total_revenue: 3_327_489.61,
+      total_revenue_growth_percentage: 18.74,
       revenues: [
         {
-          product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000017",
-          revenue: 450000.75,
-        },
-        {
-          product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000013",
-          revenue: 390000.12,
-        },
-        {
           product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000011",
-          revenue: 350000.89,
+          revenue: 328_741.83,
         },
         {
           product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000004",
-          revenue: 310000.34,
+          revenue: 287_394.57,
         },
         {
           product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000006",
-          revenue: 280000.66,
+          revenue: 261_847.24,
         },
         {
-          product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000001",
-          revenue: 240000.21,
+          product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000013",
+          revenue: 234_518.39,
         },
         {
           product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000008",
-          revenue: 210000.58,
+          revenue: 198_374.62,
+        },
+        {
+          product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000017",
+          revenue: 181_247.93,
         },
         {
           product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000015",
-          revenue: 195000.44,
+          revenue: 164_831.48,
         },
         {
-          product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000030",
-          revenue: 165000.77,
-        },
-        {
-          product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000029",
-          revenue: 120000.19,
+          product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000001",
+          revenue: 147_584.71,
         },
         {
           product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000002",
-          revenue: 115000.93,
-        },
-        {
-          product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000010",
-          revenue: 105000.5,
-        },
-        {
-          product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000028",
-          revenue: 98000.31,
+          revenue: 132_947.36,
         },
         {
           product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000022",
-          revenue: 92000.84,
+          revenue: 118_273.54,
         },
         {
-          product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000023",
-          revenue: 88000.25,
+          product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000030",
+          revenue: 104_618.27,
         },
         {
-          product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000025",
-          revenue: 84000.67,
+          product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000028",
+          revenue: 93_847.61,
         },
         {
           product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000026",
-          revenue: 78000.11,
+          revenue: 84_312.49,
         },
         {
-          product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000024",
-          revenue: 72000.49,
-        },
-        {
-          product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000021",
-          revenue: 68000.92,
-        },
-        {
-          product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000005",
-          revenue: 64000.38,
+          product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000010",
+          revenue: 76_584.83,
         },
         {
           product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000012",
-          revenue: 58000.55,
+          revenue: 69_247.38,
         },
         {
-          product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000019",
-          revenue: 54000.16,
+          product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000025",
+          revenue: 62_831.74,
         },
         {
           product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000009",
-          revenue: 49000.7,
+          revenue: 57_394.62,
         },
         {
-          product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000007",
-          revenue: 45000.28,
+          product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000023",
+          revenue: 51_847.39,
+        },
+        {
+          product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000019",
+          revenue: 46_318.84,
         },
         {
           product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000027",
-          revenue: 41000.81,
+          revenue: 41_274.53,
+        },
+        {
+          product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000029",
+          revenue: 36_847.21,
+        },
+        {
+          product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000021",
+          revenue: 32_614.77,
+        },
+        {
+          product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000024",
+          revenue: 28_947.43,
+        },
+        {
+          product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000005",
+          revenue: 25_384.18,
         },
         {
           product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000018",
-          revenue: 38000.04,
-        },
-        {
-          product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000003",
-          revenue: 35000.47,
-        },
-        {
-          product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000016",
-          revenue: 32000.96,
-        },
-        {
-          product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000014",
-          revenue: 28000.23,
+          revenue: 22_741.56,
         },
         {
           product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000020",
-          revenue: 24000.59,
+          revenue: 19_847.34,
+        },
+        {
+          product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000003",
+          revenue: 17_384.91,
+        },
+        {
+          product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000016",
+          revenue: 15_147.63,
+        },
+        {
+          product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000014",
+          revenue: 13_284.47,
+        },
+        {
+          product_id: "9f3c2b1e-1a2b-4c3d-8e9f-000000000007",
+          revenue: 11_748.92,
         },
       ],
     },

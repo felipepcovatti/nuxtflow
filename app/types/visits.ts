@@ -1,4 +1,4 @@
-import type { DataPeriod } from "~/constants/api";
+import type { PeriodPreset } from "~/constants/api";
 
 export interface CountryVisitsRecord {
   country: string;
@@ -10,12 +10,12 @@ export interface PeriodCountryVisits {
   visits: CountryVisitsRecord[];
 }
 
-export type CountryVisitsInPeriod = Map<DataPeriod, PeriodCountryVisits>;
+export type CountryVisitsInPeriod = Map<PeriodPreset, PeriodCountryVisits>;
 
 export interface VisitsByCountryResponse {
   data: PeriodCountryVisits;
   meta: {
-    period: DataPeriod;
+    period: PeriodPreset;
   };
 }
 
@@ -32,11 +32,11 @@ export interface PeriodDeviceVisits {
   visits: DeviceVisitsRecord[];
 }
 
-export type DeviceVisitsInPeriod = Map<DataPeriod, PeriodDeviceVisits>;
+export type DeviceVisitsInPeriod = Map<PeriodPreset, PeriodDeviceVisits>;
 
 export type VisitsByDeviceResponse = {
   data: PeriodDeviceVisits;
   meta: {
-    period: DataPeriod;
+    period: PeriodPreset;
   };
 };

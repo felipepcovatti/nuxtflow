@@ -1,49 +1,44 @@
-import { faker } from "@faker-js/faker";
-import {
-  Product,
-  DepartmentRevenue,
-  Revenue,
-  WeekRecord,
-} from "~/types/revenue";
+import { RevenuesByDepartmentResponse } from "~/types/revenue";
+import departmentRevenues from "~~/server/data/departmentRevenuesByDay";
+import { filterItemsWithDateByDateRange } from "~~/server/utils/api";
 
-export default defineEventHandler(async (): Promise<Revenue> => {
-  faker.seed(123);
+export default defineEventHandler(async (event) => {
+  const query = getQuery(event);
 
-  await new Promise((resolve) => {
-    setTimeout(() => resolve(""), 1000);
-  });
+  const isoDateRegex = /^\d{4}-\d{2}-\d{2}$/;
 
-  const productNames = faker.helpers.uniqueArray(
-    () => faker.commerce.productName(),
-    3,
-  );
-  const products = productNames.map(() => ({
-    id: faker.string.uuid(),
-    name: faker.commerce.product(),
-    image_url: "",
-  }));
+  const today = new Date().toISOString().slice(0, 10);
+  const oneYearAgo = new Date(Date.now() - 365 * 86_400_000)
+    .toISOString()
+    .slice(0, 10);
 
-  const week_records: WeekRecord[] = Array.from(new Array(7)).map(
-    (_, index) => ({
-      day_of_the_week: index,
-      product_revenues: products.map<ProductRevenue>((products) => ({
-        product_id: products.id,
-        amount: Number(faker.finance.amount({ min: 1000, max: 2000 })),
-      })),
-    }),
+  const queryStart = String(query.start ?? "");
+  const queryEnd = String(query.end ?? "");
+
+  const start = isoDateRegex.test(queryStart) ? queryStart : oneYearAgo;
+  const end = isoDateRegex.test(queryEnd) ? queryEnd : today;
+
+  const filteredDepartmentRevenues = filterItemsWithDateByDateRange(
+    departmentRevenues,
+    { end, start },
   );
 
   return {
-    total: week_records.reduce<number>((total, record) => {
-      const recordTotal = record.product_revenues.reduce(
-        (total, { amount: revenue }) => {
-          return revenue + total;
-        },
-        0,
-      );
-      return total + recordTotal;
-    }, 0),
-    week_records,
-    products,
-  };
+    data: {
+      revenues: filteredDepartmentRevenues,
+      total_revenue: departmentRevenues.reduce((total, { revenues }) => {
+        const dayTotal = revenues.reduce(
+          (total, revenue) => revenue.amount + total,
+          0,
+        );
+        return total + dayTotal;
+      }, 0),
+    },
+    meta: {
+      period: {
+        end,
+        start,
+      },
+    },
+  } satisfies RevenuesByDepartmentResponse;
 });
