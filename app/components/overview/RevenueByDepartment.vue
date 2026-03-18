@@ -8,27 +8,43 @@ import {
 import { GroupedBar } from "@unovis/ts";
 import { render } from "vue";
 import ChartTooltipContent from "../chart/tooltip/Content.vue";
-import type { LegendItem, RevenueChartRecord } from "~/types/chart";
-import type { Department } from "~/types/revenue";
+import type { DepartmentRevenuesChartRecord, LegendItem } from "~/types/chart";
+import type { Department, DepartmentRevenuesByDate } from "~/types/revenue";
+import { Scale } from "@unovis/ts";
 
-const { data, error, refresh, pending } = useFetch("/api/revenue/departments");
-
-const dayOfTheWeekGetter = ({ dayOfTheWeek }: RevenueChartRecord) =>
-  dayOfTheWeek;
-
-const DEPARTMENTS: Department[] = [
+const DEPARTMENTS: ReadonlyArray<Department> = [
   "electronics",
   "home_living",
   "clothing_accessories",
-] as const;
-const revenueGetters = computed(() =>
-  DEPARTMENTS.map(
-    (department) => (record: RevenueChartRecord) => record[department],
-  ),
+];
+
+const { data, error, refresh, pending } = useFetch("/api/revenue/departments", {
+  query: {
+    start: "2026-03-15",
+  },
+});
+
+const dateGetter = ({ daysFromToday }: DepartmentRevenuesChartRecord) => {
+  return daysFromToday;
+};
+
+const xTickFormat = (xValue: number) => {
+  if (xValue === 0) return "Today";
+  if (xValue === -1) return "Yesterday";
+
+  // Otherwise, find the date string we stored
+  const record = revenues.value.find((r) => r.daysFromToday === xValue);
+  return record ? record.date : "";
+};
+
+const revenueGetters = DEPARTMENTS.map(
+  (department) =>
+    ({ date, ...departments }: DepartmentRevenuesChartRecord) =>
+      departments[department],
 );
 
-const revenueRecords = computed<RevenueChartRecord[]>(() =>
-  mapRevenueToChartData(data.value?.week_records || []),
+const revenues = computed(() =>
+  mapDepartmentRevenuesToChartData(data.value?.data.revenues || []),
 );
 
 const COLORS: ReadonlyArray<string> = [
@@ -37,49 +53,47 @@ const COLORS: ReadonlyArray<string> = [
   "var(--color-teal-400)",
 ];
 
-const hoveredDayOfTheWeek = ref<number | null>(null);
+const hoveredDayOfTheWeek = ref<string | null>(null);
 
 const hoveredProductIndex = ref<number | null>(null);
 
 const events = {
   [GroupedBar.selectors.barGroup]: {
-    mouseenter: (record: RevenueChartRecord) => {
-      hoveredDayOfTheWeek.value = record.dayOfTheWeek;
+    mouseenter: ({ date }: DepartmentRevenuesChartRecord) => {
+      hoveredDayOfTheWeek.value = date;
     },
     mouseleave: () => (hoveredDayOfTheWeek.value = null),
   },
 };
 
 const triggers = {
-  [GroupedBar.selectors.barGroup]: ({
-    dayOfTheWeek,
-    ...productIds
-  }: RevenueChartRecord) => {
-    const items = Object.entries(productIds).flatMap<Required<LegendItem>>(
-      ([productId, amount]) => {
-        const product = DEPARTMENTS.value.find(({ id }) => id === productId);
-        if (!product) return [];
-        const index = DEPARTMENTS.value.indexOf(product);
-        return [
-          { color: COLORS[index] || "", label: product.name, value: amount },
-        ];
-      },
-    );
-    const tooltip = document.createElement("div");
-    const content: VNode = h(ChartTooltipContent, {
-      items,
-      title: $t(`dayOfTheWeekLong.${dayOfTheWeek}`),
-    });
-    render(content, tooltip);
-    return tooltip;
-  },
+  // [GroupedBar.selectors.barGroup]: ({
+  //   date,
+  //   revenues,
+  // }: DepartmentRevenuesByDate) => {
+  //   const items = Object.entries(revenues).flatMap<Required<LegendItem>>(
+  //     ([department, amount]) => {
+  //       const index = DEPARTMENTS.indexOf(department);
+  //       return [
+  //         { color: COLORS[index] || "", label: department, value: amount },
+  //       ];
+  //     },
+  //   );
+  //   const tooltip = document.createElement("div");
+  //   const content: VNode = h(ChartTooltipContent, {
+  //     items,
+  //     title: $t(`dayOfTheWeekLong.${date}`),
+  //   });
+  //   render(content, tooltip);
+  //   return tooltip;
+  // },
 };
 
 const chartWrapperRef = useTemplateRef("chartWrapper");
 
 function handleMutedState(
   attribute: "data-product-index" | "data-day-of-the-week",
-  hoveredItem: number | null,
+  hoveredItem: string | null,
 ) {
   if (!chartWrapperRef.value) return;
   const elements = chartWrapperRef.value.querySelectorAll(`[${attribute}]`);
@@ -96,9 +110,9 @@ watch(hoveredDayOfTheWeek, (hovered) =>
   handleMutedState("data-day-of-the-week", hovered),
 );
 
-watch(hoveredProductIndex, (hovered) =>
-  handleMutedState("data-product-index", hovered),
-);
+// watch(hoveredProductIndex, (hovered) =>
+//   handleMutedState("data-product-index", hovered),
+// );
 
 const { isExtraSmall } = useIsExtraSmall();
 
@@ -106,18 +120,19 @@ const { formatAsMoney } = useMoneyFormatter();
 </script>
 
 <template>
+  {{ revenues }}
   <UiCard
     class="min-h-149"
-    :title="data ? formatAsMoney(data.total) : ''"
+    :title="data ? formatAsMoney(data.data.total_revenue) : ''"
     :subtitle="$t('siteTotalRevenue', { site: 'example.com' })"
   >
-    <template #header-end> Filter </template>
+    <template #header-end>{{ data?.meta.period }}</template>
     <UiSpinner v-if="pending" />
     <div
       v-else-if="error"
       class="flex flex-1 flex-col items-center justify-center gap-1 text-center"
     >
-      <div>{{ t("loadError") }}</div>
+      <div>{{ $t("loadError") }}</div>
       <div>
         {{ error.statusMessage }}
       </div>
@@ -128,45 +143,19 @@ const { formatAsMoney } = useMoneyFormatter();
         {{ $t("tryAgain") }}
       </button>
     </div>
-    <template v-else>
+    <template v-else-if="data">
       <div ref="chartWrapper" class="flex-1">
         <ClientOnly>
-          <VisXYContainer
-            :data="revenueRecords"
-            :height="418"
-            :x-domain="[0, 6]"
-          >
+          <VisXYContainer :data="revenues" :height="418">
             <VisGroupedBar
-              :x="dayOfTheWeekGetter"
+              :x="dateGetter"
               :y="revenueGetters"
               :rounded-corners="4"
-              :data-step="1"
-              :attributes="{
-                [GroupedBar.selectors.barGroup]: {
-                  'data-day-of-the-week': ({
-                    dayOfTheWeek,
-                  }: RevenueChartRecord) => dayOfTheWeek,
-                },
-                [GroupedBar.selectors.bar]: {
-                  'data-product-index': (
-                    _: RevenueChartRecord,
-                    index: number,
-                  ) => index % DEPARTMENTS.length,
-                },
-              }"
-              :color="(_: RevenueChartRecord, index: number) => COLORS[index]"
-              :events="events"
             />
             <VisAxis
               type="x"
               :grid-line="false"
               :tick-line="undefined"
-              :tick-values="
-                revenueRecords.map(({ dayOfTheWeek }) => dayOfTheWeek)
-              "
-              :tick-format="
-                (dayOfTheWeek: number) => $t(`dayOfTheWeek.${dayOfTheWeek}`)
-              "
               :domain-line="false"
             />
             <VisAxis
@@ -188,13 +177,11 @@ const { formatAsMoney } = useMoneyFormatter();
 
       <div class="flex flex-wrap justify-center gap-x-4 gap-y-2">
         <div
-          v-for="(product, index) in DEPARTMENTS"
-          :key="product.id"
+          v-for="(department, index) in DEPARTMENTS"
+          :key="department"
           class="cursor-default"
-          @mouseenter="hoveredProductIndex = index"
-          @mouseleave="hoveredProductIndex = null"
         >
-          <ChartLegendItem :color="COLORS[index] ?? ''" :label="product.name" />
+          <ChartLegendItem :color="COLORS[index] ?? ''" :label="department" />
         </div>
       </div>
     </template>

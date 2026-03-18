@@ -34,9 +34,8 @@ export interface Product {
 export type DepartmentRevenuesByDate = {
   date: string;
   revenues: {
-    department: Department;
-    amount: number;
-  }[];
+    [department in Department]: number;
+  };
 };
 
 export interface RevenuesByDepartmentResponse {

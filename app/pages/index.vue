@@ -9,7 +9,7 @@ definePageMeta({
 <template>
   <div class="@container flex flex-col gap-4">
     <OverviewRevenueByDepartment />
-    <OverviewStats />
+    <!-- <OverviewStats />
     <div class="grid grid-cols-1 gap-4 @5xl:grid @5xl:grid-cols-3">
       <div class="@5xl:col-span-2">
         <OverviewVisitsByCountry />
@@ -19,6 +19,6 @@ definePageMeta({
         <OverviewRevenueByProduct />
       </div>
     </div>
-    <OverviewTransactions />
+    <OverviewTransactions /> -->
   </div>
 </template>

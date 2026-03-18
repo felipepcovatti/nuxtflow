@@ -5,6 +5,8 @@ defineEmits<{
   toggleNavigationSidebarPin: [];
   openNavigationDrawer: [];
 }>();
+
+const searchTerm = ref("");
 </script>
 
 <template>
@@ -33,7 +35,7 @@ defineEmits<{
       <NuxtLink to="/" class="icon-button">
         <img src="~/assets/img/logo.svg" alt="Logo image" class="w-8" />
       </NuxtLink>
-      <SearchBox large class="hidden sm:block" />
+      <SearchBox v-model="searchTerm" large class="hidden sm:block" />
     </div>
     <div class="flex items-center gap-3">
       <div class="sm:hidden">

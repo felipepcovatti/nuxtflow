@@ -90,14 +90,16 @@ type AbsoluteDateWithoutDaysAgo<T> = Omit<T, "days_ago"> & {
 export function fromDaysAgoToAbsoluteDayItems<T extends DaysAgoItem>(
   items: T[],
 ): AbsoluteDateWithoutDaysAgo<T>[] {
-  const now = Date.now();
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  const startOfToday = today.getTime();
 
-  return items.map<AbsoluteDateWithoutDaysAgo<T>>(({ days_ago, ...rest }) => {
-    const timestamp = now - days_ago * 86_400_000;
+  return items.map(({ days_ago, ...rest }) => {
+    const timestamp = startOfToday - days_ago * 86_400_000;
 
     return {
       ...rest,
-      date: new Date(timestamp).toISOString().slice(0, 10),
-    };
+      date: new Date(timestamp).toISOString().split("T")[0],
+    } as AbsoluteDateWithoutDaysAgo<T>;
   });
 }

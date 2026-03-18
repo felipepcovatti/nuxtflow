@@ -1,4 +1,4 @@
-import type { RevenueApiRecord } from "./revenue";
+import type { Department, RevenueApiRecord } from "./revenue";
 import type { Device } from "./visits";
 
 export interface LegendItem {
@@ -12,12 +12,12 @@ export interface RevenueProductValue {
   amount: number;
 }
 
-export interface RevenueChartRecord {
-  timestamp: number;
-  point_info: RevenueApiRecord["point_info"];
-  // Index signature allows for dynamic department keys like 'electronics' or 'sales'
-  [key: string]: number | RevenueApiRecord["point_info"] | undefined;
-}
+export type DepartmentRevenuesChartRecord = {
+  date: string;
+  daysFromToday: number;
+} & {
+  [department in Department]: number;
+};
 
 export type DevicesChartRecord = {
   index: number;

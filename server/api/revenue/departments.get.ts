@@ -27,10 +27,10 @@ export default defineEventHandler(async (event) => {
     data: {
       revenues: filteredDepartmentRevenues,
       total_revenue: departmentRevenues.reduce((total, { revenues }) => {
-        const dayTotal = revenues.reduce(
-          (total, revenue) => revenue.amount + total,
-          0,
-        );
+        const dayTotal =
+          revenues.electronics +
+          revenues.home_living +
+          revenues.clothing_accessories;
         return total + dayTotal;
       }, 0),
     },
