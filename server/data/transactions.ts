@@ -1,11 +1,11 @@
 import { Transaction } from "~/types/transactions";
 import {
-  MinutesAgoItem,
-  fromMinutesAgoToAbsoluteDatetimeItems,
+  MinutesFromNowItem,
+  setDatetimeFromMinutesFromNow,
 } from "../utils/api";
 
 type RelativeDatetimeTransaction = Omit<Transaction, "datetime"> &
-  MinutesAgoItem;
+  MinutesFromNowItem;
 
 const relativeDateTransactions: RelativeDatetimeTransaction[] = [
   {
@@ -13,7 +13,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Case #970",
     amount: -3954.0,
     status: "completed",
-    minutes_ago: 0.5,
+    minutes_from_now: -0.5,
     id: "TX-100522",
   },
   {
@@ -21,7 +21,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Pixel Perfect",
     amount: -771.75,
     status: "in_progress",
-    minutes_ago: 446.0,
+    minutes_from_now: -446.0,
     id: "TX-100521",
   },
   {
@@ -29,7 +29,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Miriam Al-Fayed",
     amount: -786.85,
     status: "completed",
-    minutes_ago: 1443.68,
+    minutes_from_now: -1443.68,
     id: "TX-100520",
   },
   {
@@ -37,7 +37,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Sarah Jenkins",
     amount: 2828.34,
     status: "completed",
-    minutes_ago: 2174.38,
+    minutes_from_now: -2174.38,
     id: "TX-100519",
   },
   {
@@ -45,7 +45,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Nova Tech",
     amount: -4183.16,
     status: "completed",
-    minutes_ago: 2452.81,
+    minutes_from_now: -2452.81,
     id: "TX-100518",
   },
   {
@@ -53,7 +53,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Elena Rodriguez",
     amount: 4533.28,
     status: "pending",
-    minutes_ago: 2767.7,
+    minutes_from_now: -2767.7,
     id: "TX-100517",
   },
   {
@@ -61,7 +61,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Green Leaf Co",
     amount: -3924.36,
     status: "completed",
-    minutes_ago: 2999.56,
+    minutes_from_now: -2999.56,
     id: "TX-100516",
   },
   {
@@ -69,7 +69,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Green Leaf Co",
     amount: -906.41,
     status: "completed",
-    minutes_ago: 4000.91,
+    minutes_from_now: -4000.91,
     id: "TX-100515",
   },
   {
@@ -77,7 +77,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Case #970",
     amount: 3735.02,
     status: "pending",
-    minutes_ago: 5023.72,
+    minutes_from_now: -5023.72,
     id: "TX-100514",
   },
   {
@@ -85,7 +85,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Sarah Jenkins",
     amount: -647.45,
     status: "completed",
-    minutes_ago: 5633.84,
+    minutes_from_now: -5633.84,
     id: "TX-100513",
   },
   {
@@ -93,7 +93,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Green Leaf Co",
     amount: -4423.35,
     status: "completed",
-    minutes_ago: 6377.82,
+    minutes_from_now: -6377.82,
     id: "TX-100512",
   },
   {
@@ -101,7 +101,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Thorne Blackwood",
     amount: 2034.15,
     status: "completed",
-    minutes_ago: 7388.91,
+    minutes_from_now: -7388.91,
     id: "TX-100511",
   },
   {
@@ -109,7 +109,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Lyra Belacqua",
     amount: -3336.05,
     status: "completed",
-    minutes_ago: 8175.61,
+    minutes_from_now: -8175.61,
     id: "TX-100510",
   },
   {
@@ -117,7 +117,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Riverstone Ltd",
     amount: 1923.57,
     status: "completed",
-    minutes_ago: 8779.21,
+    minutes_from_now: -8779.21,
     id: "TX-100509",
   },
   {
@@ -125,7 +125,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Miriam Al-Fayed",
     amount: 4832.58,
     status: "completed",
-    minutes_ago: 9418.59,
+    minutes_from_now: -9418.59,
     id: "TX-100508",
   },
   {
@@ -133,7 +133,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Elena Rodriguez",
     amount: 488.99,
     status: "completed",
-    minutes_ago: 10436.72,
+    minutes_from_now: -10436.72,
     id: "TX-100507",
   },
   {
@@ -141,7 +141,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Miriam Al-Fayed",
     amount: -956.44,
     status: "completed",
-    minutes_ago: 10653.51,
+    minutes_from_now: -10653.51,
     id: "TX-100506",
   },
   {
@@ -149,7 +149,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Nova Tech",
     amount: -635.06,
     status: "completed",
-    minutes_ago: 11389.26,
+    minutes_from_now: -11389.26,
     id: "TX-100505",
   },
   {
@@ -157,7 +157,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Elara Moon",
     amount: -2603.79,
     status: "completed",
-    minutes_ago: 12156.13,
+    minutes_from_now: -12156.13,
     id: "TX-100504",
   },
   {
@@ -165,7 +165,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Nova Tech",
     amount: -3034.3,
     status: "completed",
-    minutes_ago: 12854.99,
+    minutes_from_now: -12854.99,
     id: "TX-100503",
   },
   {
@@ -173,7 +173,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Iron Forge",
     amount: -4632.42,
     status: "pending",
-    minutes_ago: 13381.59,
+    minutes_from_now: -13381.59,
     id: "TX-100502",
   },
   {
@@ -181,7 +181,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Elena Rodriguez",
     amount: -3184.56,
     status: "completed",
-    minutes_ago: 13922.7,
+    minutes_from_now: -13922.7,
     id: "TX-100501",
   },
   {
@@ -189,7 +189,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Marcus Thorne",
     amount: -4086.49,
     status: "completed",
-    minutes_ago: 14965.93,
+    minutes_from_now: -14965.93,
     id: "TX-100500",
   },
   {
@@ -197,7 +197,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Sarah Jenkins",
     amount: -2091.93,
     status: "completed",
-    minutes_ago: 15663.91,
+    minutes_from_now: -15663.91,
     id: "TX-100499",
   },
   {
@@ -205,7 +205,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Miriam Al-Fayed",
     amount: -2439.58,
     status: "completed",
-    minutes_ago: 16243.23,
+    minutes_from_now: -16243.23,
     id: "TX-100498",
   },
   {
@@ -213,7 +213,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Bulk Paper Inc",
     amount: 1924.66,
     status: "completed",
-    minutes_ago: 16657.71,
+    minutes_from_now: -16657.71,
     id: "TX-100497",
   },
   {
@@ -221,7 +221,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Iron Forge",
     amount: -4660.06,
     status: "completed",
-    minutes_ago: 16901.22,
+    minutes_from_now: -16901.22,
     id: "TX-100496",
   },
   {
@@ -229,7 +229,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Iron Forge",
     amount: -416.67,
     status: "completed",
-    minutes_ago: 17729.37,
+    minutes_from_now: -17729.37,
     id: "TX-100495",
   },
   {
@@ -237,7 +237,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Nova Tech",
     amount: -2650.01,
     status: "completed",
-    minutes_ago: 18011.71,
+    minutes_from_now: -18011.71,
     id: "TX-100494",
   },
   {
@@ -245,7 +245,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Riverstone Ltd",
     amount: -548.98,
     status: "completed",
-    minutes_ago: 18684.08,
+    minutes_from_now: -18684.08,
     id: "TX-100493",
   },
   {
@@ -253,7 +253,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Lyra Belacqua",
     amount: 4589.1,
     status: "cancelled",
-    minutes_ago: 19140.27,
+    minutes_from_now: -19140.27,
     id: "TX-100492",
   },
   {
@@ -261,7 +261,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Pixel Perfect",
     amount: 3202.87,
     status: "completed",
-    minutes_ago: 19553.1,
+    minutes_from_now: -19553.1,
     id: "TX-100491",
   },
   {
@@ -269,7 +269,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Case #970",
     amount: 4524.79,
     status: "cancelled",
-    minutes_ago: 19944.44,
+    minutes_from_now: -19944.44,
     id: "TX-100490",
   },
   {
@@ -277,7 +277,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Pixel Perfect",
     amount: 1914.97,
     status: "pending",
-    minutes_ago: 20851.31,
+    minutes_from_now: -20851.31,
     id: "TX-100489",
   },
   {
@@ -285,7 +285,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Riverstone Ltd",
     amount: -2111.45,
     status: "completed",
-    minutes_ago: 21726.66,
+    minutes_from_now: -21726.66,
     id: "TX-100488",
   },
   {
@@ -293,7 +293,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Lyra Belacqua",
     amount: -4298.13,
     status: "completed",
-    minutes_ago: 22820.82,
+    minutes_from_now: -22820.82,
     id: "TX-100487",
   },
   {
@@ -301,7 +301,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Pixel Perfect",
     amount: -4936.7,
     status: "completed",
-    minutes_ago: 23719.63,
+    minutes_from_now: -23719.63,
     id: "TX-100486",
   },
   {
@@ -309,7 +309,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Elena Rodriguez",
     amount: -1113.43,
     status: "completed",
-    minutes_ago: 24370.01,
+    minutes_from_now: -24370.01,
     id: "TX-100485",
   },
   {
@@ -317,7 +317,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Bulk Paper Inc",
     amount: 3110.08,
     status: "completed",
-    minutes_ago: 25344.98,
+    minutes_from_now: -25344.98,
     id: "TX-100484",
   },
   {
@@ -325,7 +325,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Artisan Leather",
     amount: -3874.63,
     status: "completed",
-    minutes_ago: 25821.77,
+    minutes_from_now: -25821.77,
     id: "TX-100483",
   },
   {
@@ -333,7 +333,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Marcus Thorne",
     amount: 1749.45,
     status: "completed",
-    minutes_ago: 26458.7,
+    minutes_from_now: -26458.7,
     id: "TX-100482",
   },
   {
@@ -341,7 +341,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Iron Forge",
     amount: -4809.81,
     status: "completed",
-    minutes_ago: 26933.36,
+    minutes_from_now: -26933.36,
     id: "TX-100481",
   },
   {
@@ -349,7 +349,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Elara Moon",
     amount: -2138.56,
     status: "completed",
-    minutes_ago: 27566.27,
+    minutes_from_now: -27566.27,
     id: "TX-100480",
   },
   {
@@ -357,7 +357,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Case #970",
     amount: -2576.31,
     status: "completed",
-    minutes_ago: 28072.34,
+    minutes_from_now: -28072.34,
     id: "TX-100479",
   },
   {
@@ -365,7 +365,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Lyra Belacqua",
     amount: -1971.11,
     status: "completed",
-    minutes_ago: 28500.71,
+    minutes_from_now: -28500.71,
     id: "TX-100478",
   },
   {
@@ -373,7 +373,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Case #970",
     amount: 3254.22,
     status: "pending",
-    minutes_ago: 29301.76,
+    minutes_from_now: -29301.76,
     id: "TX-100477",
   },
   {
@@ -381,7 +381,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Bulk Paper Inc",
     amount: -1931.0,
     status: "completed",
-    minutes_ago: 30190.86,
+    minutes_from_now: -30190.86,
     id: "TX-100476",
   },
   {
@@ -389,7 +389,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Pixel Perfect",
     amount: 4590.41,
     status: "completed",
-    minutes_ago: 30887.53,
+    minutes_from_now: -30887.53,
     id: "TX-100475",
   },
   {
@@ -397,7 +397,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Lyra Belacqua",
     amount: 2691.4,
     status: "completed",
-    minutes_ago: 31608.21,
+    minutes_from_now: -31608.21,
     id: "TX-100474",
   },
   {
@@ -405,7 +405,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Green Leaf Co",
     amount: -4095.96,
     status: "completed",
-    minutes_ago: 32098.1,
+    minutes_from_now: -32098.1,
     id: "TX-100473",
   },
   {
@@ -413,7 +413,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Thorne Blackwood",
     amount: 760.76,
     status: "completed",
-    minutes_ago: 32492.68,
+    minutes_from_now: -32492.68,
     id: "TX-100472",
   },
   {
@@ -421,7 +421,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Cloud Infrastructure",
     amount: -4218.73,
     status: "completed",
-    minutes_ago: 32713.59,
+    minutes_from_now: -32713.59,
     id: "TX-100471",
   },
   {
@@ -429,7 +429,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Bulk Paper Inc",
     amount: -803.86,
     status: "completed",
-    minutes_ago: 33695.6,
+    minutes_from_now: -33695.6,
     id: "TX-100470",
   },
   {
@@ -437,7 +437,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Bulk Paper Inc",
     amount: -2581.38,
     status: "completed",
-    minutes_ago: 34259.05,
+    minutes_from_now: -34259.05,
     id: "TX-100469",
   },
   {
@@ -445,7 +445,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Cloud Infrastructure",
     amount: -3143.61,
     status: "pending",
-    minutes_ago: 35057.96,
+    minutes_from_now: -35057.96,
     id: "TX-100468",
   },
   {
@@ -453,7 +453,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Swift Parcel",
     amount: -721.58,
     status: "completed",
-    minutes_ago: 35289.42,
+    minutes_from_now: -35289.42,
     id: "TX-100467",
   },
   {
@@ -461,7 +461,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Green Leaf Co",
     amount: -4121.22,
     status: "completed",
-    minutes_ago: 36102.02,
+    minutes_from_now: -36102.02,
     id: "TX-100466",
   },
   {
@@ -469,7 +469,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Iron Forge",
     amount: -254.58,
     status: "in_progress",
-    minutes_ago: 37014.49,
+    minutes_from_now: -37014.49,
     id: "TX-100465",
   },
   {
@@ -477,7 +477,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Thorne Blackwood",
     amount: -1898.06,
     status: "completed",
-    minutes_ago: 37468.9,
+    minutes_from_now: -37468.9,
     id: "TX-100464",
   },
   {
@@ -485,7 +485,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Lyra Belacqua",
     amount: -1370.03,
     status: "completed",
-    minutes_ago: 37882.45,
+    minutes_from_now: -37882.45,
     id: "TX-100463",
   },
   {
@@ -493,7 +493,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Lyra Belacqua",
     amount: 2192.89,
     status: "completed",
-    minutes_ago: 38086.6,
+    minutes_from_now: -38086.6,
     id: "TX-100462",
   },
   {
@@ -501,7 +501,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Green Leaf Co",
     amount: -2542.7,
     status: "completed",
-    minutes_ago: 39111.9,
+    minutes_from_now: -39111.9,
     id: "TX-100461",
   },
   {
@@ -509,7 +509,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Riverstone Ltd",
     amount: 3460.23,
     status: "completed",
-    minutes_ago: 39860.28,
+    minutes_from_now: -39860.28,
     id: "TX-100460",
   },
   {
@@ -517,7 +517,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Cloud Infrastructure",
     amount: -3099.82,
     status: "completed",
-    minutes_ago: 40426.99,
+    minutes_from_now: -40426.99,
     id: "TX-100459",
   },
   {
@@ -525,7 +525,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Bulk Paper Inc",
     amount: -4581.6,
     status: "completed",
-    minutes_ago: 41401.8,
+    minutes_from_now: -41401.8,
     id: "TX-100458",
   },
   {
@@ -533,7 +533,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Artisan Leather",
     amount: -1653.36,
     status: "pending",
-    minutes_ago: 42166.44,
+    minutes_from_now: -42166.44,
     id: "TX-100457",
   },
   {
@@ -541,7 +541,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Riverstone Ltd",
     amount: -2050.33,
     status: "completed",
-    minutes_ago: 43252.73,
+    minutes_from_now: -43252.73,
     id: "TX-100456",
   },
   {
@@ -549,7 +549,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Sarah Jenkins",
     amount: 2143.05,
     status: "completed",
-    minutes_ago: 44415.5,
+    minutes_from_now: -44415.5,
     id: "TX-100455",
   },
   {
@@ -557,7 +557,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Riverstone Ltd",
     amount: 4921.51,
     status: "completed",
-    minutes_ago: 45636.93,
+    minutes_from_now: -45636.93,
     id: "TX-100454",
   },
   {
@@ -565,7 +565,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Riverstone Ltd",
     amount: 871.4,
     status: "completed",
-    minutes_ago: 46514.31,
+    minutes_from_now: -46514.31,
     id: "TX-100453",
   },
   {
@@ -573,7 +573,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Swift Parcel",
     amount: -112.99,
     status: "cancelled",
-    minutes_ago: 47644.19,
+    minutes_from_now: -47644.19,
     id: "TX-100452",
   },
   {
@@ -581,7 +581,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Elena Rodriguez",
     amount: -1958.71,
     status: "pending",
-    minutes_ago: 48462.3,
+    minutes_from_now: -48462.3,
     id: "TX-100451",
   },
   {
@@ -589,7 +589,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Elena Rodriguez",
     amount: -3990.41,
     status: "pending",
-    minutes_ago: 49488.94,
+    minutes_from_now: -49488.94,
     id: "TX-100450",
   },
   {
@@ -597,7 +597,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Lyra Belacqua",
     amount: -2144.73,
     status: "completed",
-    minutes_ago: 50764.82,
+    minutes_from_now: -50764.82,
     id: "TX-100449",
   },
   {
@@ -605,7 +605,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Sarah Jenkins",
     amount: -2153.28,
     status: "completed",
-    minutes_ago: 51678.17,
+    minutes_from_now: -51678.17,
     id: "TX-100448",
   },
   {
@@ -613,7 +613,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Thorne Blackwood",
     amount: -4612.15,
     status: "completed",
-    minutes_ago: 52876.63,
+    minutes_from_now: -52876.63,
     id: "TX-100447",
   },
   {
@@ -621,7 +621,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Swift Parcel",
     amount: -670.21,
     status: "in_progress",
-    minutes_ago: 54116.58,
+    minutes_from_now: -54116.58,
     id: "TX-100446",
   },
   {
@@ -629,7 +629,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Nova Tech",
     amount: -4788.42,
     status: "completed",
-    minutes_ago: 55315.04,
+    minutes_from_now: -55315.04,
     id: "TX-100445",
   },
   {
@@ -637,7 +637,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Lyra Belacqua",
     amount: 397.72,
     status: "completed",
-    minutes_ago: 56290.49,
+    minutes_from_now: -56290.49,
     id: "TX-100444",
   },
   {
@@ -645,7 +645,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Riverstone Ltd",
     amount: 4311.26,
     status: "in_progress",
-    minutes_ago: 57437.17,
+    minutes_from_now: -57437.17,
     id: "TX-100443",
   },
   {
@@ -653,7 +653,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Riverstone Ltd",
     amount: 1986.76,
     status: "in_progress",
-    minutes_ago: 58444.45,
+    minutes_from_now: -58444.45,
     id: "TX-100442",
   },
   {
@@ -661,7 +661,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Marcus Thorne",
     amount: -3829.68,
     status: "cancelled",
-    minutes_ago: 59346.64,
+    minutes_from_now: -59346.64,
     id: "TX-100441",
   },
   {
@@ -669,7 +669,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Nova Tech",
     amount: 4152.82,
     status: "pending",
-    minutes_ago: 60293.9,
+    minutes_from_now: -60293.9,
     id: "TX-100440",
   },
   {
@@ -677,7 +677,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Iron Forge",
     amount: -4451.89,
     status: "completed",
-    minutes_ago: 61338.58,
+    minutes_from_now: -61338.58,
     id: "TX-100439",
   },
   {
@@ -685,7 +685,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Bulk Paper Inc",
     amount: -3674.56,
     status: "completed",
-    minutes_ago: 62441.21,
+    minutes_from_now: -62441.21,
     id: "TX-100438",
   },
   {
@@ -693,7 +693,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Pixel Perfect",
     amount: -4798.1,
     status: "pending",
-    minutes_ago: 63244.21,
+    minutes_from_now: -63244.21,
     id: "TX-100437",
   },
   {
@@ -701,7 +701,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Bulk Paper Inc",
     amount: -4228.52,
     status: "completed",
-    minutes_ago: 64402.12,
+    minutes_from_now: -64402.12,
     id: "TX-100436",
   },
   {
@@ -709,7 +709,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Elara Moon",
     amount: -669.66,
     status: "in_progress",
-    minutes_ago: 65473.4,
+    minutes_from_now: -65473.4,
     id: "TX-100435",
   },
   {
@@ -717,7 +717,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Green Leaf Co",
     amount: -4379.86,
     status: "completed",
-    minutes_ago: 66719.04,
+    minutes_from_now: -66719.04,
     id: "TX-100434",
   },
   {
@@ -725,7 +725,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Green Leaf Co",
     amount: -3133.21,
     status: "cancelled",
-    minutes_ago: 67804.44,
+    minutes_from_now: -67804.44,
     id: "TX-100433",
   },
   {
@@ -733,7 +733,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Riverstone Ltd",
     amount: -1101.43,
     status: "completed",
-    minutes_ago: 68891.69,
+    minutes_from_now: -68891.69,
     id: "TX-100432",
   },
   {
@@ -741,7 +741,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Elena Rodriguez",
     amount: -4352.04,
     status: "completed",
-    minutes_ago: 69720.64,
+    minutes_from_now: -69720.64,
     id: "TX-100431",
   },
   {
@@ -749,7 +749,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Bulk Paper Inc",
     amount: -3059.31,
     status: "completed",
-    minutes_ago: 70778.95,
+    minutes_from_now: -70778.95,
     id: "TX-100430",
   },
   {
@@ -757,7 +757,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Bulk Paper Inc",
     amount: -866.24,
     status: "completed",
-    minutes_ago: 72076.25,
+    minutes_from_now: -72076.25,
     id: "TX-100429",
   },
   {
@@ -765,7 +765,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Sarah Jenkins",
     amount: -2822.97,
     status: "completed",
-    minutes_ago: 73274.56,
+    minutes_from_now: -73274.56,
     id: "TX-100428",
   },
   {
@@ -773,7 +773,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Swift Parcel",
     amount: -1659.24,
     status: "completed",
-    minutes_ago: 74570.69,
+    minutes_from_now: -74570.69,
     id: "TX-100427",
   },
   {
@@ -781,7 +781,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Miriam Al-Fayed",
     amount: 341.84,
     status: "completed",
-    minutes_ago: 75495.66,
+    minutes_from_now: -75495.66,
     id: "TX-100426",
   },
   {
@@ -789,7 +789,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Iron Forge",
     amount: -2956.52,
     status: "in_progress",
-    minutes_ago: 76575.32,
+    minutes_from_now: -76575.32,
     id: "TX-100425",
   },
   {
@@ -797,7 +797,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Sarah Jenkins",
     amount: 1036.46,
     status: "in_progress",
-    minutes_ago: 77590.09,
+    minutes_from_now: -77590.09,
     id: "TX-100424",
   },
   {
@@ -805,7 +805,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Green Leaf Co",
     amount: 3739.6,
     status: "pending",
-    minutes_ago: 78620.32,
+    minutes_from_now: -78620.32,
     id: "TX-100423",
   },
   {
@@ -813,7 +813,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Elara Moon",
     amount: 4955.29,
     status: "completed",
-    minutes_ago: 79820.46,
+    minutes_from_now: -79820.46,
     id: "TX-100422",
   },
   {
@@ -821,7 +821,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Bulk Paper Inc",
     amount: -1496.34,
     status: "completed",
-    minutes_ago: 80891.85,
+    minutes_from_now: -80891.85,
     id: "TX-100421",
   },
   {
@@ -829,7 +829,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Bulk Paper Inc",
     amount: -4116.96,
     status: "in_progress",
-    minutes_ago: 81692.9,
+    minutes_from_now: -81692.9,
     id: "TX-100420",
   },
   {
@@ -837,7 +837,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Marcus Thorne",
     amount: -4772.76,
     status: "completed",
-    minutes_ago: 82763.05,
+    minutes_from_now: -82763.05,
     id: "TX-100419",
   },
   {
@@ -845,7 +845,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Green Leaf Co",
     amount: 2347.13,
     status: "pending",
-    minutes_ago: 84001.4,
+    minutes_from_now: -84001.4,
     id: "TX-100418",
   },
   {
@@ -853,7 +853,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Thorne Blackwood",
     amount: -432.42,
     status: "completed",
-    minutes_ago: 85193.12,
+    minutes_from_now: -85193.12,
     id: "TX-100417",
   },
   {
@@ -861,7 +861,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Nova Tech",
     amount: -2246.09,
     status: "completed",
-    minutes_ago: 86097.92,
+    minutes_from_now: -86097.92,
     id: "TX-100416",
   },
   {
@@ -869,7 +869,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Miriam Al-Fayed",
     amount: 3548.55,
     status: "completed",
-    minutes_ago: 87017.25,
+    minutes_from_now: -87017.25,
     id: "TX-100415",
   },
   {
@@ -877,7 +877,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Thorne Blackwood",
     amount: 4454.34,
     status: "completed",
-    minutes_ago: 87828.21,
+    minutes_from_now: -87828.21,
     id: "TX-100414",
   },
   {
@@ -885,7 +885,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Lyra Belacqua",
     amount: -2557.85,
     status: "completed",
-    minutes_ago: 88851.87,
+    minutes_from_now: -88851.87,
     id: "TX-100413",
   },
   {
@@ -893,7 +893,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Lyra Belacqua",
     amount: 3040.49,
     status: "pending",
-    minutes_ago: 90035.76,
+    minutes_from_now: -90035.76,
     id: "TX-100412",
   },
   {
@@ -901,7 +901,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Bulk Paper Inc",
     amount: 240.34,
     status: "completed",
-    minutes_ago: 91236.83,
+    minutes_from_now: -91236.83,
     id: "TX-100411",
   },
   {
@@ -909,7 +909,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Lyra Belacqua",
     amount: -4040.32,
     status: "completed",
-    minutes_ago: 92427.3,
+    minutes_from_now: -92427.3,
     id: "TX-100410",
   },
   {
@@ -917,7 +917,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Nova Tech",
     amount: -978.34,
     status: "completed",
-    minutes_ago: 93467.44,
+    minutes_from_now: -93467.44,
     id: "TX-100409",
   },
   {
@@ -925,7 +925,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Sarah Jenkins",
     amount: -4758.32,
     status: "completed",
-    minutes_ago: 94508.27,
+    minutes_from_now: -94508.27,
     id: "TX-100408",
   },
   {
@@ -933,7 +933,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Cloud Infrastructure",
     amount: 1961.49,
     status: "completed",
-    minutes_ago: 95618.95,
+    minutes_from_now: -95618.95,
     id: "TX-100407",
   },
   {
@@ -941,7 +941,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Sarah Jenkins",
     amount: 4386.87,
     status: "in_progress",
-    minutes_ago: 96584.33,
+    minutes_from_now: -96584.33,
     id: "TX-100406",
   },
   {
@@ -949,7 +949,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Lyra Belacqua",
     amount: -235.7,
     status: "completed",
-    minutes_ago: 97601.08,
+    minutes_from_now: -97601.08,
     id: "TX-100405",
   },
   {
@@ -957,7 +957,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Iron Forge",
     amount: -1697.8,
     status: "completed",
-    minutes_ago: 98586.48,
+    minutes_from_now: -98586.48,
     id: "TX-100404",
   },
   {
@@ -965,7 +965,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Pixel Perfect",
     amount: -1124.81,
     status: "completed",
-    minutes_ago: 99860.24,
+    minutes_from_now: -99860.24,
     id: "TX-100403",
   },
   {
@@ -973,7 +973,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Marcus Thorne",
     amount: -3992.98,
     status: "in_progress",
-    minutes_ago: 100717.58,
+    minutes_from_now: -100717.58,
     id: "TX-100402",
   },
   {
@@ -981,7 +981,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Artisan Leather",
     amount: 4758.45,
     status: "in_progress",
-    minutes_ago: 101969.58,
+    minutes_from_now: -101969.58,
     id: "TX-100401",
   },
   {
@@ -989,7 +989,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Iron Forge",
     amount: -2688.18,
     status: "pending",
-    minutes_ago: 102808.4,
+    minutes_from_now: -102808.4,
     id: "TX-100400",
   },
   {
@@ -997,7 +997,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Pixel Perfect",
     amount: 3754.33,
     status: "in_progress",
-    minutes_ago: 103973.29,
+    minutes_from_now: -103973.29,
     id: "TX-100399",
   },
   {
@@ -1005,7 +1005,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Cloud Infrastructure",
     amount: 4867.75,
     status: "completed",
-    minutes_ago: 105171.69,
+    minutes_from_now: -105171.69,
     id: "TX-100398",
   },
   {
@@ -1013,7 +1013,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Thorne Blackwood",
     amount: 3369.76,
     status: "completed",
-    minutes_ago: 106412.1,
+    minutes_from_now: -106412.1,
     id: "TX-100397",
   },
   {
@@ -1021,7 +1021,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Nova Tech",
     amount: -2949.0,
     status: "in_progress",
-    minutes_ago: 107400.68,
+    minutes_from_now: -107400.68,
     id: "TX-100396",
   },
   {
@@ -1029,7 +1029,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Elena Rodriguez",
     amount: 165.1,
     status: "completed",
-    minutes_ago: 108672.42,
+    minutes_from_now: -108672.42,
     id: "TX-100395",
   },
   {
@@ -1037,7 +1037,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Marcus Thorne",
     amount: -2667.87,
     status: "in_progress",
-    minutes_ago: 109821.89,
+    minutes_from_now: -109821.89,
     id: "TX-100394",
   },
   {
@@ -1045,7 +1045,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Elara Moon",
     amount: 4158.27,
     status: "cancelled",
-    minutes_ago: 111089.12,
+    minutes_from_now: -111089.12,
     id: "TX-100393",
   },
   {
@@ -1053,7 +1053,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Sarah Jenkins",
     amount: -438.06,
     status: "completed",
-    minutes_ago: 111992.2,
+    minutes_from_now: -111992.2,
     id: "TX-100392",
   },
   {
@@ -1061,7 +1061,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Pixel Perfect",
     amount: -3874.47,
     status: "completed",
-    minutes_ago: 113170.96,
+    minutes_from_now: -113170.96,
     id: "TX-100391",
   },
   {
@@ -1069,7 +1069,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Nova Tech",
     amount: 3973.99,
     status: "in_progress",
-    minutes_ago: 114026.7,
+    minutes_from_now: -114026.7,
     id: "TX-100390",
   },
   {
@@ -1077,7 +1077,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Nova Tech",
     amount: 1407.54,
     status: "completed",
-    minutes_ago: 115196.69,
+    minutes_from_now: -115196.69,
     id: "TX-100389",
   },
   {
@@ -1085,7 +1085,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Marcus Thorne",
     amount: 1447.21,
     status: "completed",
-    minutes_ago: 116413.34,
+    minutes_from_now: -116413.34,
     id: "TX-100388",
   },
   {
@@ -1093,7 +1093,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Thorne Blackwood",
     amount: -2102.15,
     status: "cancelled",
-    minutes_ago: 117710.3,
+    minutes_from_now: -117710.3,
     id: "TX-100387",
   },
   {
@@ -1101,7 +1101,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Case #970",
     amount: -3447.21,
     status: "completed",
-    minutes_ago: 118895.23,
+    minutes_from_now: -118895.23,
     id: "TX-100386",
   },
   {
@@ -1109,7 +1109,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Lyra Belacqua",
     amount: -3732.25,
     status: "completed",
-    minutes_ago: 120147.2,
+    minutes_from_now: -120147.2,
     id: "TX-100385",
   },
   {
@@ -1117,7 +1117,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Swift Parcel",
     amount: 1254.36,
     status: "completed",
-    minutes_ago: 121022.49,
+    minutes_from_now: -121022.49,
     id: "TX-100384",
   },
   {
@@ -1125,7 +1125,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Thorne Blackwood",
     amount: -2519.52,
     status: "completed",
-    minutes_ago: 122266.85,
+    minutes_from_now: -122266.85,
     id: "TX-100383",
   },
   {
@@ -1133,7 +1133,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Cloud Infrastructure",
     amount: -4168.51,
     status: "pending",
-    minutes_ago: 123092.46,
+    minutes_from_now: -123092.46,
     id: "TX-100382",
   },
   {
@@ -1141,7 +1141,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Green Leaf Co",
     amount: -1640.18,
     status: "pending",
-    minutes_ago: 124168.22,
+    minutes_from_now: -124168.22,
     id: "TX-100381",
   },
   {
@@ -1149,7 +1149,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Nova Tech",
     amount: 4676.26,
     status: "completed",
-    minutes_ago: 125454.49,
+    minutes_from_now: -125454.49,
     id: "TX-100380",
   },
   {
@@ -1157,7 +1157,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Elena Rodriguez",
     amount: 1830.58,
     status: "completed",
-    minutes_ago: 126381.31,
+    minutes_from_now: -126381.31,
     id: "TX-100379",
   },
   {
@@ -1165,7 +1165,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Case #970",
     amount: 3996.26,
     status: "completed",
-    minutes_ago: 127633.63,
+    minutes_from_now: -127633.63,
     id: "TX-100378",
   },
   {
@@ -1173,7 +1173,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Riverstone Ltd",
     amount: -4431.73,
     status: "completed",
-    minutes_ago: 128574.45,
+    minutes_from_now: -128574.45,
     id: "TX-100377",
   },
   {
@@ -1181,7 +1181,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Artisan Leather",
     amount: 4503.76,
     status: "completed",
-    minutes_ago: 129782.06,
+    minutes_from_now: -129782.06,
     id: "TX-100376",
   },
   {
@@ -1189,7 +1189,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Marcus Thorne",
     amount: 2882.64,
     status: "completed",
-    minutes_ago: 131015.2,
+    minutes_from_now: -131015.2,
     id: "TX-100375",
   },
   {
@@ -1197,7 +1197,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Lyra Belacqua",
     amount: 2801.94,
     status: "completed",
-    minutes_ago: 132139.35,
+    minutes_from_now: -132139.35,
     id: "TX-100374",
   },
   {
@@ -1205,7 +1205,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Green Leaf Co",
     amount: -1542.81,
     status: "completed",
-    minutes_ago: 133288.55,
+    minutes_from_now: -133288.55,
     id: "TX-100373",
   },
   {
@@ -1213,7 +1213,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Cloud Infrastructure",
     amount: 4357.86,
     status: "in_progress",
-    minutes_ago: 134530.3,
+    minutes_from_now: -134530.3,
     id: "TX-100372",
   },
   {
@@ -1221,7 +1221,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Bulk Paper Inc",
     amount: -145.76,
     status: "completed",
-    minutes_ago: 135429.14,
+    minutes_from_now: -135429.14,
     id: "TX-100371",
   },
   {
@@ -1229,7 +1229,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Iron Forge",
     amount: 1394.98,
     status: "completed",
-    minutes_ago: 136555.27,
+    minutes_from_now: -136555.27,
     id: "TX-100370",
   },
   {
@@ -1237,7 +1237,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Elara Moon",
     amount: 2490.68,
     status: "completed",
-    minutes_ago: 137548.68,
+    minutes_from_now: -137548.68,
     id: "TX-100369",
   },
   {
@@ -1245,7 +1245,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Marcus Thorne",
     amount: -2067.98,
     status: "pending",
-    minutes_ago: 138391.82,
+    minutes_from_now: -138391.82,
     id: "TX-100368",
   },
   {
@@ -1253,7 +1253,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Thorne Blackwood",
     amount: -4401.48,
     status: "pending",
-    minutes_ago: 139448.67,
+    minutes_from_now: -139448.67,
     id: "TX-100367",
   },
   {
@@ -1261,7 +1261,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Bulk Paper Inc",
     amount: -1213.73,
     status: "in_progress",
-    minutes_ago: 140275.38,
+    minutes_from_now: -140275.38,
     id: "TX-100366",
   },
   {
@@ -1269,7 +1269,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Marcus Thorne",
     amount: 3844.92,
     status: "completed",
-    minutes_ago: 141111.51,
+    minutes_from_now: -141111.51,
     id: "TX-100365",
   },
   {
@@ -1277,7 +1277,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Swift Parcel",
     amount: -4868.9,
     status: "pending",
-    minutes_ago: 142044.12,
+    minutes_from_now: -142044.12,
     id: "TX-100364",
   },
   {
@@ -1285,7 +1285,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Elara Moon",
     amount: 1805.03,
     status: "pending",
-    minutes_ago: 143259.72,
+    minutes_from_now: -143259.72,
     id: "TX-100363",
   },
   {
@@ -1293,7 +1293,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Thorne Blackwood",
     amount: -230.22,
     status: "completed",
-    minutes_ago: 144199.07,
+    minutes_from_now: -144199.07,
     id: "TX-100362",
   },
   {
@@ -1301,7 +1301,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Green Leaf Co",
     amount: -2390.03,
     status: "completed",
-    minutes_ago: 145108.97,
+    minutes_from_now: -145108.97,
     id: "TX-100361",
   },
   {
@@ -1309,7 +1309,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Elara Moon",
     amount: -1683.53,
     status: "pending",
-    minutes_ago: 146000.57,
+    minutes_from_now: -146000.57,
     id: "TX-100360",
   },
   {
@@ -1317,7 +1317,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Elena Rodriguez",
     amount: 2965.89,
     status: "in_progress",
-    minutes_ago: 147074.59,
+    minutes_from_now: -147074.59,
     id: "TX-100359",
   },
   {
@@ -1325,7 +1325,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Lyra Belacqua",
     amount: 3913.39,
     status: "in_progress",
-    minutes_ago: 148136.77,
+    minutes_from_now: -148136.77,
     id: "TX-100358",
   },
   {
@@ -1333,7 +1333,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Thorne Blackwood",
     amount: -1845.46,
     status: "completed",
-    minutes_ago: 149146.61,
+    minutes_from_now: -149146.61,
     id: "TX-100357",
   },
   {
@@ -1341,7 +1341,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Case #970",
     amount: 4860.0,
     status: "completed",
-    minutes_ago: 150114.79,
+    minutes_from_now: -150114.79,
     id: "TX-100356",
   },
   {
@@ -1349,7 +1349,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Marcus Thorne",
     amount: -4560.02,
     status: "completed",
-    minutes_ago: 151100.01,
+    minutes_from_now: -151100.01,
     id: "TX-100355",
   },
   {
@@ -1357,7 +1357,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Cloud Infrastructure",
     amount: -3059.88,
     status: "completed",
-    minutes_ago: 152345.09,
+    minutes_from_now: -152345.09,
     id: "TX-100354",
   },
   {
@@ -1365,7 +1365,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Lyra Belacqua",
     amount: 2030.82,
     status: "completed",
-    minutes_ago: 153572.61,
+    minutes_from_now: -153572.61,
     id: "TX-100353",
   },
   {
@@ -1373,7 +1373,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Miriam Al-Fayed",
     amount: -439.88,
     status: "completed",
-    minutes_ago: 154753.91,
+    minutes_from_now: -154753.91,
     id: "TX-100352",
   },
   {
@@ -1381,7 +1381,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Nova Tech",
     amount: -871.05,
     status: "pending",
-    minutes_ago: 155835.0,
+    minutes_from_now: -155835.0,
     id: "TX-100351",
   },
   {
@@ -1389,7 +1389,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Nova Tech",
     amount: -2508.86,
     status: "pending",
-    minutes_ago: 157003.67,
+    minutes_from_now: -157003.67,
     id: "TX-100350",
   },
   {
@@ -1397,7 +1397,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Elara Moon",
     amount: 4730.0,
     status: "completed",
-    minutes_ago: 157982.08,
+    minutes_from_now: -157982.08,
     id: "TX-100349",
   },
   {
@@ -1405,7 +1405,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Elena Rodriguez",
     amount: -3370.67,
     status: "pending",
-    minutes_ago: 158905.07,
+    minutes_from_now: -158905.07,
     id: "TX-100348",
   },
   {
@@ -1413,7 +1413,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Nova Tech",
     amount: -3997.96,
     status: "completed",
-    minutes_ago: 159862.09,
+    minutes_from_now: -159862.09,
     id: "TX-100347",
   },
   {
@@ -1421,7 +1421,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Cloud Infrastructure",
     amount: -1104.8,
     status: "completed",
-    minutes_ago: 160919.32,
+    minutes_from_now: -160919.32,
     id: "TX-100346",
   },
   {
@@ -1429,7 +1429,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Bulk Paper Inc",
     amount: -3211.45,
     status: "completed",
-    minutes_ago: 162177.81,
+    minutes_from_now: -162177.81,
     id: "TX-100345",
   },
   {
@@ -1437,7 +1437,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Miriam Al-Fayed",
     amount: 153.29,
     status: "in_progress",
-    minutes_ago: 163194.25,
+    minutes_from_now: -163194.25,
     id: "TX-100344",
   },
   {
@@ -1445,7 +1445,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Elena Rodriguez",
     amount: -4025.11,
     status: "pending",
-    minutes_ago: 164198.8,
+    minutes_from_now: -164198.8,
     id: "TX-100343",
   },
   {
@@ -1453,7 +1453,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Elena Rodriguez",
     amount: -4865.15,
     status: "completed",
-    minutes_ago: 165193.02,
+    minutes_from_now: -165193.02,
     id: "TX-100342",
   },
   {
@@ -1461,7 +1461,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Riverstone Ltd",
     amount: 4088.33,
     status: "completed",
-    minutes_ago: 166451.38,
+    minutes_from_now: -166451.38,
     id: "TX-100341",
   },
   {
@@ -1469,7 +1469,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Case #970",
     amount: 89.14,
     status: "in_progress",
-    minutes_ago: 167455.85,
+    minutes_from_now: -167455.85,
     id: "TX-100340",
   },
   {
@@ -1477,7 +1477,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Iron Forge",
     amount: 436.44,
     status: "completed",
-    minutes_ago: 168611.27,
+    minutes_from_now: -168611.27,
     id: "TX-100339",
   },
   {
@@ -1485,7 +1485,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Cloud Infrastructure",
     amount: 799.02,
     status: "cancelled",
-    minutes_ago: 169581.98,
+    minutes_from_now: -169581.98,
     id: "TX-100338",
   },
   {
@@ -1493,7 +1493,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Elara Moon",
     amount: -2310.16,
     status: "completed",
-    minutes_ago: 170608.37,
+    minutes_from_now: -170608.37,
     id: "TX-100337",
   },
   {
@@ -1501,7 +1501,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Marcus Thorne",
     amount: 2491.53,
     status: "pending",
-    minutes_ago: 171850.13,
+    minutes_from_now: -171850.13,
     id: "TX-100336",
   },
   {
@@ -1509,7 +1509,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Cloud Infrastructure",
     amount: 2946.73,
     status: "completed",
-    minutes_ago: 172808.51,
+    minutes_from_now: -172808.51,
     id: "TX-100335",
   },
   {
@@ -1517,7 +1517,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Elara Moon",
     amount: 1945.55,
     status: "completed",
-    minutes_ago: 173851.67,
+    minutes_from_now: -173851.67,
     id: "TX-100334",
   },
   {
@@ -1525,7 +1525,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Sarah Jenkins",
     amount: 2968.0,
     status: "completed",
-    minutes_ago: 174810.07,
+    minutes_from_now: -174810.07,
     id: "TX-100333",
   },
   {
@@ -1533,7 +1533,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Cloud Infrastructure",
     amount: -1976.57,
     status: "completed",
-    minutes_ago: 175981.43,
+    minutes_from_now: -175981.43,
     id: "TX-100332",
   },
   {
@@ -1541,7 +1541,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Elena Rodriguez",
     amount: -2266.45,
     status: "completed",
-    minutes_ago: 177140.35,
+    minutes_from_now: -177140.35,
     id: "TX-100331",
   },
   {
@@ -1549,7 +1549,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Elara Moon",
     amount: 3364.52,
     status: "completed",
-    minutes_ago: 177964.66,
+    minutes_from_now: -177964.66,
     id: "TX-100330",
   },
   {
@@ -1557,7 +1557,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Nova Tech",
     amount: 3876.39,
     status: "pending",
-    minutes_ago: 178923.44,
+    minutes_from_now: -178923.44,
     id: "TX-100329",
   },
   {
@@ -1565,7 +1565,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Cloud Infrastructure",
     amount: -84.01,
     status: "completed",
-    minutes_ago: 180168.48,
+    minutes_from_now: -180168.48,
     id: "TX-100328",
   },
   {
@@ -1573,7 +1573,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Nova Tech",
     amount: 2474.69,
     status: "completed",
-    minutes_ago: 181307.12,
+    minutes_from_now: -181307.12,
     id: "TX-100327",
   },
   {
@@ -1581,7 +1581,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Cloud Infrastructure",
     amount: -1438.29,
     status: "pending",
-    minutes_ago: 182413.16,
+    minutes_from_now: -182413.16,
     id: "TX-100326",
   },
   {
@@ -1589,7 +1589,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Elara Moon",
     amount: -1269.92,
     status: "completed",
-    minutes_ago: 183294.11,
+    minutes_from_now: -183294.11,
     id: "TX-100325",
   },
   {
@@ -1597,7 +1597,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Lyra Belacqua",
     amount: 3266.11,
     status: "cancelled",
-    minutes_ago: 184403.95,
+    minutes_from_now: -184403.95,
     id: "TX-100324",
   },
   {
@@ -1605,7 +1605,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Iron Forge",
     amount: -3158.67,
     status: "pending",
-    minutes_ago: 185390.86,
+    minutes_from_now: -185390.86,
     id: "TX-100323",
   },
   {
@@ -1613,7 +1613,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Nova Tech",
     amount: 1202.67,
     status: "pending",
-    minutes_ago: 186605.36,
+    minutes_from_now: -186605.36,
     id: "TX-100322",
   },
   {
@@ -1621,7 +1621,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Elara Moon",
     amount: 2375.39,
     status: "completed",
-    minutes_ago: 187877.4,
+    minutes_from_now: -187877.4,
     id: "TX-100321",
   },
   {
@@ -1629,7 +1629,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Bulk Paper Inc",
     amount: -1638.73,
     status: "completed",
-    minutes_ago: 188725.49,
+    minutes_from_now: -188725.49,
     id: "TX-100320",
   },
   {
@@ -1637,7 +1637,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Artisan Leather",
     amount: -4751.41,
     status: "pending",
-    minutes_ago: 189900.3,
+    minutes_from_now: -189900.3,
     id: "TX-100319",
   },
   {
@@ -1645,7 +1645,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Bulk Paper Inc",
     amount: -1649.29,
     status: "in_progress",
-    minutes_ago: 190944.3,
+    minutes_from_now: -190944.3,
     id: "TX-100318",
   },
   {
@@ -1653,7 +1653,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Pixel Perfect",
     amount: -4173.43,
     status: "completed",
-    minutes_ago: 191804.37,
+    minutes_from_now: -191804.37,
     id: "TX-100317",
   },
   {
@@ -1661,7 +1661,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Riverstone Ltd",
     amount: -4217.08,
     status: "cancelled",
-    minutes_ago: 192998.48,
+    minutes_from_now: -192998.48,
     id: "TX-100316",
   },
   {
@@ -1669,7 +1669,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Elena Rodriguez",
     amount: -3138.27,
     status: "completed",
-    minutes_ago: 194294.39,
+    minutes_from_now: -194294.39,
     id: "TX-100315",
   },
   {
@@ -1677,7 +1677,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Elara Moon",
     amount: -1610.29,
     status: "completed",
-    minutes_ago: 195507.15,
+    minutes_from_now: -195507.15,
     id: "TX-100314",
   },
   {
@@ -1685,7 +1685,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Case #970",
     amount: 3790.95,
     status: "pending",
-    minutes_ago: 196422.64,
+    minutes_from_now: -196422.64,
     id: "TX-100313",
   },
   {
@@ -1693,7 +1693,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Riverstone Ltd",
     amount: 4408.8,
     status: "completed",
-    minutes_ago: 197680.44,
+    minutes_from_now: -197680.44,
     id: "TX-100312",
   },
   {
@@ -1701,7 +1701,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Bulk Paper Inc",
     amount: -2824.95,
     status: "cancelled",
-    minutes_ago: 198487.36,
+    minutes_from_now: -198487.36,
     id: "TX-100311",
   },
   {
@@ -1709,7 +1709,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Riverstone Ltd",
     amount: -963.31,
     status: "cancelled",
-    minutes_ago: 199466.04,
+    minutes_from_now: -199466.04,
     id: "TX-100310",
   },
   {
@@ -1717,7 +1717,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Pixel Perfect",
     amount: 1429.39,
     status: "completed",
-    minutes_ago: 200576.83,
+    minutes_from_now: -200576.83,
     id: "TX-100309",
   },
   {
@@ -1725,7 +1725,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Nova Tech",
     amount: -4501.37,
     status: "completed",
-    minutes_ago: 201516.85,
+    minutes_from_now: -201516.85,
     id: "TX-100308",
   },
   {
@@ -1733,7 +1733,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Swift Parcel",
     amount: -3808.5,
     status: "pending",
-    minutes_ago: 202793.13,
+    minutes_from_now: -202793.13,
     id: "TX-100307",
   },
   {
@@ -1741,7 +1741,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Elara Moon",
     amount: -2995.27,
     status: "completed",
-    minutes_ago: 203911.8,
+    minutes_from_now: -203911.8,
     id: "TX-100306",
   },
   {
@@ -1749,7 +1749,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Green Leaf Co",
     amount: -2055.83,
     status: "completed",
-    minutes_ago: 204805.55,
+    minutes_from_now: -204805.55,
     id: "TX-100305",
   },
   {
@@ -1757,7 +1757,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Iron Forge",
     amount: 3712.94,
     status: "cancelled",
-    minutes_ago: 205938.94,
+    minutes_from_now: -205938.94,
     id: "TX-100304",
   },
   {
@@ -1765,7 +1765,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Green Leaf Co",
     amount: -3458.66,
     status: "completed",
-    minutes_ago: 206805.36,
+    minutes_from_now: -206805.36,
     id: "TX-100303",
   },
   {
@@ -1773,7 +1773,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Elara Moon",
     amount: 1959.74,
     status: "completed",
-    minutes_ago: 207996.63,
+    minutes_from_now: -207996.63,
     id: "TX-100302",
   },
   {
@@ -1781,7 +1781,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Iron Forge",
     amount: -2307.86,
     status: "pending",
-    minutes_ago: 208958.29,
+    minutes_from_now: -208958.29,
     id: "TX-100301",
   },
   {
@@ -1789,7 +1789,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Green Leaf Co",
     amount: 3742.14,
     status: "completed",
-    minutes_ago: 210044.09,
+    minutes_from_now: -210044.09,
     id: "TX-100300",
   },
   {
@@ -1797,7 +1797,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Sarah Jenkins",
     amount: -4607.21,
     status: "pending",
-    minutes_ago: 211007.45,
+    minutes_from_now: -211007.45,
     id: "TX-100299",
   },
   {
@@ -1805,7 +1805,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Iron Forge",
     amount: -2074.21,
     status: "completed",
-    minutes_ago: 211811.88,
+    minutes_from_now: -211811.88,
     id: "TX-100298",
   },
   {
@@ -1813,7 +1813,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Iron Forge",
     amount: 1596.41,
     status: "completed",
-    minutes_ago: 212699.88,
+    minutes_from_now: -212699.88,
     id: "TX-100297",
   },
   {
@@ -1821,7 +1821,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Miriam Al-Fayed",
     amount: 1640.01,
     status: "completed",
-    minutes_ago: 213997.81,
+    minutes_from_now: -213997.81,
     id: "TX-100296",
   },
   {
@@ -1829,7 +1829,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Miriam Al-Fayed",
     amount: -2524.19,
     status: "pending",
-    minutes_ago: 215216.15,
+    minutes_from_now: -215216.15,
     id: "TX-100295",
   },
   {
@@ -1837,7 +1837,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Artisan Leather",
     amount: -3467.65,
     status: "completed",
-    minutes_ago: 216066.24,
+    minutes_from_now: -216066.24,
     id: "TX-100294",
   },
   {
@@ -1845,7 +1845,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Bulk Paper Inc",
     amount: -2935.16,
     status: "pending",
-    minutes_ago: 217354.39,
+    minutes_from_now: -217354.39,
     id: "TX-100293",
   },
   {
@@ -1853,7 +1853,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Sarah Jenkins",
     amount: 739.74,
     status: "completed",
-    minutes_ago: 218222.66,
+    minutes_from_now: -218222.66,
     id: "TX-100292",
   },
   {
@@ -1861,7 +1861,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Marcus Thorne",
     amount: -2011.48,
     status: "completed",
-    minutes_ago: 219166.13,
+    minutes_from_now: -219166.13,
     id: "TX-100291",
   },
   {
@@ -1869,7 +1869,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Green Leaf Co",
     amount: 4019.87,
     status: "completed",
-    minutes_ago: 220045.56,
+    minutes_from_now: -220045.56,
     id: "TX-100290",
   },
   {
@@ -1877,7 +1877,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Thorne Blackwood",
     amount: 4974.43,
     status: "completed",
-    minutes_ago: 221245.38,
+    minutes_from_now: -221245.38,
     id: "TX-100289",
   },
   {
@@ -1885,7 +1885,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Artisan Leather",
     amount: -2429.8,
     status: "completed",
-    minutes_ago: 222191.92,
+    minutes_from_now: -222191.92,
     id: "TX-100288",
   },
   {
@@ -1893,7 +1893,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Bulk Paper Inc",
     amount: 908.54,
     status: "cancelled",
-    minutes_ago: 223322.19,
+    minutes_from_now: -223322.19,
     id: "TX-100287",
   },
   {
@@ -1901,7 +1901,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Lyra Belacqua",
     amount: -4446.54,
     status: "completed",
-    minutes_ago: 224510.62,
+    minutes_from_now: -224510.62,
     id: "TX-100286",
   },
   {
@@ -1909,7 +1909,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Elara Moon",
     amount: 3086.81,
     status: "completed",
-    minutes_ago: 225440.86,
+    minutes_from_now: -225440.86,
     id: "TX-100285",
   },
   {
@@ -1917,7 +1917,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Iron Forge",
     amount: -795.72,
     status: "completed",
-    minutes_ago: 226254.24,
+    minutes_from_now: -226254.24,
     id: "TX-100284",
   },
   {
@@ -1925,7 +1925,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Thorne Blackwood",
     amount: -2893.41,
     status: "pending",
-    minutes_ago: 227218.14,
+    minutes_from_now: -227218.14,
     id: "TX-100283",
   },
   {
@@ -1933,7 +1933,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Riverstone Ltd",
     amount: 4347.42,
     status: "completed",
-    minutes_ago: 228220.31,
+    minutes_from_now: -228220.31,
     id: "TX-100282",
   },
   {
@@ -1941,7 +1941,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Swift Parcel",
     amount: -3860.48,
     status: "completed",
-    minutes_ago: 229085.51,
+    minutes_from_now: -229085.51,
     id: "TX-100281",
   },
   {
@@ -1949,7 +1949,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Swift Parcel",
     amount: 799.28,
     status: "completed",
-    minutes_ago: 230060.55,
+    minutes_from_now: -230060.55,
     id: "TX-100280",
   },
   {
@@ -1957,7 +1957,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Green Leaf Co",
     amount: -2320.06,
     status: "completed",
-    minutes_ago: 230976.15,
+    minutes_from_now: -230976.15,
     id: "TX-100279",
   },
   {
@@ -1965,7 +1965,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Case #970",
     amount: -1242.88,
     status: "in_progress",
-    minutes_ago: 231808.41,
+    minutes_from_now: -231808.41,
     id: "TX-100278",
   },
   {
@@ -1973,7 +1973,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Nova Tech",
     amount: -398.01,
     status: "completed",
-    minutes_ago: 232974.96,
+    minutes_from_now: -232974.96,
     id: "TX-100277",
   },
   {
@@ -1981,7 +1981,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Sarah Jenkins",
     amount: -1429.47,
     status: "completed",
-    minutes_ago: 233865.67,
+    minutes_from_now: -233865.67,
     id: "TX-100276",
   },
   {
@@ -1989,7 +1989,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Artisan Leather",
     amount: -3945.85,
     status: "cancelled",
-    minutes_ago: 234671.85,
+    minutes_from_now: -234671.85,
     id: "TX-100275",
   },
   {
@@ -1997,7 +1997,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Elena Rodriguez",
     amount: -1838.36,
     status: "completed",
-    minutes_ago: 235686.29,
+    minutes_from_now: -235686.29,
     id: "TX-100274",
   },
   {
@@ -2005,7 +2005,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Elara Moon",
     amount: -2801.91,
     status: "pending",
-    minutes_ago: 236854.21,
+    minutes_from_now: -236854.21,
     id: "TX-100273",
   },
   {
@@ -2013,7 +2013,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Swift Parcel",
     amount: 1969.49,
     status: "in_progress",
-    minutes_ago: 238005.93,
+    minutes_from_now: -238005.93,
     id: "TX-100272",
   },
   {
@@ -2021,7 +2021,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Marcus Thorne",
     amount: -4992.68,
     status: "completed",
-    minutes_ago: 239148.28,
+    minutes_from_now: -239148.28,
     id: "TX-100271",
   },
   {
@@ -2029,7 +2029,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Lyra Belacqua",
     amount: -1911.94,
     status: "pending",
-    minutes_ago: 240100.98,
+    minutes_from_now: -240100.98,
     id: "TX-100270",
   },
   {
@@ -2037,7 +2037,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Case #970",
     amount: 695.63,
     status: "completed",
-    minutes_ago: 241014.5,
+    minutes_from_now: -241014.5,
     id: "TX-100269",
   },
   {
@@ -2045,7 +2045,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Green Leaf Co",
     amount: -156.4,
     status: "completed",
-    minutes_ago: 241828.61,
+    minutes_from_now: -241828.61,
     id: "TX-100268",
   },
   {
@@ -2053,7 +2053,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Elena Rodriguez",
     amount: -3577.27,
     status: "completed",
-    minutes_ago: 242837.71,
+    minutes_from_now: -242837.71,
     id: "TX-100267",
   },
   {
@@ -2061,7 +2061,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Swift Parcel",
     amount: -277.72,
     status: "completed",
-    minutes_ago: 243907.45,
+    minutes_from_now: -243907.45,
     id: "TX-100266",
   },
   {
@@ -2069,7 +2069,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Marcus Thorne",
     amount: -4082.4,
     status: "cancelled",
-    minutes_ago: 245059.78,
+    minutes_from_now: -245059.78,
     id: "TX-100265",
   },
   {
@@ -2077,7 +2077,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Green Leaf Co",
     amount: 2322.38,
     status: "completed",
-    minutes_ago: 246328.51,
+    minutes_from_now: -246328.51,
     id: "TX-100264",
   },
   {
@@ -2085,7 +2085,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Elara Moon",
     amount: 3781.98,
     status: "completed",
-    minutes_ago: 247410.91,
+    minutes_from_now: -247410.91,
     id: "TX-100263",
   },
   {
@@ -2093,7 +2093,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Case #970",
     amount: -3459.77,
     status: "completed",
-    minutes_ago: 248286.36,
+    minutes_from_now: -248286.36,
     id: "TX-100262",
   },
   {
@@ -2101,7 +2101,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Elara Moon",
     amount: -1401.33,
     status: "completed",
-    minutes_ago: 249484.76,
+    minutes_from_now: -249484.76,
     id: "TX-100261",
   },
   {
@@ -2109,7 +2109,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Artisan Leather",
     amount: -1461.66,
     status: "completed",
-    minutes_ago: 250667.18,
+    minutes_from_now: -250667.18,
     id: "TX-100260",
   },
   {
@@ -2117,7 +2117,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Marcus Thorne",
     amount: 2669.18,
     status: "pending",
-    minutes_ago: 251799.23,
+    minutes_from_now: -251799.23,
     id: "TX-100259",
   },
   {
@@ -2125,7 +2125,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Marcus Thorne",
     amount: -2010.92,
     status: "completed",
-    minutes_ago: 252886.06,
+    minutes_from_now: -252886.06,
     id: "TX-100258",
   },
   {
@@ -2133,7 +2133,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Pixel Perfect",
     amount: 4538.98,
     status: "completed",
-    minutes_ago: 253789.36,
+    minutes_from_now: -253789.36,
     id: "TX-100257",
   },
   {
@@ -2141,7 +2141,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Cloud Infrastructure",
     amount: -3260.73,
     status: "completed",
-    minutes_ago: 255037.42,
+    minutes_from_now: -255037.42,
     id: "TX-100256",
   },
   {
@@ -2149,7 +2149,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Marcus Thorne",
     amount: 1033.93,
     status: "cancelled",
-    minutes_ago: 256043.89,
+    minutes_from_now: -256043.89,
     id: "TX-100255",
   },
   {
@@ -2157,7 +2157,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Sarah Jenkins",
     amount: -3314.19,
     status: "completed",
-    minutes_ago: 257194.6,
+    minutes_from_now: -257194.6,
     id: "TX-100254",
   },
   {
@@ -2165,7 +2165,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Bulk Paper Inc",
     amount: -3857.71,
     status: "completed",
-    minutes_ago: 258483.83,
+    minutes_from_now: -258483.83,
     id: "TX-100253",
   },
   {
@@ -2173,7 +2173,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Elena Rodriguez",
     amount: -844.9,
     status: "completed",
-    minutes_ago: 259485.24,
+    minutes_from_now: -259485.24,
     id: "TX-100252",
   },
   {
@@ -2181,7 +2181,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Cloud Infrastructure",
     amount: -459.25,
     status: "completed",
-    minutes_ago: 260422.19,
+    minutes_from_now: -260422.19,
     id: "TX-100251",
   },
   {
@@ -2189,7 +2189,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Cloud Infrastructure",
     amount: -2056.0,
     status: "completed",
-    minutes_ago: 261501.66,
+    minutes_from_now: -261501.66,
     id: "TX-100250",
   },
   {
@@ -2197,7 +2197,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Thorne Blackwood",
     amount: -2434.26,
     status: "cancelled",
-    minutes_ago: 262459.74,
+    minutes_from_now: -262459.74,
     id: "TX-100249",
   },
   {
@@ -2205,7 +2205,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Pixel Perfect",
     amount: -4435.26,
     status: "completed",
-    minutes_ago: 263366.52,
+    minutes_from_now: -263366.52,
     id: "TX-100248",
   },
   {
@@ -2213,7 +2213,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Thorne Blackwood",
     amount: 3521.34,
     status: "completed",
-    minutes_ago: 264263.44,
+    minutes_from_now: -264263.44,
     id: "TX-100247",
   },
   {
@@ -2221,7 +2221,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Sarah Jenkins",
     amount: -3854.4,
     status: "completed",
-    minutes_ago: 265125.76,
+    minutes_from_now: -265125.76,
     id: "TX-100246",
   },
   {
@@ -2229,7 +2229,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Artisan Leather",
     amount: 4376.96,
     status: "completed",
-    minutes_ago: 266119.17,
+    minutes_from_now: -266119.17,
     id: "TX-100245",
   },
   {
@@ -2237,7 +2237,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Elena Rodriguez",
     amount: 3628.87,
     status: "completed",
-    minutes_ago: 267381.6,
+    minutes_from_now: -267381.6,
     id: "TX-100244",
   },
   {
@@ -2245,7 +2245,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Nova Tech",
     amount: -3871.05,
     status: "cancelled",
-    minutes_ago: 268244.92,
+    minutes_from_now: -268244.92,
     id: "TX-100243",
   },
   {
@@ -2253,7 +2253,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Artisan Leather",
     amount: 4647.55,
     status: "completed",
-    minutes_ago: 269049.85,
+    minutes_from_now: -269049.85,
     id: "TX-100242",
   },
   {
@@ -2261,7 +2261,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Artisan Leather",
     amount: 401.41,
     status: "cancelled",
-    minutes_ago: 270151.15,
+    minutes_from_now: -270151.15,
     id: "TX-100241",
   },
   {
@@ -2269,7 +2269,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Green Leaf Co",
     amount: -1007.06,
     status: "pending",
-    minutes_ago: 270995.73,
+    minutes_from_now: -270995.73,
     id: "TX-100240",
   },
   {
@@ -2277,7 +2277,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Green Leaf Co",
     amount: 4389.04,
     status: "pending",
-    minutes_ago: 272197.94,
+    minutes_from_now: -272197.94,
     id: "TX-100239",
   },
   {
@@ -2285,7 +2285,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Elena Rodriguez",
     amount: -3857.02,
     status: "completed",
-    minutes_ago: 273296.91,
+    minutes_from_now: -273296.91,
     id: "TX-100238",
   },
   {
@@ -2293,7 +2293,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Miriam Al-Fayed",
     amount: 666.43,
     status: "in_progress",
-    minutes_ago: 274273.57,
+    minutes_from_now: -274273.57,
     id: "TX-100237",
   },
   {
@@ -2301,7 +2301,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Sarah Jenkins",
     amount: -2947.59,
     status: "completed",
-    minutes_ago: 275460.52,
+    minutes_from_now: -275460.52,
     id: "TX-100236",
   },
   {
@@ -2309,7 +2309,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Nova Tech",
     amount: 2989.95,
     status: "in_progress",
-    minutes_ago: 276686.52,
+    minutes_from_now: -276686.52,
     id: "TX-100235",
   },
   {
@@ -2317,7 +2317,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Cloud Infrastructure",
     amount: -709.49,
     status: "pending",
-    minutes_ago: 277561.92,
+    minutes_from_now: -277561.92,
     id: "TX-100234",
   },
   {
@@ -2325,7 +2325,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Miriam Al-Fayed",
     amount: -918.63,
     status: "completed",
-    minutes_ago: 278530.17,
+    minutes_from_now: -278530.17,
     id: "TX-100233",
   },
   {
@@ -2333,7 +2333,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Bulk Paper Inc",
     amount: 2687.77,
     status: "completed",
-    minutes_ago: 279426.95,
+    minutes_from_now: -279426.95,
     id: "TX-100232",
   },
   {
@@ -2341,7 +2341,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Sarah Jenkins",
     amount: -1374.03,
     status: "completed",
-    minutes_ago: 280548.73,
+    minutes_from_now: -280548.73,
     id: "TX-100231",
   },
   {
@@ -2349,7 +2349,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Thorne Blackwood",
     amount: -451.54,
     status: "pending",
-    minutes_ago: 281786.52,
+    minutes_from_now: -281786.52,
     id: "TX-100230",
   },
   {
@@ -2357,7 +2357,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Artisan Leather",
     amount: -4344.11,
     status: "completed",
-    minutes_ago: 282798.6,
+    minutes_from_now: -282798.6,
     id: "TX-100229",
   },
   {
@@ -2365,7 +2365,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Thorne Blackwood",
     amount: -4519.97,
     status: "pending",
-    minutes_ago: 283786.34,
+    minutes_from_now: -283786.34,
     id: "TX-100228",
   },
   {
@@ -2373,7 +2373,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Case #970",
     amount: 3156.49,
     status: "completed",
-    minutes_ago: 284603.81,
+    minutes_from_now: -284603.81,
     id: "TX-100227",
   },
   {
@@ -2381,7 +2381,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Iron Forge",
     amount: 3554.06,
     status: "completed",
-    minutes_ago: 285436.53,
+    minutes_from_now: -285436.53,
     id: "TX-100226",
   },
   {
@@ -2389,7 +2389,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Elara Moon",
     amount: -3848.31,
     status: "completed",
-    minutes_ago: 286506.51,
+    minutes_from_now: -286506.51,
     id: "TX-100225",
   },
   {
@@ -2397,7 +2397,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Cloud Infrastructure",
     amount: -1581.25,
     status: "pending",
-    minutes_ago: 287697.93,
+    minutes_from_now: -287697.93,
     id: "TX-100224",
   },
   {
@@ -2405,7 +2405,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Miriam Al-Fayed",
     amount: 2222.81,
     status: "completed",
-    minutes_ago: 288779.97,
+    minutes_from_now: -288779.97,
     id: "TX-100223",
   },
   {
@@ -2413,7 +2413,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Riverstone Ltd",
     amount: -3417.98,
     status: "pending",
-    minutes_ago: 289777.5,
+    minutes_from_now: -289777.5,
     id: "TX-100222",
   },
   {
@@ -2421,7 +2421,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Marcus Thorne",
     amount: 481.11,
     status: "completed",
-    minutes_ago: 290969.05,
+    minutes_from_now: -290969.05,
     id: "TX-100221",
   },
   {
@@ -2429,7 +2429,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Riverstone Ltd",
     amount: -4689.39,
     status: "completed",
-    minutes_ago: 292228.21,
+    minutes_from_now: -292228.21,
     id: "TX-100220",
   },
   {
@@ -2437,7 +2437,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Bulk Paper Inc",
     amount: -271.07,
     status: "completed",
-    minutes_ago: 293357.05,
+    minutes_from_now: -293357.05,
     id: "TX-100219",
   },
   {
@@ -2445,7 +2445,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Artisan Leather",
     amount: -4410.59,
     status: "completed",
-    minutes_ago: 294611.53,
+    minutes_from_now: -294611.53,
     id: "TX-100218",
   },
   {
@@ -2453,7 +2453,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Miriam Al-Fayed",
     amount: -1691.75,
     status: "in_progress",
-    minutes_ago: 295725.42,
+    minutes_from_now: -295725.42,
     id: "TX-100217",
   },
   {
@@ -2461,7 +2461,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Pixel Perfect",
     amount: -878.13,
     status: "cancelled",
-    minutes_ago: 296629.82,
+    minutes_from_now: -296629.82,
     id: "TX-100216",
   },
   {
@@ -2469,7 +2469,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Artisan Leather",
     amount: -4200.2,
     status: "cancelled",
-    minutes_ago: 297575.56,
+    minutes_from_now: -297575.56,
     id: "TX-100215",
   },
   {
@@ -2477,7 +2477,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Elena Rodriguez",
     amount: -1525.69,
     status: "completed",
-    minutes_ago: 298845.22,
+    minutes_from_now: -298845.22,
     id: "TX-100214",
   },
   {
@@ -2485,7 +2485,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Cloud Infrastructure",
     amount: -2353.38,
     status: "in_progress",
-    minutes_ago: 299689.1,
+    minutes_from_now: -299689.1,
     id: "TX-100213",
   },
   {
@@ -2493,7 +2493,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Swift Parcel",
     amount: -2670.0,
     status: "in_progress",
-    minutes_ago: 300740.17,
+    minutes_from_now: -300740.17,
     id: "TX-100212",
   },
   {
@@ -2501,7 +2501,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Elena Rodriguez",
     amount: -2327.06,
     status: "cancelled",
-    minutes_ago: 301823.85,
+    minutes_from_now: -301823.85,
     id: "TX-100211",
   },
   {
@@ -2509,7 +2509,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Elara Moon",
     amount: 2038.17,
     status: "in_progress",
-    minutes_ago: 302743.78,
+    minutes_from_now: -302743.78,
     id: "TX-100210",
   },
   {
@@ -2517,7 +2517,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Thorne Blackwood",
     amount: -2547.35,
     status: "completed",
-    minutes_ago: 303926.5,
+    minutes_from_now: -303926.5,
     id: "TX-100209",
   },
   {
@@ -2525,7 +2525,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Elara Moon",
     amount: -4759.51,
     status: "in_progress",
-    minutes_ago: 305019.22,
+    minutes_from_now: -305019.22,
     id: "TX-100208",
   },
   {
@@ -2533,7 +2533,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Riverstone Ltd",
     amount: -2981.43,
     status: "completed",
-    minutes_ago: 306097.81,
+    minutes_from_now: -306097.81,
     id: "TX-100207",
   },
   {
@@ -2541,7 +2541,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Swift Parcel",
     amount: 188.47,
     status: "completed",
-    minutes_ago: 307342.43,
+    minutes_from_now: -307342.43,
     id: "TX-100206",
   },
   {
@@ -2549,7 +2549,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Marcus Thorne",
     amount: -2090.13,
     status: "completed",
-    minutes_ago: 308347.98,
+    minutes_from_now: -308347.98,
     id: "TX-100205",
   },
   {
@@ -2557,7 +2557,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Artisan Leather",
     amount: -2958.44,
     status: "cancelled",
-    minutes_ago: 309590.43,
+    minutes_from_now: -309590.43,
     id: "TX-100204",
   },
   {
@@ -2565,7 +2565,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Swift Parcel",
     amount: -1715.6,
     status: "completed",
-    minutes_ago: 310810.24,
+    minutes_from_now: -310810.24,
     id: "TX-100203",
   },
   {
@@ -2573,7 +2573,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Pixel Perfect",
     amount: 2014.54,
     status: "pending",
-    minutes_ago: 312041.51,
+    minutes_from_now: -312041.51,
     id: "TX-100202",
   },
   {
@@ -2581,7 +2581,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Thorne Blackwood",
     amount: 3459.52,
     status: "completed",
-    minutes_ago: 313275.96,
+    minutes_from_now: -313275.96,
     id: "TX-100201",
   },
   {
@@ -2589,7 +2589,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Nova Tech",
     amount: -2193.07,
     status: "cancelled",
-    minutes_ago: 314291.52,
+    minutes_from_now: -314291.52,
     id: "TX-100200",
   },
   {
@@ -2597,7 +2597,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Thorne Blackwood",
     amount: -4019.48,
     status: "completed",
-    minutes_ago: 315253.04,
+    minutes_from_now: -315253.04,
     id: "TX-100199",
   },
   {
@@ -2605,7 +2605,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Marcus Thorne",
     amount: 4654.93,
     status: "completed",
-    minutes_ago: 316297.39,
+    minutes_from_now: -316297.39,
     id: "TX-100198",
   },
   {
@@ -2613,7 +2613,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Pixel Perfect",
     amount: -1768.31,
     status: "completed",
-    minutes_ago: 317246.63,
+    minutes_from_now: -317246.63,
     id: "TX-100197",
   },
   {
@@ -2621,7 +2621,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Cloud Infrastructure",
     amount: -1913.79,
     status: "pending",
-    minutes_ago: 318293.22,
+    minutes_from_now: -318293.22,
     id: "TX-100196",
   },
   {
@@ -2629,7 +2629,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Bulk Paper Inc",
     amount: 2723.04,
     status: "completed",
-    minutes_ago: 319573.29,
+    minutes_from_now: -319573.29,
     id: "TX-100195",
   },
   {
@@ -2637,7 +2637,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Iron Forge",
     amount: -2860.13,
     status: "completed",
-    minutes_ago: 320686.14,
+    minutes_from_now: -320686.14,
     id: "TX-100194",
   },
   {
@@ -2645,7 +2645,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Pixel Perfect",
     amount: 1169.22,
     status: "pending",
-    minutes_ago: 321815.89,
+    minutes_from_now: -321815.89,
     id: "TX-100193",
   },
   {
@@ -2653,7 +2653,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Marcus Thorne",
     amount: -4820.3,
     status: "completed",
-    minutes_ago: 322861.48,
+    minutes_from_now: -322861.48,
     id: "TX-100192",
   },
   {
@@ -2661,7 +2661,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Cloud Infrastructure",
     amount: 2541.25,
     status: "cancelled",
-    minutes_ago: 323938.71,
+    minutes_from_now: -323938.71,
     id: "TX-100191",
   },
   {
@@ -2669,7 +2669,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Sarah Jenkins",
     amount: 1919.01,
     status: "in_progress",
-    minutes_ago: 324948.42,
+    minutes_from_now: -324948.42,
     id: "TX-100190",
   },
   {
@@ -2677,7 +2677,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Elena Rodriguez",
     amount: -2943.34,
     status: "cancelled",
-    minutes_ago: 325878.83,
+    minutes_from_now: -325878.83,
     id: "TX-100189",
   },
   {
@@ -2685,7 +2685,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Sarah Jenkins",
     amount: -882.63,
     status: "completed",
-    minutes_ago: 326798.9,
+    minutes_from_now: -326798.9,
     id: "TX-100188",
   },
   {
@@ -2693,7 +2693,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Iron Forge",
     amount: -3666.38,
     status: "completed",
-    minutes_ago: 327962.9,
+    minutes_from_now: -327962.9,
     id: "TX-100187",
   },
   {
@@ -2701,7 +2701,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Elara Moon",
     amount: -2540.46,
     status: "completed",
-    minutes_ago: 328877.14,
+    minutes_from_now: -328877.14,
     id: "TX-100186",
   },
   {
@@ -2709,7 +2709,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Elara Moon",
     amount: -3714.42,
     status: "completed",
-    minutes_ago: 330155.8,
+    minutes_from_now: -330155.8,
     id: "TX-100185",
   },
   {
@@ -2717,7 +2717,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Elara Moon",
     amount: 2530.94,
     status: "completed",
-    minutes_ago: 331097.03,
+    minutes_from_now: -331097.03,
     id: "TX-100184",
   },
   {
@@ -2725,7 +2725,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Nova Tech",
     amount: 2258.27,
     status: "cancelled",
-    minutes_ago: 331981.23,
+    minutes_from_now: -331981.23,
     id: "TX-100183",
   },
   {
@@ -2733,7 +2733,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Nova Tech",
     amount: -2218.48,
     status: "in_progress",
-    minutes_ago: 332814.74,
+    minutes_from_now: -332814.74,
     id: "TX-100182",
   },
   {
@@ -2741,7 +2741,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Marcus Thorne",
     amount: -3575.69,
     status: "pending",
-    minutes_ago: 333751.08,
+    minutes_from_now: -333751.08,
     id: "TX-100181",
   },
   {
@@ -2749,7 +2749,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Nova Tech",
     amount: -4619.01,
     status: "in_progress",
-    minutes_ago: 334761.8,
+    minutes_from_now: -334761.8,
     id: "TX-100180",
   },
   {
@@ -2757,7 +2757,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Artisan Leather",
     amount: -2376.08,
     status: "completed",
-    minutes_ago: 335754.16,
+    minutes_from_now: -335754.16,
     id: "TX-100179",
   },
   {
@@ -2765,7 +2765,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Thorne Blackwood",
     amount: 1571.58,
     status: "in_progress",
-    minutes_ago: 336733.09,
+    minutes_from_now: -336733.09,
     id: "TX-100178",
   },
   {
@@ -2773,7 +2773,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Sarah Jenkins",
     amount: -1882.88,
     status: "cancelled",
-    minutes_ago: 337689.07,
+    minutes_from_now: -337689.07,
     id: "TX-100177",
   },
   {
@@ -2781,7 +2781,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Nova Tech",
     amount: -4160.37,
     status: "completed",
-    minutes_ago: 338672.08,
+    minutes_from_now: -338672.08,
     id: "TX-100176",
   },
   {
@@ -2789,7 +2789,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Cloud Infrastructure",
     amount: -2660.9,
     status: "in_progress",
-    minutes_ago: 339707.55,
+    minutes_from_now: -339707.55,
     id: "TX-100175",
   },
   {
@@ -2797,7 +2797,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Case #970",
     amount: 2757.83,
     status: "completed",
-    minutes_ago: 340962.76,
+    minutes_from_now: -340962.76,
     id: "TX-100174",
   },
   {
@@ -2805,7 +2805,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Nova Tech",
     amount: -4764.63,
     status: "completed",
-    minutes_ago: 342052.25,
+    minutes_from_now: -342052.25,
     id: "TX-100173",
   },
   {
@@ -2813,7 +2813,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Pixel Perfect",
     amount: 1802.37,
     status: "completed",
-    minutes_ago: 342869.15,
+    minutes_from_now: -342869.15,
     id: "TX-100172",
   },
   {
@@ -2821,7 +2821,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Nova Tech",
     amount: -3241.07,
     status: "cancelled",
-    minutes_ago: 343992.09,
+    minutes_from_now: -343992.09,
     id: "TX-100171",
   },
   {
@@ -2829,7 +2829,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Artisan Leather",
     amount: -3192.75,
     status: "completed",
-    minutes_ago: 344891.55,
+    minutes_from_now: -344891.55,
     id: "TX-100170",
   },
   {
@@ -2837,7 +2837,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Bulk Paper Inc",
     amount: 2071.83,
     status: "completed",
-    minutes_ago: 345805.45,
+    minutes_from_now: -345805.45,
     id: "TX-100169",
   },
   {
@@ -2845,7 +2845,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Elara Moon",
     amount: 2805.16,
     status: "completed",
-    minutes_ago: 346951.11,
+    minutes_from_now: -346951.11,
     id: "TX-100168",
   },
   {
@@ -2853,7 +2853,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Elara Moon",
     amount: -572.45,
     status: "completed",
-    minutes_ago: 347852.98,
+    minutes_from_now: -347852.98,
     id: "TX-100167",
   },
   {
@@ -2861,7 +2861,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Pixel Perfect",
     amount: -2094.69,
     status: "completed",
-    minutes_ago: 349043.07,
+    minutes_from_now: -349043.07,
     id: "TX-100166",
   },
   {
@@ -2869,7 +2869,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Green Leaf Co",
     amount: -540.2,
     status: "completed",
-    minutes_ago: 350005.39,
+    minutes_from_now: -350005.39,
     id: "TX-100165",
   },
   {
@@ -2877,7 +2877,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Lyra Belacqua",
     amount: -2074.69,
     status: "completed",
-    minutes_ago: 351161.83,
+    minutes_from_now: -351161.83,
     id: "TX-100164",
   },
   {
@@ -2885,7 +2885,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Miriam Al-Fayed",
     amount: -3526.98,
     status: "in_progress",
-    minutes_ago: 352290.92,
+    minutes_from_now: -352290.92,
     id: "TX-100163",
   },
   {
@@ -2893,7 +2893,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Elara Moon",
     amount: 2769.09,
     status: "completed",
-    minutes_ago: 353123.34,
+    minutes_from_now: -353123.34,
     id: "TX-100162",
   },
   {
@@ -2901,7 +2901,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Nova Tech",
     amount: -2715.56,
     status: "cancelled",
-    minutes_ago: 354099.3,
+    minutes_from_now: -354099.3,
     id: "TX-100161",
   },
   {
@@ -2909,7 +2909,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Miriam Al-Fayed",
     amount: 369.48,
     status: "completed",
-    minutes_ago: 355117.82,
+    minutes_from_now: -355117.82,
     id: "TX-100160",
   },
   {
@@ -2917,7 +2917,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Case #970",
     amount: -777.93,
     status: "completed",
-    minutes_ago: 356332.39,
+    minutes_from_now: -356332.39,
     id: "TX-100159",
   },
   {
@@ -2925,7 +2925,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Thorne Blackwood",
     amount: 3358.58,
     status: "completed",
-    minutes_ago: 357142.64,
+    minutes_from_now: -357142.64,
     id: "TX-100158",
   },
   {
@@ -2933,7 +2933,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Lyra Belacqua",
     amount: -592.21,
     status: "completed",
-    minutes_ago: 358340.37,
+    minutes_from_now: -358340.37,
     id: "TX-100157",
   },
   {
@@ -2941,7 +2941,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Pixel Perfect",
     amount: 4976.28,
     status: "pending",
-    minutes_ago: 359360.19,
+    minutes_from_now: -359360.19,
     id: "TX-100156",
   },
   {
@@ -2949,7 +2949,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Elena Rodriguez",
     amount: -3081.93,
     status: "cancelled",
-    minutes_ago: 360501.95,
+    minutes_from_now: -360501.95,
     id: "TX-100155",
   },
   {
@@ -2957,7 +2957,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Green Leaf Co",
     amount: 1057.38,
     status: "in_progress",
-    minutes_ago: 361548.93,
+    minutes_from_now: -361548.93,
     id: "TX-100154",
   },
   {
@@ -2965,7 +2965,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Bulk Paper Inc",
     amount: 2700.04,
     status: "pending",
-    minutes_ago: 362515.75,
+    minutes_from_now: -362515.75,
     id: "TX-100153",
   },
   {
@@ -2973,7 +2973,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Elena Rodriguez",
     amount: -4665.12,
     status: "pending",
-    minutes_ago: 363550.73,
+    minutes_from_now: -363550.73,
     id: "TX-100152",
   },
   {
@@ -2981,7 +2981,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Cloud Infrastructure",
     amount: -2609.87,
     status: "completed",
-    minutes_ago: 364509.89,
+    minutes_from_now: -364509.89,
     id: "TX-100151",
   },
   {
@@ -2989,7 +2989,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Artisan Leather",
     amount: -3937.11,
     status: "completed",
-    minutes_ago: 365786.19,
+    minutes_from_now: -365786.19,
     id: "TX-100150",
   },
   {
@@ -2997,7 +2997,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Pixel Perfect",
     amount: -3258.63,
     status: "completed",
-    minutes_ago: 366792.53,
+    minutes_from_now: -366792.53,
     id: "TX-100149",
   },
   {
@@ -3005,7 +3005,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Case #970",
     amount: -1758.32,
     status: "completed",
-    minutes_ago: 367676.88,
+    minutes_from_now: -367676.88,
     id: "TX-100148",
   },
   {
@@ -3013,7 +3013,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Elara Moon",
     amount: -1606.27,
     status: "pending",
-    minutes_ago: 368893.19,
+    minutes_from_now: -368893.19,
     id: "TX-100147",
   },
   {
@@ -3021,7 +3021,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Miriam Al-Fayed",
     amount: -4538.09,
     status: "in_progress",
-    minutes_ago: 369998.4,
+    minutes_from_now: -369998.4,
     id: "TX-100146",
   },
   {
@@ -3029,7 +3029,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Marcus Thorne",
     amount: -1483.68,
     status: "completed",
-    minutes_ago: 371153.88,
+    minutes_from_now: -371153.88,
     id: "TX-100145",
   },
   {
@@ -3037,7 +3037,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Bulk Paper Inc",
     amount: -4747.58,
     status: "cancelled",
-    minutes_ago: 372071.42,
+    minutes_from_now: -372071.42,
     id: "TX-100144",
   },
   {
@@ -3045,7 +3045,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Cloud Infrastructure",
     amount: -2629.06,
     status: "completed",
-    minutes_ago: 372884.33,
+    minutes_from_now: -372884.33,
     id: "TX-100143",
   },
   {
@@ -3053,7 +3053,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Elena Rodriguez",
     amount: -2870.38,
     status: "completed",
-    minutes_ago: 373925.73,
+    minutes_from_now: -373925.73,
     id: "TX-100142",
   },
   {
@@ -3061,7 +3061,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Cloud Infrastructure",
     amount: -3877.97,
     status: "completed",
-    minutes_ago: 375051.96,
+    minutes_from_now: -375051.96,
     id: "TX-100141",
   },
   {
@@ -3069,7 +3069,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Green Leaf Co",
     amount: -2624.7,
     status: "completed",
-    minutes_ago: 376121.51,
+    minutes_from_now: -376121.51,
     id: "TX-100140",
   },
   {
@@ -3077,7 +3077,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Sarah Jenkins",
     amount: -1004.18,
     status: "completed",
-    minutes_ago: 377147.67,
+    minutes_from_now: -377147.67,
     id: "TX-100139",
   },
   {
@@ -3085,7 +3085,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Marcus Thorne",
     amount: -3550.69,
     status: "completed",
-    minutes_ago: 378040.61,
+    minutes_from_now: -378040.61,
     id: "TX-100138",
   },
   {
@@ -3093,7 +3093,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Iron Forge",
     amount: -1783.2,
     status: "completed",
-    minutes_ago: 379091.45,
+    minutes_from_now: -379091.45,
     id: "TX-100137",
   },
   {
@@ -3101,7 +3101,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Iron Forge",
     amount: -4841.9,
     status: "cancelled",
-    minutes_ago: 380326.5,
+    minutes_from_now: -380326.5,
     id: "TX-100136",
   },
   {
@@ -3109,7 +3109,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Nova Tech",
     amount: -586.16,
     status: "completed",
-    minutes_ago: 381289.94,
+    minutes_from_now: -381289.94,
     id: "TX-100135",
   },
   {
@@ -3117,7 +3117,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Riverstone Ltd",
     amount: 4190.51,
     status: "completed",
-    minutes_ago: 382159.5,
+    minutes_from_now: -382159.5,
     id: "TX-100134",
   },
   {
@@ -3125,7 +3125,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Thorne Blackwood",
     amount: -1874.5,
     status: "in_progress",
-    minutes_ago: 383211.62,
+    minutes_from_now: -383211.62,
     id: "TX-100133",
   },
   {
@@ -3133,7 +3133,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Cloud Infrastructure",
     amount: -954.83,
     status: "completed",
-    minutes_ago: 384307.47,
+    minutes_from_now: -384307.47,
     id: "TX-100132",
   },
   {
@@ -3141,7 +3141,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Artisan Leather",
     amount: 2532.17,
     status: "completed",
-    minutes_ago: 385117.96,
+    minutes_from_now: -385117.96,
     id: "TX-100131",
   },
   {
@@ -3149,7 +3149,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Marcus Thorne",
     amount: -4552.85,
     status: "completed",
-    minutes_ago: 385989.17,
+    minutes_from_now: -385989.17,
     id: "TX-100130",
   },
   {
@@ -3157,7 +3157,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Miriam Al-Fayed",
     amount: -2923.04,
     status: "cancelled",
-    minutes_ago: 387101.72,
+    minutes_from_now: -387101.72,
     id: "TX-100129",
   },
   {
@@ -3165,7 +3165,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Green Leaf Co",
     amount: -2621.39,
     status: "in_progress",
-    minutes_ago: 388369.94,
+    minutes_from_now: -388369.94,
     id: "TX-100128",
   },
   {
@@ -3173,7 +3173,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Riverstone Ltd",
     amount: -4731.13,
     status: "completed",
-    minutes_ago: 389247.08,
+    minutes_from_now: -389247.08,
     id: "TX-100127",
   },
   {
@@ -3181,7 +3181,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Swift Parcel",
     amount: -3861.17,
     status: "in_progress",
-    minutes_ago: 390538.61,
+    minutes_from_now: -390538.61,
     id: "TX-100126",
   },
   {
@@ -3189,7 +3189,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Bulk Paper Inc",
     amount: -2949.25,
     status: "completed",
-    minutes_ago: 391663.72,
+    minutes_from_now: -391663.72,
     id: "TX-100125",
   },
   {
@@ -3197,7 +3197,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Thorne Blackwood",
     amount: 4188.38,
     status: "completed",
-    minutes_ago: 392558.84,
+    minutes_from_now: -392558.84,
     id: "TX-100124",
   },
   {
@@ -3205,7 +3205,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Swift Parcel",
     amount: 1885.34,
     status: "completed",
-    minutes_ago: 393816.47,
+    minutes_from_now: -393816.47,
     id: "TX-100123",
   },
   {
@@ -3213,7 +3213,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Elena Rodriguez",
     amount: -3592.25,
     status: "completed",
-    minutes_ago: 394849.41,
+    minutes_from_now: -394849.41,
     id: "TX-100122",
   },
   {
@@ -3221,7 +3221,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Pixel Perfect",
     amount: 3138.11,
     status: "completed",
-    minutes_ago: 395822.5,
+    minutes_from_now: -395822.5,
     id: "TX-100121",
   },
   {
@@ -3229,7 +3229,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Nova Tech",
     amount: -4814.05,
     status: "completed",
-    minutes_ago: 396974.6,
+    minutes_from_now: -396974.6,
     id: "TX-100120",
   },
   {
@@ -3237,7 +3237,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Marcus Thorne",
     amount: -4698.08,
     status: "completed",
-    minutes_ago: 398145.92,
+    minutes_from_now: -398145.92,
     id: "TX-100119",
   },
   {
@@ -3245,7 +3245,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Case #970",
     amount: -666.75,
     status: "pending",
-    minutes_ago: 399095.0,
+    minutes_from_now: -399095.0,
     id: "TX-100118",
   },
   {
@@ -3253,7 +3253,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Marcus Thorne",
     amount: -3444.54,
     status: "completed",
-    minutes_ago: 400202.26,
+    minutes_from_now: -400202.26,
     id: "TX-100117",
   },
   {
@@ -3261,7 +3261,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Green Leaf Co",
     amount: 4494.24,
     status: "cancelled",
-    minutes_ago: 401227.19,
+    minutes_from_now: -401227.19,
     id: "TX-100116",
   },
   {
@@ -3269,7 +3269,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Elara Moon",
     amount: 2999.25,
     status: "completed",
-    minutes_ago: 402181.03,
+    minutes_from_now: -402181.03,
     id: "TX-100115",
   },
   {
@@ -3277,7 +3277,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Green Leaf Co",
     amount: 3318.51,
     status: "completed",
-    minutes_ago: 403061.81,
+    minutes_from_now: -403061.81,
     id: "TX-100114",
   },
   {
@@ -3285,7 +3285,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Case #970",
     amount: -810.1,
     status: "completed",
-    minutes_ago: 404104.75,
+    minutes_from_now: -404104.75,
     id: "TX-100113",
   },
   {
@@ -3293,7 +3293,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Case #970",
     amount: 4790.52,
     status: "completed",
-    minutes_ago: 405272.91,
+    minutes_from_now: -405272.91,
     id: "TX-100112",
   },
   {
@@ -3301,7 +3301,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Elara Moon",
     amount: -4418.52,
     status: "pending",
-    minutes_ago: 406147.05,
+    minutes_from_now: -406147.05,
     id: "TX-100111",
   },
   {
@@ -3309,7 +3309,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Case #970",
     amount: -854.85,
     status: "completed",
-    minutes_ago: 407137.82,
+    minutes_from_now: -407137.82,
     id: "TX-100110",
   },
   {
@@ -3317,7 +3317,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Pixel Perfect",
     amount: -3837.04,
     status: "completed",
-    minutes_ago: 408328.77,
+    minutes_from_now: -408328.77,
     id: "TX-100109",
   },
   {
@@ -3325,7 +3325,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Lyra Belacqua",
     amount: -1636.23,
     status: "cancelled",
-    minutes_ago: 409148.39,
+    minutes_from_now: -409148.39,
     id: "TX-100108",
   },
   {
@@ -3333,7 +3333,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Green Leaf Co",
     amount: 1218.81,
     status: "completed",
-    minutes_ago: 410249.79,
+    minutes_from_now: -410249.79,
     id: "TX-100107",
   },
   {
@@ -3341,7 +3341,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Iron Forge",
     amount: -4600.6,
     status: "completed",
-    minutes_ago: 411428.68,
+    minutes_from_now: -411428.68,
     id: "TX-100106",
   },
   {
@@ -3349,7 +3349,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Riverstone Ltd",
     amount: -3253.14,
     status: "completed",
-    minutes_ago: 412461.34,
+    minutes_from_now: -412461.34,
     id: "TX-100105",
   },
   {
@@ -3357,7 +3357,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Bulk Paper Inc",
     amount: -3018.19,
     status: "pending",
-    minutes_ago: 413388.05,
+    minutes_from_now: -413388.05,
     id: "TX-100104",
   },
   {
@@ -3365,7 +3365,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Case #970",
     amount: -4289.52,
     status: "in_progress",
-    minutes_ago: 414467.09,
+    minutes_from_now: -414467.09,
     id: "TX-100103",
   },
   {
@@ -3373,7 +3373,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Bulk Paper Inc",
     amount: 3239.79,
     status: "completed",
-    minutes_ago: 415589.69,
+    minutes_from_now: -415589.69,
     id: "TX-100102",
   },
   {
@@ -3381,7 +3381,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Green Leaf Co",
     amount: -2429.69,
     status: "in_progress",
-    minutes_ago: 416872.7,
+    minutes_from_now: -416872.7,
     id: "TX-100101",
   },
   {
@@ -3389,7 +3389,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Thorne Blackwood",
     amount: 3901.68,
     status: "in_progress",
-    minutes_ago: 417830.7,
+    minutes_from_now: -417830.7,
     id: "TX-100100",
   },
   {
@@ -3397,7 +3397,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Green Leaf Co",
     amount: -3416.55,
     status: "completed",
-    minutes_ago: 418653.43,
+    minutes_from_now: -418653.43,
     id: "TX-100099",
   },
   {
@@ -3405,7 +3405,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Lyra Belacqua",
     amount: 4255.82,
     status: "completed",
-    minutes_ago: 419681.94,
+    minutes_from_now: -419681.94,
     id: "TX-100098",
   },
   {
@@ -3413,7 +3413,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Riverstone Ltd",
     amount: -4760.43,
     status: "completed",
-    minutes_ago: 420882.74,
+    minutes_from_now: -420882.74,
     id: "TX-100097",
   },
   {
@@ -3421,7 +3421,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Marcus Thorne",
     amount: -4302.71,
     status: "completed",
-    minutes_ago: 422100.53,
+    minutes_from_now: -422100.53,
     id: "TX-100096",
   },
   {
@@ -3429,7 +3429,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Case #970",
     amount: 1866.63,
     status: "completed",
-    minutes_ago: 423289.34,
+    minutes_from_now: -423289.34,
     id: "TX-100095",
   },
   {
@@ -3437,7 +3437,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Riverstone Ltd",
     amount: 4590.8,
     status: "completed",
-    minutes_ago: 424535.58,
+    minutes_from_now: -424535.58,
     id: "TX-100094",
   },
   {
@@ -3445,7 +3445,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Cloud Infrastructure",
     amount: -777.99,
     status: "completed",
-    minutes_ago: 425455.11,
+    minutes_from_now: -425455.11,
     id: "TX-100093",
   },
   {
@@ -3453,7 +3453,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Nova Tech",
     amount: 238.49,
     status: "in_progress",
-    minutes_ago: 426580.7,
+    minutes_from_now: -426580.7,
     id: "TX-100092",
   },
   {
@@ -3461,7 +3461,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Thorne Blackwood",
     amount: 2928.8,
     status: "cancelled",
-    minutes_ago: 427439.48,
+    minutes_from_now: -427439.48,
     id: "TX-100091",
   },
   {
@@ -3469,7 +3469,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Riverstone Ltd",
     amount: -844.98,
     status: "completed",
-    minutes_ago: 428522.35,
+    minutes_from_now: -428522.35,
     id: "TX-100090",
   },
   {
@@ -3477,7 +3477,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Swift Parcel",
     amount: 4515.49,
     status: "completed",
-    minutes_ago: 429473.81,
+    minutes_from_now: -429473.81,
     id: "TX-100089",
   },
   {
@@ -3485,7 +3485,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Swift Parcel",
     amount: -2073.49,
     status: "in_progress",
-    minutes_ago: 430567.49,
+    minutes_from_now: -430567.49,
     id: "TX-100088",
   },
   {
@@ -3493,7 +3493,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Bulk Paper Inc",
     amount: -1904.53,
     status: "completed",
-    minutes_ago: 431453.31,
+    minutes_from_now: -431453.31,
     id: "TX-100087",
   },
   {
@@ -3501,7 +3501,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Riverstone Ltd",
     amount: 714.87,
     status: "in_progress",
-    minutes_ago: 432380.59,
+    minutes_from_now: -432380.59,
     id: "TX-100086",
   },
   {
@@ -3509,7 +3509,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Artisan Leather",
     amount: 3229.37,
     status: "pending",
-    minutes_ago: 433488.36,
+    minutes_from_now: -433488.36,
     id: "TX-100085",
   },
   {
@@ -3517,7 +3517,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Nova Tech",
     amount: 2152.44,
     status: "pending",
-    minutes_ago: 434308.74,
+    minutes_from_now: -434308.74,
     id: "TX-100084",
   },
   {
@@ -3525,7 +3525,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Elara Moon",
     amount: -4227.38,
     status: "cancelled",
-    minutes_ago: 435495.94,
+    minutes_from_now: -435495.94,
     id: "TX-100083",
   },
   {
@@ -3533,7 +3533,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Cloud Infrastructure",
     amount: -110.83,
     status: "completed",
-    minutes_ago: 436514.95,
+    minutes_from_now: -436514.95,
     id: "TX-100082",
   },
   {
@@ -3541,7 +3541,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Elena Rodriguez",
     amount: -3822.68,
     status: "in_progress",
-    minutes_ago: 437400.51,
+    minutes_from_now: -437400.51,
     id: "TX-100081",
   },
   {
@@ -3549,7 +3549,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Elara Moon",
     amount: -4048.14,
     status: "completed",
-    minutes_ago: 438590.6,
+    minutes_from_now: -438590.6,
     id: "TX-100080",
   },
   {
@@ -3557,7 +3557,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Bulk Paper Inc",
     amount: -2562.01,
     status: "completed",
-    minutes_ago: 439865.47,
+    minutes_from_now: -439865.47,
     id: "TX-100079",
   },
   {
@@ -3565,7 +3565,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Lyra Belacqua",
     amount: -4517.31,
     status: "completed",
-    minutes_ago: 441097.56,
+    minutes_from_now: -441097.56,
     id: "TX-100078",
   },
   {
@@ -3573,7 +3573,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Elara Moon",
     amount: -2335.48,
     status: "in_progress",
-    minutes_ago: 442258.13,
+    minutes_from_now: -442258.13,
     id: "TX-100077",
   },
   {
@@ -3581,7 +3581,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Case #970",
     amount: 1212.44,
     status: "completed",
-    minutes_ago: 443160.79,
+    minutes_from_now: -443160.79,
     id: "TX-100076",
   },
   {
@@ -3589,7 +3589,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Artisan Leather",
     amount: -1215.91,
     status: "completed",
-    minutes_ago: 444128.38,
+    minutes_from_now: -444128.38,
     id: "TX-100075",
   },
   {
@@ -3597,7 +3597,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Marcus Thorne",
     amount: -3859.8,
     status: "completed",
-    minutes_ago: 445064.36,
+    minutes_from_now: -445064.36,
     id: "TX-100074",
   },
   {
@@ -3605,7 +3605,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Marcus Thorne",
     amount: -4710.18,
     status: "cancelled",
-    minutes_ago: 445878.33,
+    minutes_from_now: -445878.33,
     id: "TX-100073",
   },
   {
@@ -3613,7 +3613,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Elena Rodriguez",
     amount: 2995.57,
     status: "in_progress",
-    minutes_ago: 447176.41,
+    minutes_from_now: -447176.41,
     id: "TX-100072",
   },
   {
@@ -3621,7 +3621,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Bulk Paper Inc",
     amount: -3326.11,
     status: "completed",
-    minutes_ago: 448205.25,
+    minutes_from_now: -448205.25,
     id: "TX-100071",
   },
   {
@@ -3629,7 +3629,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Thorne Blackwood",
     amount: 817.34,
     status: "completed",
-    minutes_ago: 449040.39,
+    minutes_from_now: -449040.39,
     id: "TX-100070",
   },
   {
@@ -3637,7 +3637,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Thorne Blackwood",
     amount: -4588.13,
     status: "completed",
-    minutes_ago: 449853.94,
+    minutes_from_now: -449853.94,
     id: "TX-100069",
   },
   {
@@ -3645,7 +3645,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Nova Tech",
     amount: -1662.23,
     status: "completed",
-    minutes_ago: 450946.75,
+    minutes_from_now: -450946.75,
     id: "TX-100068",
   },
   {
@@ -3653,7 +3653,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Nova Tech",
     amount: 2198.71,
     status: "in_progress",
-    minutes_ago: 452047.06,
+    minutes_from_now: -452047.06,
     id: "TX-100067",
   },
   {
@@ -3661,7 +3661,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Iron Forge",
     amount: -4164.93,
     status: "completed",
-    minutes_ago: 453195.2,
+    minutes_from_now: -453195.2,
     id: "TX-100066",
   },
   {
@@ -3669,7 +3669,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Nova Tech",
     amount: -4433.26,
     status: "completed",
-    minutes_ago: 454448.25,
+    minutes_from_now: -454448.25,
     id: "TX-100065",
   },
   {
@@ -3677,7 +3677,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Bulk Paper Inc",
     amount: -2697.75,
     status: "pending",
-    minutes_ago: 455715.11,
+    minutes_from_now: -455715.11,
     id: "TX-100064",
   },
   {
@@ -3685,7 +3685,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Elena Rodriguez",
     amount: -640.63,
     status: "completed",
-    minutes_ago: 456862.01,
+    minutes_from_now: -456862.01,
     id: "TX-100063",
   },
   {
@@ -3693,7 +3693,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Elara Moon",
     amount: -2989.68,
     status: "pending",
-    minutes_ago: 457809.72,
+    minutes_from_now: -457809.72,
     id: "TX-100062",
   },
   {
@@ -3701,7 +3701,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Elara Moon",
     amount: -4914.81,
     status: "completed",
-    minutes_ago: 459080.02,
+    minutes_from_now: -459080.02,
     id: "TX-100061",
   },
   {
@@ -3709,7 +3709,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Sarah Jenkins",
     amount: 4545.63,
     status: "completed",
-    minutes_ago: 460311.99,
+    minutes_from_now: -460311.99,
     id: "TX-100060",
   },
   {
@@ -3717,7 +3717,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Lyra Belacqua",
     amount: -2775.13,
     status: "completed",
-    minutes_ago: 461497.98,
+    minutes_from_now: -461497.98,
     id: "TX-100059",
   },
   {
@@ -3725,7 +3725,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Marcus Thorne",
     amount: 3286.43,
     status: "completed",
-    minutes_ago: 462669.26,
+    minutes_from_now: -462669.26,
     id: "TX-100058",
   },
   {
@@ -3733,7 +3733,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Case #970",
     amount: 2096.39,
     status: "in_progress",
-    minutes_ago: 463679.43,
+    minutes_from_now: -463679.43,
     id: "TX-100057",
   },
   {
@@ -3741,7 +3741,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Green Leaf Co",
     amount: 1663.94,
     status: "pending",
-    minutes_ago: 464698.57,
+    minutes_from_now: -464698.57,
     id: "TX-100056",
   },
   {
@@ -3749,7 +3749,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Artisan Leather",
     amount: -3057.2,
     status: "completed",
-    minutes_ago: 465930.27,
+    minutes_from_now: -465930.27,
     id: "TX-100055",
   },
   {
@@ -3757,7 +3757,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Elena Rodriguez",
     amount: -140.41,
     status: "in_progress",
-    minutes_ago: 467165.68,
+    minutes_from_now: -467165.68,
     id: "TX-100054",
   },
   {
@@ -3765,7 +3765,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Sarah Jenkins",
     amount: -463.86,
     status: "completed",
-    minutes_ago: 468162.29,
+    minutes_from_now: -468162.29,
     id: "TX-100053",
   },
   {
@@ -3773,7 +3773,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Miriam Al-Fayed",
     amount: 450.6,
     status: "completed",
-    minutes_ago: 469260.62,
+    minutes_from_now: -469260.62,
     id: "TX-100052",
   },
   {
@@ -3781,7 +3781,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Miriam Al-Fayed",
     amount: -1972.26,
     status: "completed",
-    minutes_ago: 470243.09,
+    minutes_from_now: -470243.09,
     id: "TX-100051",
   },
   {
@@ -3789,7 +3789,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Case #970",
     amount: -144.47,
     status: "completed",
-    minutes_ago: 471347.79,
+    minutes_from_now: -471347.79,
     id: "TX-100050",
   },
   {
@@ -3797,7 +3797,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Iron Forge",
     amount: -4182.71,
     status: "cancelled",
-    minutes_ago: 472363.05,
+    minutes_from_now: -472363.05,
     id: "TX-100049",
   },
   {
@@ -3805,7 +3805,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Nova Tech",
     amount: -952.18,
     status: "completed",
-    minutes_ago: 473443.39,
+    minutes_from_now: -473443.39,
     id: "TX-100048",
   },
   {
@@ -3813,7 +3813,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Swift Parcel",
     amount: -339.89,
     status: "cancelled",
-    minutes_ago: 474308.31,
+    minutes_from_now: -474308.31,
     id: "TX-100047",
   },
   {
@@ -3821,7 +3821,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Elara Moon",
     amount: 3742.88,
     status: "completed",
-    minutes_ago: 475277.99,
+    minutes_from_now: -475277.99,
     id: "TX-100046",
   },
   {
@@ -3829,7 +3829,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Case #970",
     amount: -3055.62,
     status: "completed",
-    minutes_ago: 476492.3,
+    minutes_from_now: -476492.3,
     id: "TX-100045",
   },
   {
@@ -3837,7 +3837,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Artisan Leather",
     amount: -837.61,
     status: "pending",
-    minutes_ago: 477454.17,
+    minutes_from_now: -477454.17,
     id: "TX-100044",
   },
   {
@@ -3845,7 +3845,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Sarah Jenkins",
     amount: -1329.76,
     status: "in_progress",
-    minutes_ago: 478650.31,
+    minutes_from_now: -478650.31,
     id: "TX-100043",
   },
   {
@@ -3853,7 +3853,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Cloud Infrastructure",
     amount: 2851.59,
     status: "completed",
-    minutes_ago: 479618.4,
+    minutes_from_now: -479618.4,
     id: "TX-100042",
   },
   {
@@ -3861,7 +3861,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Miriam Al-Fayed",
     amount: -1849.51,
     status: "cancelled",
-    minutes_ago: 480512.91,
+    minutes_from_now: -480512.91,
     id: "TX-100041",
   },
   {
@@ -3869,7 +3869,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Elara Moon",
     amount: -179.57,
     status: "completed",
-    minutes_ago: 481500.74,
+    minutes_from_now: -481500.74,
     id: "TX-100040",
   },
   {
@@ -3877,7 +3877,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Elena Rodriguez",
     amount: -3846.64,
     status: "completed",
-    minutes_ago: 482787.54,
+    minutes_from_now: -482787.54,
     id: "TX-100039",
   },
   {
@@ -3885,7 +3885,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Miriam Al-Fayed",
     amount: -3154.53,
     status: "pending",
-    minutes_ago: 483956.05,
+    minutes_from_now: -483956.05,
     id: "TX-100038",
   },
   {
@@ -3893,7 +3893,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Bulk Paper Inc",
     amount: -3744.88,
     status: "cancelled",
-    minutes_ago: 484802.29,
+    minutes_from_now: -484802.29,
     id: "TX-100037",
   },
   {
@@ -3901,7 +3901,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Pixel Perfect",
     amount: -1610.03,
     status: "completed",
-    minutes_ago: 486091.86,
+    minutes_from_now: -486091.86,
     id: "TX-100036",
   },
   {
@@ -3909,7 +3909,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Elara Moon",
     amount: -426.25,
     status: "completed",
-    minutes_ago: 487142.49,
+    minutes_from_now: -487142.49,
     id: "TX-100035",
   },
   {
@@ -3917,7 +3917,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Miriam Al-Fayed",
     amount: -1120.74,
     status: "completed",
-    minutes_ago: 488017.24,
+    minutes_from_now: -488017.24,
     id: "TX-100034",
   },
   {
@@ -3925,7 +3925,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Artisan Leather",
     amount: -1836.83,
     status: "completed",
-    minutes_ago: 488893.97,
+    minutes_from_now: -488893.97,
     id: "TX-100033",
   },
   {
@@ -3933,7 +3933,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Elena Rodriguez",
     amount: -1721.79,
     status: "cancelled",
-    minutes_ago: 490115.28,
+    minutes_from_now: -490115.28,
     id: "TX-100032",
   },
   {
@@ -3941,7 +3941,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Bulk Paper Inc",
     amount: -4976.51,
     status: "cancelled",
-    minutes_ago: 491058.85,
+    minutes_from_now: -491058.85,
     id: "TX-100031",
   },
   {
@@ -3949,7 +3949,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Lyra Belacqua",
     amount: -3625.65,
     status: "pending",
-    minutes_ago: 492126.04,
+    minutes_from_now: -492126.04,
     id: "TX-100030",
   },
   {
@@ -3957,7 +3957,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Sarah Jenkins",
     amount: -2009.9,
     status: "completed",
-    minutes_ago: 493079.99,
+    minutes_from_now: -493079.99,
     id: "TX-100029",
   },
   {
@@ -3965,7 +3965,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Sarah Jenkins",
     amount: -2746.65,
     status: "completed",
-    minutes_ago: 494327.12,
+    minutes_from_now: -494327.12,
     id: "TX-100028",
   },
   {
@@ -3973,7 +3973,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Marcus Thorne",
     amount: 882.27,
     status: "completed",
-    minutes_ago: 495588.71,
+    minutes_from_now: -495588.71,
     id: "TX-100027",
   },
   {
@@ -3981,7 +3981,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Swift Parcel",
     amount: -3911.53,
     status: "completed",
-    minutes_ago: 496435.16,
+    minutes_from_now: -496435.16,
     id: "TX-100026",
   },
   {
@@ -3989,7 +3989,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Iron Forge",
     amount: -926.59,
     status: "pending",
-    minutes_ago: 497654.42,
+    minutes_from_now: -497654.42,
     id: "TX-100025",
   },
   {
@@ -3997,7 +3997,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Lyra Belacqua",
     amount: 4940.72,
     status: "pending",
-    minutes_ago: 498857.93,
+    minutes_from_now: -498857.93,
     id: "TX-100024",
   },
   {
@@ -4005,7 +4005,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Elara Moon",
     amount: -4793.49,
     status: "completed",
-    minutes_ago: 499788.18,
+    minutes_from_now: -499788.18,
     id: "TX-100023",
   },
   {
@@ -4013,7 +4013,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Riverstone Ltd",
     amount: -4645.47,
     status: "in_progress",
-    minutes_ago: 500759.56,
+    minutes_from_now: -500759.56,
     id: "TX-100022",
   },
   {
@@ -4021,7 +4021,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Marcus Thorne",
     amount: -1080.7,
     status: "completed",
-    minutes_ago: 501645.82,
+    minutes_from_now: -501645.82,
     id: "TX-100021",
   },
   {
@@ -4029,7 +4029,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Iron Forge",
     amount: -4953.62,
     status: "completed",
-    minutes_ago: 502897.69,
+    minutes_from_now: -502897.69,
     id: "TX-100020",
   },
   {
@@ -4037,7 +4037,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Pixel Perfect",
     amount: -218.26,
     status: "pending",
-    minutes_ago: 503811.81,
+    minutes_from_now: -503811.81,
     id: "TX-100019",
   },
   {
@@ -4045,7 +4045,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Artisan Leather",
     amount: 1829.65,
     status: "completed",
-    minutes_ago: 504796.9,
+    minutes_from_now: -504796.9,
     id: "TX-100018",
   },
   {
@@ -4053,7 +4053,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Pixel Perfect",
     amount: -1505.67,
     status: "pending",
-    minutes_ago: 505742.69,
+    minutes_from_now: -505742.69,
     id: "TX-100017",
   },
   {
@@ -4061,7 +4061,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Artisan Leather",
     amount: -2117.5,
     status: "completed",
-    minutes_ago: 507000.17,
+    minutes_from_now: -507000.17,
     id: "TX-100016",
   },
   {
@@ -4069,7 +4069,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Elara Moon",
     amount: -3590.23,
     status: "completed",
-    minutes_ago: 507834.16,
+    minutes_from_now: -507834.16,
     id: "TX-100015",
   },
   {
@@ -4077,7 +4077,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Marcus Thorne",
     amount: 933.35,
     status: "completed",
-    minutes_ago: 508881.85,
+    minutes_from_now: -508881.85,
     id: "TX-100014",
   },
   {
@@ -4085,7 +4085,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Pixel Perfect",
     amount: 4505.96,
     status: "completed",
-    minutes_ago: 509892.45,
+    minutes_from_now: -509892.45,
     id: "TX-100013",
   },
   {
@@ -4093,7 +4093,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Iron Forge",
     amount: -1555.37,
     status: "cancelled",
-    minutes_ago: 510946.86,
+    minutes_from_now: -510946.86,
     id: "TX-100012",
   },
   {
@@ -4101,7 +4101,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Bulk Paper Inc",
     amount: -547.21,
     status: "cancelled",
-    minutes_ago: 511860.05,
+    minutes_from_now: -511860.05,
     id: "TX-100011",
   },
   {
@@ -4109,7 +4109,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Nova Tech",
     amount: -434.74,
     status: "completed",
-    minutes_ago: 513066.33,
+    minutes_from_now: -513066.33,
     id: "TX-100010",
   },
   {
@@ -4117,7 +4117,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Bulk Paper Inc",
     amount: 593.99,
     status: "completed",
-    minutes_ago: 513966.52,
+    minutes_from_now: -513966.52,
     id: "TX-100009",
   },
   {
@@ -4125,7 +4125,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Cloud Infrastructure",
     amount: -1425.49,
     status: "completed",
-    minutes_ago: 514885.89,
+    minutes_from_now: -514885.89,
     id: "TX-100008",
   },
   {
@@ -4133,7 +4133,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Pixel Perfect",
     amount: -3802.09,
     status: "completed",
-    minutes_ago: 515783.67,
+    minutes_from_now: -515783.67,
     id: "TX-100007",
   },
   {
@@ -4141,7 +4141,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Cloud Infrastructure",
     amount: 4354.23,
     status: "completed",
-    minutes_ago: 516617.84,
+    minutes_from_now: -516617.84,
     id: "TX-100006",
   },
   {
@@ -4149,7 +4149,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Cloud Infrastructure",
     amount: -4429.75,
     status: "completed",
-    minutes_ago: 517704.37,
+    minutes_from_now: -517704.37,
     id: "TX-100005",
   },
   {
@@ -4157,7 +4157,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Nova Tech",
     amount: 4276.96,
     status: "completed",
-    minutes_ago: 518769.76,
+    minutes_from_now: -518769.76,
     id: "TX-100004",
   },
   {
@@ -4165,7 +4165,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Elara Moon",
     amount: -4868.1,
     status: "completed",
-    minutes_ago: 519771.28,
+    minutes_from_now: -519771.28,
     id: "TX-100003",
   },
   {
@@ -4173,7 +4173,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Riverstone Ltd",
     amount: -4331.47,
     status: "pending",
-    minutes_ago: 520571.37,
+    minutes_from_now: -520571.37,
     id: "TX-100002",
   },
   {
@@ -4181,7 +4181,7 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Sarah Jenkins",
     amount: -4140.81,
     status: "pending",
-    minutes_ago: 521787.32,
+    minutes_from_now: -521787.32,
     id: "TX-100001",
   },
   {
@@ -4189,13 +4189,11 @@ const relativeDateTransactions: RelativeDatetimeTransaction[] = [
     actor: "Green Leaf Co",
     amount: 4564.96,
     status: "completed",
-    minutes_ago: 523043.8,
+    minutes_from_now: -523043.8,
     id: "TX-100000",
   },
 ];
 
-const transactions = fromMinutesAgoToAbsoluteDatetimeItems(
-  relativeDateTransactions,
-);
+const transactions = setDatetimeFromMinutesFromNow(relativeDateTransactions);
 
 export default transactions;

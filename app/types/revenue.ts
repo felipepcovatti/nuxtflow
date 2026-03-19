@@ -33,6 +33,7 @@ export interface Product {
 
 export type DepartmentRevenuesByDate = {
   date: string;
+  days_from_today: number;
   revenues: {
     [department in Department]: number;
   };

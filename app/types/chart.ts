@@ -14,7 +14,7 @@ export interface RevenueProductValue {
 
 export type DepartmentRevenuesChartRecord = {
   date: string;
-  daysFromToday: number;
+  days_from_today: number;
 } & {
   [department in Department]: number;
 };

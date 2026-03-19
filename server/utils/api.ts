@@ -1,4 +1,5 @@
 import { PERIOD_PRESETS, PeriodPreset } from "~/constants/api";
+import { addDays, addMinutes, format, formatISO, startOfToday } from "date-fns";
 
 export function getPeriod(query: EventHandlerRequest["query"]) {
   const period = PERIOD_PRESETS.find((period) => period === query?.period);
@@ -54,52 +55,45 @@ export function filterItemsWithDateByDateRange<T extends { date: string }>(
   return items.filter(({ date }) => date >= period.start && date <= period.end);
 }
 
-export interface MinutesAgoItem {
-  minutes_ago: number;
+export interface MinutesFromNowItem {
+  minutes_from_now: number;
 }
 
-type AbsoluteDatetimeWithoutMinutesAgo<T> = Omit<T, "minutes_ago"> & {
+type AbsoluteDatetime<T> = T & {
   datetime: string;
 };
 
-export function fromMinutesAgoToAbsoluteDatetimeItems<T extends MinutesAgoItem>(
+export function setDatetimeFromMinutesFromNow<T extends MinutesFromNowItem>(
   items: T[],
-): AbsoluteDatetimeWithoutMinutesAgo<T>[] {
-  const now = Date.now();
-
-  return items.map<AbsoluteDatetimeWithoutMinutesAgo<T>>(
-    ({ minutes_ago, ...rest }) => {
-      const timestamp = now - minutes_ago * 60_000;
-
-      return {
-        ...rest,
-        datetime: new Date(timestamp).toISOString(),
-      };
-    },
-  );
+): AbsoluteDatetime<T>[] {
+  const now = new Date();
+  return items.map<AbsoluteDatetime<T>>((item) => {
+    const date = addMinutes(now, item.minutes_from_now);
+    return {
+      ...item,
+      datetime: formatISO(date),
+    };
+  });
 }
 
-export interface DaysAgoItem {
-  days_ago: number;
+export interface DaysFromTodayItem {
+  days_from_today: number;
 }
 
-type AbsoluteDateWithoutDaysAgo<T> = Omit<T, "days_ago"> & {
+type AbsoluteDate<T> = T & {
   date: string;
 };
 
-export function fromDaysAgoToAbsoluteDayItems<T extends DaysAgoItem>(
+export function setDateFromDaysFromToday<T extends DaysFromTodayItem>(
   items: T[],
-): AbsoluteDateWithoutDaysAgo<T>[] {
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
-  const startOfToday = today.getTime();
-
-  return items.map(({ days_ago, ...rest }) => {
-    const timestamp = startOfToday - days_ago * 86_400_000;
-
+): AbsoluteDate<T>[] {
+  const today = startOfToday();
+  return items.map<AbsoluteDate<T>>((item) => {
+    const date = addDays(today, item.days_from_today);
+    console.log(date);
     return {
-      ...rest,
-      date: new Date(timestamp).toISOString().split("T")[0],
-    } as AbsoluteDateWithoutDaysAgo<T>;
+      ...item,
+      date: format(date, "yyyy-MM-dd"),
+    };
   });
 }
