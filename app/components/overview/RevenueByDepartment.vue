@@ -11,8 +11,16 @@ import { GroupedBar } from "@unovis/ts";
 import ChartTooltipContent from "../chart/tooltip/Content.vue";
 import type { LegendItem } from "~/types/chart";
 import type { Department, DepartmentRevenuesByDate } from "~/types/revenue";
-import { format, parseISO } from "date-fns";
-import { render } from "vue";
+import {
+  render,
+  ref,
+  computed,
+  useTemplateRef,
+  watch,
+  h,
+  type VNode,
+} from "vue";
+import { format, subDays, subYears } from "date-fns";
 
 const DEPARTMENTS: ReadonlyArray<Department> = [
   "electronics",
@@ -25,11 +33,20 @@ const COLORS: ReadonlyArray<string> = [
   "var(--color-orange-300)",
   "var(--color-teal-400)",
 ];
+const { isExtraSmall } = useIsExtraSmall();
+
+const { formatAsMoney } = useMoneyFormatter();
+const { formatAsShortDate, formatAsWeekday } = useDateFormatter();
+
+const minDate = format(subYears(new Date(), 1), "yyyy-MM-dd");
+
+const dateRange = ref({
+  start: format(subDays(new Date(), 7), "yyyy-MM-dd"),
+  end: format(new Date(), "yyyy-MM-dd"),
+});
 
 const { data, error, refresh, pending } = useFetch("/api/revenue/departments", {
-  query: {
-    start: "2026-03-13",
-  },
+  query: dateRange,
 });
 
 const dateGetter = ({ days_from_today }: DepartmentRevenuesByDate) => {
@@ -48,8 +65,9 @@ const xTickFormat = (value: number) => {
     ({ days_from_today }) => days_from_today === value,
   );
   if (!record) return value;
-  const dateFormat = value < -6 ? "MMM d" : "EEEE";
-  return format(parseISO(record.date), dateFormat);
+  return value < -6
+    ? formatAsShortDate(record.date)
+    : formatAsWeekday(record.date);
 };
 
 const revenueGetters = DEPARTMENTS.map(
@@ -117,10 +135,6 @@ watch(hoveredDayOfTheWeek, (hovered) =>
 // watch(hoveredProductIndex, (hovered) =>
 //   handleMutedState("data-product-index", hovered),
 // );
-
-const { isExtraSmall } = useIsExtraSmall();
-
-const { formatAsMoney } = useMoneyFormatter();
 </script>
 
 <template>
@@ -129,7 +143,13 @@ const { formatAsMoney } = useMoneyFormatter();
     :title="data ? formatAsMoney(data.data.total_revenue) : ''"
     :subtitle="$t('siteTotalRevenue', { site: 'example.com' })"
   >
-    <template #header-end>{{ data?.meta.period }}</template>
+    <template #header-end>
+      <UiDateRangePicker
+        v-model="dateRange"
+        min-preset="lastYear"
+        disable-future
+      />
+    </template>
     <UiSpinner v-if="pending" />
     <div
       v-else-if="error"

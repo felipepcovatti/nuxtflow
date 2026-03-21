@@ -1,16 +1,16 @@
 import { RevenuesByDepartmentResponse } from "~/types/revenue";
 import departmentRevenues from "~~/server/data/departmentRevenuesByDay";
 import { filterItemsWithDateByDateRange } from "~~/server/utils/api";
+import { format, subDays } from "date-fns";
 
 export default defineEventHandler(async (event) => {
   const query = getQuery(event);
 
   const isoDateRegex = /^\d{4}-\d{2}-\d{2}$/;
 
-  const today = new Date().toISOString().slice(0, 10);
-  const oneYearAgo = new Date(Date.now() - 365 * 86_400_000)
-    .toISOString()
-    .slice(0, 10);
+  const fallbackDate = new Date();
+  const today = format(fallbackDate, "yyyy-MM-dd");
+  const oneYearAgo = format(subDays(fallbackDate, 365), "yyyy-MM-dd");
 
   const queryStart = String(query.start ?? "");
   const queryEnd = String(query.end ?? "");

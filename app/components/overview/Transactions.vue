@@ -35,7 +35,7 @@ watch(query, (query, { page: previousPage }) => {
 
 const transactions = computed(() => data.value?.data || []);
 
-const { formatAsDate } = useDateTimeFormatter();
+const { formatDate } = useDateFormatter();
 
 const { formatAsMoney } = useMoneyFormatter();
 
@@ -86,7 +86,7 @@ const { groupState, isSelected, toggle } = useCheckboxGroup(transactions);
               </i18n-t>
             </td>
             <td class="min-w-30">
-              {{ formatAsDate(transaction.datetime) }}
+              {{ formatDate(transaction.datetime) }}
             </td>
             <td class="font-semibold text-white">
               {{ formatAsMoney(transaction.amount) }}

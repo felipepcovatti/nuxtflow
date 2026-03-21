@@ -90,7 +90,6 @@ export function setDateFromDaysFromToday<T extends DaysFromTodayItem>(
   const today = startOfToday();
   return items.map<AbsoluteDate<T>>((item) => {
     const date = addDays(today, item.days_from_today);
-    console.log(date);
     return {
       ...item,
       date: format(date, "yyyy-MM-dd"),
