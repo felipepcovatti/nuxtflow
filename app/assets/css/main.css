@@ -181,7 +181,7 @@
     }
   }
   .button {
-    @apply inline-flex min-w-30 cursor-pointer justify-center gap-1 rounded-lg border border-gray-600 px-3 py-2 text-center text-sm transition-colors hover:bg-gray-700 hover:text-white;
+    @apply inline-flex min-w-30 cursor-pointer items-center justify-center gap-1 rounded-lg border border-gray-600 px-3 py-2 text-center text-sm transition-colors hover:bg-gray-700 hover:text-white;
   }
 }
 

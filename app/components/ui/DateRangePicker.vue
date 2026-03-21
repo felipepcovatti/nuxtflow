@@ -6,8 +6,9 @@ import {
   type CalendarDate,
 } from "@internationalized/date";
 
-// ---- i18n ----
+// ---- i18n & Formatter ----
 const { locale } = useI18n({ useScope: "global" });
+const { formatAsShortDate } = useDateFormatter();
 
 // ---- Props ----
 const props = defineProps<{
@@ -30,10 +31,6 @@ function getToday(): CalendarDate {
 
 function isoToDate(date?: string): CalendarDate | undefined {
   return date ? parseDate(date) : undefined;
-}
-
-function dateToISO(date: CalendarDate): string {
-  return date.toString();
 }
 
 // ---- Min / Max ----
@@ -89,26 +86,18 @@ watch(internalRange, (val) => {
     return;
   }
 
-  // ⛔ Only sync when complete
   if (!start || !end) return;
 
-  const next = {
-    start: dateToISO(start),
-    end: dateToISO(end),
+  range.value = {
+    start: start.toString(),
+    end: end.toString(),
   };
 
-  // ✅ Prevent unnecessary updates
-  if (next.start === range.value.start && next.end === range.value.end) {
-    return;
-  }
-
-  range.value = next;
-
-  // ✅ UX: close on full selection
+  // UX: close on full selection
   isOpen.value = false;
 });
 
-// ---- UX: autofill end date on close ----
+// UX: autofill end date on close
 watch(isOpen, (open) => {
   if (!open && internalRange.value.start && !internalRange.value.end) {
     internalRange.value = {
@@ -128,53 +117,24 @@ watch(isOpen, (open) => {
     :locale="locale"
     class="relative isolate flex w-full justify-end"
   >
-    <DateRangePickerField
-      v-slot="{ segments }"
-      class="focus-within:ring-primary-500 flex w-fit items-center rounded-lg border border-gray-600 bg-gray-700 px-3 py-1.5 text-sm text-white focus-within:ring-2"
-    >
-      <!-- Start -->
-      <template
-        v-for="(item, index) in segments.start"
-        :key="'start-' + item.part + '-' + index"
-      >
-        <DateRangePickerInput
-          v-if="item.part !== 'literal'"
-          :part="item.part"
-          type="start"
-          class="rounded px-0.5 tabular-nums outline-none focus:bg-gray-600 focus:text-white"
-        >
-          {{ item.value }}
-        </DateRangePickerInput>
-        <span v-else class="text-gray-400">{{ item.value }}</span>
-      </template>
-
-      <span class="mx-2 text-gray-500">-</span>
-
-      <!-- End -->
-      <template
-        v-for="(item, index) in segments.end"
-        :key="'end-' + item.part + '-' + index"
-      >
-        <DateRangePickerInput
-          v-if="item.part !== 'literal'"
-          :part="item.part"
-          type="end"
-          class="rounded px-0.5 tabular-nums outline-none focus:bg-gray-600 focus:text-white"
-        >
-          {{ item.value }}
-        </DateRangePickerInput>
-        <span v-else class="text-gray-400">{{ item.value }}</span>
-      </template>
-
-      <DateRangePickerTrigger
-        class="ml-2 cursor-pointer text-gray-400 hover:text-white"
-      >
-        <Icon name="mdi:calendar" class="h-4 w-4" />
-      </DateRangePickerTrigger>
-    </DateRangePickerField>
+    <DateRangePickerTrigger as-child>
+      <button class="button min-w-37 justify-start gap-2">
+        <Icon name="flowbite:calendar-month-solid" />
+        <div class="flex flex-1 justify-between gap-1">
+          <div v-if="internalRange.start">
+            {{ formatAsShortDate(internalRange.start.toString()) }}
+          </div>
+          <div v-if="internalRange.end">-</div>
+          <div v-if="internalRange.end">
+            {{ formatAsShortDate(internalRange.end.toString()) }}
+          </div>
+        </div>
+      </button>
+    </DateRangePickerTrigger>
 
     <DateRangePickerContent
-      class="z-50 mt-1 w-auto rounded-lg border border-gray-600 bg-gray-800 p-3 font-sans text-white shadow-xl outline-none"
+      align="end"
+      class="z-50 mt-2 w-auto rounded-lg border border-gray-600 bg-gray-800 p-3 font-sans text-white shadow-xl outline-none"
     >
       <DateRangePickerCalendar v-slot="{ grid, weekDays }" class="p-1">
         <DateRangePickerHeader
@@ -230,7 +190,7 @@ watch(isOpen, (open) => {
                   <DateRangePickerCellTrigger
                     :day="date"
                     :month="month.value"
-                    class="focus:ring-primary-400 data-[today]:text-primary-400 data-[selection-start]:bg-primary-600 data-[selection-end]:bg-primary-600 inline-flex h-full w-full items-center justify-center rounded p-0 text-sm whitespace-nowrap hover:bg-gray-700 focus:ring-2 focus:outline-none data-[disabled]:text-gray-500 data-[disabled]:opacity-50 data-[highlighted]:bg-gray-700 data-[outside-view]:text-gray-500 data-[selected]:bg-gray-700 data-[selection-end]:rounded-r-md data-[selection-end]:text-white data-[selection-start]:rounded-l-md data-[selection-start]:text-white data-[today]:font-bold"
+                    class="focus:ring-primary-400 data-today:text-primary-400 data-selection-start:bg-primary-600 data-selection-end:bg-primary-600 inline-flex h-full w-full items-center justify-center rounded p-0 text-sm whitespace-nowrap not-data-disabled:cursor-pointer not-data-disabled:hover:bg-gray-700 focus:ring-2 focus:outline-none data-disabled:text-gray-500 data-disabled:opacity-50 data-highlighted:bg-gray-700 data-outside-view:text-gray-500 data-selected:bg-gray-700 data-selection-end:rounded-r-md data-selection-end:text-white data-selection-start:rounded-l-md data-selection-start:text-white data-today:font-bold"
                   />
                 </DateRangePickerCell>
               </DateRangePickerGridRow>

@@ -38,10 +38,8 @@ const { isExtraSmall } = useIsExtraSmall();
 const { formatAsMoney } = useMoneyFormatter();
 const { formatAsShortDate, formatAsWeekday } = useDateFormatter();
 
-const minDate = format(subYears(new Date(), 1), "yyyy-MM-dd");
-
 const dateRange = ref({
-  start: format(subDays(new Date(), 7), "yyyy-MM-dd"),
+  start: format(subDays(new Date(), 6), "yyyy-MM-dd"),
   end: format(new Date(), "yyyy-MM-dd"),
 });
 
