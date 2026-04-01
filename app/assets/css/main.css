@@ -161,15 +161,25 @@
   --color-pink-900: #751a3d;
 }
 
+@layer base {
+  body {
+    font-family: var(--font-sans);
+    --vis-axis-tick-label-font-size: 0.875rem;
+    --vis-crosshair-line-stroke-color: var(--color-gray-400);
+    --vis-map-feature-color: var(--color-gray-700);
+    --vis-map-boundary-color: var(--color-gray-900);
+  }
+}
+
 @layer components {
   .heading-1 {
-    @apply mb-2 text-3xl/tight font-bold text-white;
+    @apply text-3xl/tight font-bold text-white;
   }
   .heading-2 {
-    @apply mb-1 text-2xl/tight font-bold text-white;
+    @apply text-2xl/tight font-bold text-white;
   }
   .heading-3 {
-    @apply mb-0.5 text-base/tight font-semibold text-white;
+    @apply text-base/tight font-semibold text-white;
   }
   .icon-button {
     @apply relative flex size-9 cursor-pointer items-center justify-center rounded-full text-gray-400 focus:bg-gray-700/60;
@@ -180,11 +190,29 @@
       @apply absolute top-1/2 left-1/2 size-12 translate-[-50%] pointer-fine:hidden;
     }
   }
+  .icon-button--outline {
+    @apply rounded-lg border border-gray-600 hover:bg-gray-700;
+  }
+  .button {
+    @apply inline-flex min-w-30 items-center justify-center gap-1 not-disabled:cursor-pointer;
+    @apply rounded-lg border border-gray-600 px-3 py-2;
+    @apply text-center text-sm whitespace-nowrap text-gray-400;
+    @apply transition-colors hover:text-white not-disabled:hover:bg-gray-700;
+    @apply disabled:border-gray-700 disabled:text-gray-600;
+  }
+  .table {
+    @apply w-full table-fixed;
+    thead {
+      @apply uppercase;
+    }
+
+    td,
+    th {
+      @apply p-4 text-sm;
+    }
+  }
 }
 
-@layer base {
-  body {
-    font-family: var(--font-sans);
-    --vis-axis-tick-label-font-size: 0.875rem;
-  }
+@utility tooltip {
+  @apply rounded-lg border-0 bg-gray-700 p-3 text-sm/loose text-white shadow-lg;
 }

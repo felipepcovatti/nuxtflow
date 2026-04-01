@@ -35,7 +35,7 @@ watch(isPinned, (fixed) => {
     :data-expanded="isExpanded"
     @mouseleave="!isPinned && (isExpanded = false)"
     @mouseenter="!isPinned && (isExpanded = true)"
-    class="hidden w-14 overflow-x-hidden bg-gray-800 text-white transition-[width] duration-200 ease-in-out hover:delay-200 data-[expanded=true]:w-64 sm:block"
+    class="sticky top-(--header-height) hidden h-[calc(100vh-var(--header-height))] w-14 overflow-y-auto bg-gray-800 text-white transition-[width] duration-200 ease-in-out hover:delay-200 data-[expanded=true]:w-64 sm:block"
   >
     <LayoutNavigationItems ref="navigation-items" />
   </div>

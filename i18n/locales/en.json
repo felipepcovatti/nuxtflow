@@ -1,0 +1,107 @@
+{
+  "departments": {
+    "electronics": "Electronics",
+    "home_living": "Home & Living",
+    "clothing_accessories": "Clothing & Accessories"
+  },
+  "categories": {
+    "audio": "Audio",
+    "peripherals": "Peripherals",
+    "charging": "Charging & Power",
+    "furniture": "Furniture",
+    "kitchen": "Kitchen & Dining",
+    "devices": "Devices",
+    "lighting": "Lighting",
+    "footwear": "Footwear",
+    "tops": "Tops & Apparel",
+    "bags": "Bags & Luggage",
+    "outerwear": "Outerwear",
+    "stationery": "Stationery",
+    "wellness": "Wellness",
+    "decor": "Decor"
+  },
+  "search": "Search",
+  "dataPeriods": {
+    "7D": "Last 7 days",
+    "30D": "Last 30 days",
+    "90D": "Last 90 days",
+    "1Y": "Last 1 year"
+  },
+  "today": "Today",
+  "yesterday": "Yesterday",
+  "navigation": "Navigation",
+  "navigationItems": {
+    "overview": "Overview",
+    "pages": "Pages",
+    "e-commerce": "E-commerce",
+    "messages": "Messages",
+    "authentication": "Authentication"
+  },
+  "navigationSubitems": {
+    "kanban": "Kanban",
+    "calendar": "Calendar",
+    "chat-room": "Chat Room",
+    "product-list": "Product List",
+    "billing": "Billing",
+    "invoice": "Invoice",
+    "sign-in": "Sign In",
+    "sign-up": "Sign Up",
+    "forgot-password": "Forgot Password",
+    "reset-password": "Reset Password"
+  },
+  "footerNavigationItems": {
+    "about": "About",
+    "pricing": "Pricing",
+    "help": "Help",
+    "terms-and-conditions": "Terms & conditions",
+    "cookies": "Cookies",
+    "contact": "Contact"
+  },
+  "tryAgain": "Try again",
+  "visits": "Visits",
+  "visitsByCountry": "Visits by country",
+  "visitsByDevice": "Visits by device",
+  "devices": {
+    "mobile": "Mobile",
+    "desktop": "Desktop",
+    "tablet": "Tablet"
+  },
+  "vsLast3Months": "vs last 3 months",
+  "siteTotalRevenue": "Total revenue for { site }",
+  "amount": "Amount",
+  "transactions": "Transactions",
+  "date": "Date",
+  "status": "Status",
+  "allStatuses": "All statuses",
+  "viewCountryReport": "View country report",
+  "viewProductReport": "View product report",
+  "viewUserReport": "View user report",
+  "totalIncome": "Total Income",
+  "totalOutcome": "Total Outcome",
+  "totalProfit": "Total Profit",
+  "downloadReceipt": "Download receipt | Download receipts",
+  "newCustomers": "New Customers",
+  "goBack": "Go back",
+  "onlyOverviewAvailable": "Only the Overview page is currently available.",
+  "transactionStatuses": {
+    "completed": "Complete",
+    "cancelled": "Cancelled",
+    "in_progress": "In progress",
+    "failed": "Cancelled",
+    "pending": "Pending"
+  },
+  "transactionDescriptions": {
+    "payment_from": "Payment from {actor}",
+    "refund_to": "Refund to {actor}",
+    "payout_to": "Payout to {actor}",
+    "fee_logistic": "Logistic Fee: {actor}",
+    "adjustment_dispute": "Adjustment: {actor}",
+    "purchase_supply": "Supply Purchase: {actor}"
+  },
+  "pagination": {
+    "next": "Next page",
+    "previous": "Previous page",
+    "itemsInfo": "Showing {from}-{to} of {total}"
+  },
+  "topProductsByRevenue": "Top products by revenue"
+}

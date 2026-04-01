@@ -38,7 +38,7 @@ describe("Card", () => {
     const wrapper = mount(Card, {
       props: { title: "Visible Header" },
       slots: {
-        "header-end": "<button data-test='header-btn'>Action</button>",
+        headerEnd: "<button data-test='header-btn'>Action</button>",
       },
     });
 

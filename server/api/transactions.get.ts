@@ -1,0 +1,50 @@
+import { TransactionResponse } from "~/types/transactions";
+import getTransactions from "../data/transactions";
+import { filterItemsWithDatetimeByPeriod, getPeriod } from "../utils/api";
+
+export default defineEventHandler(async (event) => {
+  const query = getQuery(event);
+
+  const period = getPeriod(query);
+
+  const page = Math.max(1, Number(query.page ?? 1));
+  const pageSize = Math.max(1, Number(query.page_size ?? 10));
+  const referenceTime = getHeader(event, "x-reference-time");
+
+  const transactions = filterItemsWithDatetimeByPeriod(
+    getTransactions(referenceTime),
+    period,
+  );
+
+  const status = query.status?.toString();
+
+  const filteredTransactions = status
+    ? transactions.filter((transaction) => transaction.status === status)
+    : transactions;
+
+  const search = String(query.search ?? "");
+
+  const searchedTransactions = filteredTransactions.filter((transaction) =>
+    transaction.actor.toLowerCase().includes(search.toLowerCase()),
+  );
+
+  const total = searchedTransactions.length;
+
+  const start = (page - 1) * pageSize;
+  const end = start + pageSize;
+
+  const paginatedTransactions = searchedTransactions.slice(start, end);
+
+  const pageCount = Math.ceil(total / pageSize);
+
+  return {
+    data: paginatedTransactions,
+    meta: {
+      period,
+      page,
+      page_size: pageSize,
+      total,
+      page_count: pageCount,
+    },
+  } satisfies TransactionResponse;
+});
