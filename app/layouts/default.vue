@@ -16,9 +16,11 @@ const isNavigationDrawerOpen = ref(false);
         id="navigation-sidebar"
         v-model:pinned="isNavigationSidebarPinned"
       />
-      <main class="p-4">
-        <slot />
-      </main>
+      <div class="grid grid-rows-[1fr_auto] gap-4 p-4">
+        <main class="@container">
+          <slot />
+        </main>
+      </div>
     </div>
     <LayoutNavigationDrawer
       id="navigation-drawer"

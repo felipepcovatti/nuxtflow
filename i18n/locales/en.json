@@ -1,0 +1,37 @@
+{
+  "departments": {
+    "electronics": "Electronics",
+    "home_living": "Home & Living",
+    "clothing_accessories": "Clothing & Accessories"
+  },
+  "search": "Search",
+  "siteTotalRevenue": "Total revenue for { site }",
+  "dataPeriods": {
+    "7D": "Last 7 days",
+    "30D": "Last 30 days",
+    "90D": "Last 90 days",
+    "1Y": "Last 1 year"
+  },
+  "today": "Today",
+  "yesterday": "Yesterday",
+  "navigation": "Navigation",
+  "navigationItems": {
+    "overview": "Overview",
+    "pages": "Pages",
+    "e-commerce": "E-commerce",
+    "messages": "Messages",
+    "authentication": "Authentication"
+  },
+  "navigationSubitems": {
+    "kanban": "Kanban",
+    "calendar": "Calendar",
+    "chat-room": "Chat Room",
+    "product-list": "Product List",
+    "billing": "Billing",
+    "invoice": "Invoice",
+    "sign-in": "Sign In",
+    "sign-up": "Sign Up",
+    "forgot-password": "Forgot Password",
+    "reset-password": "Reset Password"
+  }
+}

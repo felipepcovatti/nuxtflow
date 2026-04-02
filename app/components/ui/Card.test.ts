@@ -11,7 +11,7 @@ describe("Card", () => {
       },
     });
 
-    expect(wrapper.find(".heading-2").text()).toBe("Revenue");
+    expect(wrapper.find(".section-title").text()).toBe("Revenue");
     expect(wrapper.text()).toContain("January 2026");
     expect(wrapper.find("header").exists()).toBe(true);
   });
@@ -34,11 +34,11 @@ describe("Card", () => {
     expect(wrapper.get('[data-test="content"]').text()).toBe("Main Content");
   });
 
-  it("renders header-end slot content within the header", () => {
+  it("renders headerEnd slot content within the header", () => {
     const wrapper = mount(Card, {
       props: { title: "Visible Header" },
       slots: {
-        "header-end": "<button data-test='header-btn'>Action</button>",
+        headerEnd: "<button data-test='header-btn'>Action</button>",
       },
     });
 

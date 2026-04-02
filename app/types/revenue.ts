@@ -1,20 +1,21 @@
-export interface Product {
-  id: string;
-  name: string;
-}
+export type Department = "electronics" | "home_living" | "clothing_accessories";
 
-export interface ProductRevenue {
-  product_id: string;
-  amount: number;
-}
+export type DepartmentRevenuesByDate = {
+  date: string;
+  revenues: {
+    [department in Department]: number;
+  };
+};
 
-export interface WeekRecord {
-  day_of_the_week: number;
-  product_revenues: ProductRevenue[];
-}
-
-export interface Revenue {
-  total: number;
-  week_records: WeekRecord[];
-  products: Product[];
+export interface RevenuesByDepartmentResponse {
+  data: {
+    revenues: DepartmentRevenuesByDate[];
+    total_revenue: number;
+  };
+  meta: {
+    period: {
+      start: string;
+      end: string;
+    };
+  };
 }

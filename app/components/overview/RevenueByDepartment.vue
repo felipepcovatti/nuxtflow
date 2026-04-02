@@ -1,0 +1,83 @@
+<script setup lang="ts">
+import type { Department, DepartmentRevenuesByDate } from "~/types/revenue";
+import { ref, computed } from "vue";
+import {
+  addDays,
+  endOfToday,
+  isAfter,
+  isToday,
+  isYesterday,
+  startOfToday,
+} from "date-fns";
+
+const DEPARTMENTS: ReadonlyArray<{ id: Department; color: string }> = [
+  { id: "electronics", color: "var(--color-primary-700)" },
+  { id: "home_living", color: "var(--color-orange-300)" },
+  { id: "clothing_accessories", color: "var(--color-teal-400)" },
+];
+
+const { formatAsMoney } = useMoneyFormatter();
+const { formatAsShortDate, formatAsWeekday, formatAsFullDate } =
+  useDateFormatter();
+
+const dateRange = ref({
+  start: addDays(startOfToday(), -6).toISOString(),
+  end: endOfToday().toISOString(),
+});
+
+const { data, pending } = useApi("/api/revenue/departments", {
+  query: dateRange,
+});
+
+const revenues = computed(() => data.value?.data.revenues.toReversed() || []);
+
+type ChartType = "grouped-bar" | "stacked-bar" | "stacked-area";
+
+const chartType = computed<ChartType>(() => {
+  const { length } = revenues.value;
+  if (length < 8) return "grouped-bar";
+  if (length < 31) return "stacked-bar";
+  return "stacked-area";
+});
+
+function itemXGetter(record: DepartmentRevenuesByDate) {
+  if (isToday(record.date)) return $t("today");
+  if (isYesterday(record.date)) return $t("yesterday");
+  if (isAfter(record.date, addDays(endOfToday(), -7)))
+    return formatAsWeekday(record.date);
+  return formatAsShortDate(record.date);
+}
+</script>
+
+<template>
+  <UiCard
+    class="min-h-149"
+    :title="data ? formatAsMoney(data.data.total_revenue) : ''"
+    :subtitle="$t('siteTotalRevenue', { site: 'example.com' })"
+  >
+    <template #headerEnd>
+      <UiDateRangePicker
+        v-model="dateRange"
+        minStart="one-year-ago"
+        disable-future
+      />
+    </template>
+    <UiSpinner v-if="pending" />
+    <template v-else-if="data">
+      <UiChart
+        :type="chartType"
+        :data-records="revenues"
+        :item-x-getter="itemXGetter"
+        :tooltip-title-getter="(record) => formatAsFullDate(record.date)"
+        :item-y-getter="(record, id) => record.revenues[id]"
+        :items="
+          DEPARTMENTS.map(({ id, color }) => ({
+            id,
+            label: $t('departments.' + id),
+            color,
+          }))
+        "
+      />
+    </template>
+  </UiCard>
+</template>

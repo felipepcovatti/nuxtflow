@@ -1,11 +1,18 @@
+import type { Department } from "./revenue";
 export interface LegendItem {
   color: string;
   label: string;
   value?: string | number;
 }
 
-export type RevenueRecord = {
-  dayOfTheWeek: number;
+export interface RevenueProductValue {
+  product_id: string;
+  amount: number;
+}
+
+export type DepartmentRevenuesChartRecord = {
+  date: string;
+  days_from_today: number;
 } & {
-  [productId: string]: number;
+  [department in Department]: number;
 };
