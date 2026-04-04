@@ -33,5 +33,10 @@
     "sign-up": "Sign Up",
     "forgot-password": "Forgot Password",
     "reset-password": "Reset Password"
-  }
+  },
+  "totalIncome": "Total Income",
+  "totalOutcome": "Total Outcome",
+  "totalProfit": "Total Profit",
+  "newCustomers": "New Customers",
+  "vsLast3Months": "vs last 3 months"
 }
