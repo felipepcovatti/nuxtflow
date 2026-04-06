@@ -27,16 +27,18 @@ describe("Content", () => {
       },
       global: {
         stubs: {
-          ChartLegendItem: true,
+          UiChartLegendItem: true,
         },
       },
     });
 
-    const legendItems = wrapper.findAllComponents({ name: "ChartLegendItem" });
+    const legendItems = wrapper.findAllComponents({
+      name: "UiChartLegendItem",
+    });
     expect(legendItems).toHaveLength(2);
   });
 
-  it("forwards props to ChartLegendItem", () => {
+  it("forwards props to UiChartLegendItem", () => {
     const wrapper = mount(Content, {
       props: {
         title: "January",
@@ -44,12 +46,14 @@ describe("Content", () => {
       },
       global: {
         stubs: {
-          ChartLegendItem: true,
+          UiChartLegendItem: true,
         },
       },
     });
 
-    const legendItems = wrapper.findAllComponents({ name: "ChartLegendItem" });
+    const legendItems = wrapper.findAllComponents({
+      name: "UiChartLegendItem",
+    });
 
     expect(legendItems[0]?.props()).toEqual(items[0]);
     expect(legendItems[1]?.props()).toEqual(items[1]);

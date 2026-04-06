@@ -12,7 +12,11 @@ defineProps<{
       {{ title }}
     </div>
     <div class="mt-1 flex flex-col gap-1">
-      <ChartLegendItem v-for="item in items" v-bind="item" :key="item.label" />
+      <UiChartLegendItem
+        v-for="item in items"
+        v-bind="item"
+        :key="item.label"
+      />
     </div>
   </div>
 </template>
