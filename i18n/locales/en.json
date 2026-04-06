@@ -38,5 +38,8 @@
   "totalOutcome": "Total Outcome",
   "totalProfit": "Total Profit",
   "newCustomers": "New Customers",
-  "vsLast3Months": "vs last 3 months"
+  "vsLast3Months": "vs last 3 months",
+  "notImplemented": "Not implemented",
+  "onlyOverviewAvailable": "Only the Overview page is currently available.",
+  "goBack": "Go back"
 }
