@@ -26,6 +26,7 @@ const props = withDefaults(
     items: Array<{ id: ItemId; color: string; label: string }>;
     dataRecords: DataRecord[];
     tooltipTitleGetter: (record: DataRecord) => string;
+    loading: boolean;
     hideAxis?: boolean;
     itemXGetter?: (record: DataRecord) => string;
     itemYGetter?: (record: DataRecord, itemId: ItemId) => number;
@@ -160,8 +161,9 @@ watch(hoveredItemId, (id) =>
 </script>
 <template>
   <div class="flex flex-col gap-6">
-    <ClientOnly>
-      <div ref="chartWrapper" :style="{ height: height + 'px' }">
+    <div ref="chartWrapper" :style="{ height: height + 'px' }">
+      <UiSpinner v-if="loading" />
+      <ClientOnly v-else>
         <VisXYContainer :data="dataRecords" :height="height">
           <VisGroupedBar
             v-if="type === 'grouped-bar'"
@@ -225,19 +227,19 @@ watch(hoveredItemId, (id) =>
             :color="colorGetter"
           />
         </VisXYContainer>
+      </ClientOnly>
+    </div>
+    <div class="flex flex-wrap justify-center gap-x-4 gap-y-2">
+      <div
+        v-for="item in items"
+        :key="item.id"
+        class="cursor-default"
+        @mouseenter="hoveredItemId = String(item.id)"
+        @mouseleave="hoveredItemId = null"
+      >
+        <UiChartLegendItem :color="item.color" :label="item.label" />
       </div>
-      <div class="flex flex-wrap justify-center gap-x-4 gap-y-2">
-        <div
-          v-for="item in items"
-          :key="item.id"
-          class="cursor-default"
-          @mouseenter="hoveredItemId = String(item.id)"
-          @mouseleave="hoveredItemId = null"
-        >
-          <UiChartLegendItem :color="item.color" :label="item.label" />
-        </div>
-      </div>
-    </ClientOnly>
+    </div>
   </div>
 </template>
 <style scoped>

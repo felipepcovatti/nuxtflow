@@ -62,22 +62,20 @@ function itemXGetter(record: DepartmentRevenuesByDate) {
         disable-future
       />
     </template>
-    <UiSpinner v-if="pending" />
-    <template v-else-if="data">
-      <UiChart
-        :type="chartType"
-        :data-records="revenues"
-        :item-x-getter="itemXGetter"
-        :tooltip-title-getter="(record) => formatAsFullDate(record.date)"
-        :item-y-getter="(record, id) => record.revenues[id]"
-        :items="
-          DEPARTMENTS.map(({ id, color }) => ({
-            id,
-            label: $t('departments.' + id),
-            color,
-          }))
-        "
-      />
-    </template>
+    <UiChart
+      :type="chartType"
+      :loading="pending"
+      :data-records="revenues"
+      :item-x-getter="itemXGetter"
+      :tooltip-title-getter="(record) => formatAsFullDate(record.date)"
+      :item-y-getter="(record, id) => record.revenues[id]"
+      :items="
+        DEPARTMENTS.map(({ id, color }) => ({
+          id,
+          label: $t('departments.' + id),
+          color,
+        }))
+      "
+    />
   </UiCard>
 </template>
