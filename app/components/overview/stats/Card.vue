@@ -26,7 +26,7 @@ const growthPercentage = computed(() =>
 );
 </script>
 <template>
-  <UiCard>
+  <div class="card">
     <div class="flex flex-col gap-2">
       <Icon :name="icon" size="1.25rem" />
       {{ title }}
@@ -43,5 +43,5 @@ const growthPercentage = computed(() =>
         </span>
       </div>
     </div>
-  </UiCard>
+  </div>
 </template>

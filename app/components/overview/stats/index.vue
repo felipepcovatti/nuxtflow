@@ -28,7 +28,7 @@ const { data } = useApi("/api/stats");
       icon="flowbite:users-group-solid"
     />
   </div>
-  <UiCard v-else class="h-41.75">
+  <div v-else class="card h-41.75">
     <UiSpinner />
-  </UiCard>
+  </div>
 </template>

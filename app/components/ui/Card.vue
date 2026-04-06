@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 defineProps<{
-  title?: string | number;
-  subtitle?: string;
+  title: string | number;
+  subtitle: string;
   link?: {
     label: string;
     to: string;
@@ -9,22 +9,15 @@ defineProps<{
 }>();
 </script>
 <template>
-  <div
-    class="flex w-full flex-col gap-6 rounded-lg bg-gray-800 p-6 text-base text-gray-400"
-  >
-    <header
-      v-if="title !== undefined || subtitle || $slots.headerEnd"
-      class="flex flex-wrap justify-end gap-6"
-    >
-      <div v-if="title !== undefined || subtitle" class="flex-1">
-        <div v-if="title" class="section-title mb-1">
+  <div class="card">
+    <header class="flex flex-wrap items-center justify-end gap-6">
+      <div class="flex-1">
+        <div class="section-title mb-1 min-h-lh">
           {{ title }}
         </div>
-        <div v-if="subtitle">{{ subtitle }}</div>
+        <div>{{ subtitle }}</div>
       </div>
-      <div v-if="$slots.headerEnd" class="mt-2.5">
-        <slot name="headerEnd" />
-      </div>
+      <slot name="headerEnd" />
     </header>
     <slot />
     <footer
