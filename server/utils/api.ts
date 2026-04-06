@@ -6,6 +6,7 @@ import {
   isValid,
   parseISO,
 } from "date-fns";
+import { PERIOD_PRESETS, PeriodPreset } from "~/constants/api";
 
 function isIsoDate(date: string): boolean {
   return isValid(parseISO(date));
@@ -39,6 +40,32 @@ export function getDateRange(query: EventHandlerRequest["query"]): {
     });
   }
   return { start, end };
+}
+
+export function getPeriod(query: EventHandlerRequest["query"]) {
+  const period = PERIOD_PRESETS.find((period) => period === query?.period);
+  if (!period) {
+    throw createError({
+      statusCode: 400,
+      statusMessage: "Invalid period requested",
+    });
+  }
+  return period;
+}
+
+export function getPeriodData<Data>(
+  query: EventHandlerRequest["query"],
+  dataByPeriod: Map<PeriodPreset, Data>,
+) {
+  const period = getPeriod(query);
+  const data = dataByPeriod.get(period);
+  if (!data) {
+    throw createError({
+      statusCode: 404,
+      statusMessage: "Period data not found",
+    });
+  }
+  return data;
 }
 
 export function filterItemsWithDateByDateRange<T extends { date: string }>(

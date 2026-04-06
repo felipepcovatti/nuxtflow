@@ -166,6 +166,8 @@
     font-family: var(--font-sans);
     --vis-axis-tick-label-font-size: 0.875rem;
     --vis-crosshair-line-stroke-color: var(--color-gray-400);
+    --vis-map-feature-color: var(--color-gray-700);
+    --vis-map-boundary-color: var(--color-gray-900);
   }
 }
 
