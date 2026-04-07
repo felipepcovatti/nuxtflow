@@ -129,7 +129,26 @@ const activePreset = computed({
       align="end"
       class="z-50 mt-2 ml-10 rounded-lg bg-gray-900 p-3 text-gray-200 shadow-lg"
     >
-      <div class="flex flex-col gap-4 lg:flex-row-reverse">
+      <div class="flex flex-col gap-4 lg:flex-row">
+        <ListboxRoot
+          v-model="activePreset"
+          :aria-label="$t('dateRangePresets')"
+        >
+          <ListboxContent class="flex flex-col gap-1">
+            <ListboxItem
+              v-for="preset in PERIOD_PRESETS"
+              :key="preset"
+              :value="preset"
+              :class="[
+                'button justify-start rounded-sm',
+                'hover:bg-primary-700 hover:text-white',
+                'aria-selected:bg-primary-300/20 aria-selected:text-white',
+              ]"
+            >
+              {{ $t(`periodPresets.${preset}`) }}
+            </ListboxItem>
+          </ListboxContent>
+        </ListboxRoot>
         <DateRangePickerCalendar v-slot="{ grid, weekDays }" class="p-1">
           <DateRangePickerHeader class="flex items-center justify-between">
             <DateRangePickerPrev
@@ -196,25 +215,6 @@ const activePreset = computed({
             </DateRangePickerGridBody>
           </DateRangePickerGrid>
         </DateRangePickerCalendar>
-        <ListboxRoot
-          v-model="activePreset"
-          :aria-label="$t('dateRangePresets')"
-        >
-          <ListboxContent class="flex flex-col gap-1">
-            <ListboxItem
-              v-for="preset in PERIOD_PRESETS"
-              :key="preset"
-              :value="preset"
-              :class="[
-                'button justify-start rounded-sm',
-                'hover:bg-primary-700 hover:text-white',
-                'aria-selected:bg-primary-300/20 aria-selected:text-white',
-              ]"
-            >
-              {{ $t(`periodPresets.${preset}`) }}
-            </ListboxItem>
-          </ListboxContent>
-        </ListboxRoot>
       </div>
     </DateRangePickerContent>
   </DateRangePickerRoot>
