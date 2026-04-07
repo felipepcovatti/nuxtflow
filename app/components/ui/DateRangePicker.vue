@@ -196,24 +196,25 @@ const activePreset = computed({
             </DateRangePickerGridBody>
           </DateRangePickerGrid>
         </DateRangePickerCalendar>
-        <RadioGroupRoot
+        <ListboxRoot
           v-model="activePreset"
-          class="flex flex-col gap-1"
-          aria-label="Select a date range preset"
+          :aria-label="$t('dateRangePresets')"
         >
-          <RadioGroupItem
-            v-for="period in PERIOD_PRESETS"
-            :key="period"
-            :value="period"
-            :class="[
-              'button justify-start rounded-sm',
-              'hover:bg-primary-700 hover:text-white',
-              'aria-checked:bg-primary-300/20 aria-checked:text-white',
-            ]"
-          >
-            {{ $t(`dataPeriods.${period}`) }}
-          </RadioGroupItem>
-        </RadioGroupRoot>
+          <ListboxContent class="flex flex-col gap-1">
+            <ListboxItem
+              v-for="preset in PERIOD_PRESETS"
+              :key="preset"
+              :value="preset"
+              :class="[
+                'button justify-start rounded-sm',
+                'hover:bg-primary-700 hover:text-white',
+                'aria-selected:bg-primary-300/20 aria-selected:text-white',
+              ]"
+            >
+              {{ $t(`periodPresets.${preset}`) }}
+            </ListboxItem>
+          </ListboxContent>
+        </ListboxRoot>
       </div>
     </DateRangePickerContent>
   </DateRangePickerRoot>

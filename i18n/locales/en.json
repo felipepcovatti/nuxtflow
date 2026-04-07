@@ -6,12 +6,13 @@
   },
   "search": "Search",
   "siteTotalRevenue": "Total revenue for { site }",
-  "dataPeriods": {
+  "periodPresets": {
     "7D": "Last 7 days",
     "30D": "Last 30 days",
     "90D": "Last 90 days",
     "1Y": "Last 1 year"
   },
+  "dateRangePresets": "Date range presets",
   "today": "Today",
   "yesterday": "Yesterday",
   "navigation": "Navigation",

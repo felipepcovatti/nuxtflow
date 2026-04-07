@@ -12,7 +12,7 @@ defineProps<{
   <UiSelect
     :options="
       PERIOD_PRESETS.map<SelectOption>((period) => ({
-        label: $t(`dataPeriods.${period}`),
+        label: $t(`periodPresets.${period}`),
         value: period,
       }))
     "
