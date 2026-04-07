@@ -18,3 +18,24 @@ export interface VisitsByCountryResponse {
     period: PeriodPreset;
   };
 }
+
+export type Device = "mobile" | "desktop" | "tablet";
+
+export type DeviceVisits = {
+  [device in Device]: number;
+};
+
+export interface PeriodDeviceVisits {
+  total_visits: number;
+  total_visits_growth_percentage: number;
+  visits: DeviceVisits;
+}
+
+export type DeviceVisitsInPeriod = Map<PeriodPreset, PeriodDeviceVisits>;
+
+export type VisitsByDeviceResponse = {
+  data: PeriodDeviceVisits;
+  meta: {
+    period: PeriodPreset;
+  };
+};

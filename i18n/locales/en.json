@@ -43,6 +43,13 @@
   "visitsByCountry": "Visits by country",
   "viewCountryReport": "View country report",
   "vsLast3Months": "vs last 3 months",
+  "visitsByDevice": "Visits by device",
+  "devices": {
+    "mobile": "Mobile",
+    "desktop": "Desktop",
+    "tablet": "Tablet"
+  },
+  "viewUserReport": "View user report",
   "notImplemented": "Not implemented",
   "onlyOverviewAvailable": "Only the Overview page is currently available.",
   "goBack": "Go back"

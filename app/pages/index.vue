@@ -11,5 +11,6 @@ definePageMeta({
     <OverviewRevenueByDepartment class="@5xl:col-span-3" />
     <OverviewStats class="@5xl:col-span-3" />
     <OverviewVisitsByCountry class="@5xl:col-span-2 @5xl:row-span-2" />
+    <OverviewVisitsByDevice />
   </div>
 </template>

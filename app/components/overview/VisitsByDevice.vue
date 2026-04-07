@@ -45,44 +45,48 @@ const { formatAsCompactNumber } = useNumberFormatter();
     :subtitle="$t('visitsByDevice')"
     :link="{ label: $t('viewUserReport'), to: 'user-report' }"
   >
-    <template #headerEnd>
+    <template #headerEnd v-if="data">
       <GrowthPercentage
-        :percentage="data?.data.total_visits_growth_percentage || 0"
+        :percentage="data.data.total_visits_growth_percentage"
       />
     </template>
-    <UiSpinner v-if="pending" class="h-(--map-height)" />
-    <template v-else-if="data">
-      <div class="flex flex-wrap justify-between gap-3">
-        <div v-for="device in DEVICES" :key="device.id">
-          <header class="flex items-center gap-1">
-            <Icon :name="device.icon" />
-            <div class="text-white">
-              {{ $t(`devices.${device.id}`) }}
-            </div>
-          </header>
+    <div class="flex flex-wrap justify-between gap-3">
+      <div
+        v-for="device in DEVICES"
+        :key="device.id"
+        class="flex min-h-21 flex-col justify-between"
+      >
+        <header class="flex items-center gap-1">
+          <Icon :name="device.icon" />
+          <div class="text-white">
+            {{ $t(`devices.${device.id}`) }}
+          </div>
+        </header>
+        <template v-if="data">
           <div class="section-title">
             {{ getVisitsPercentage(data.data.visits[device.id]) }}
           </div>
           <div>
             {{ formatAsCompactNumber(data.data.visits[device.id]) }}
           </div>
-        </div>
+        </template>
       </div>
-      <UiChart
-        type="horizontal-stacked-bar"
-        hide-axis
-        :height="20"
-        :data-records="visits"
-        :tooltip-title-getter="() => $t('visits')"
-        :items="
-          DEVICES.map((device) => ({
-            id: device.id,
-            label: $t(`devices.${device.id}`),
-            color: device.color,
-          }))
-        "
-      />
-    </template>
+    </div>
+    <UiChart
+      type="horizontal-stacked-bar"
+      hide-axis
+      :loading="pending"
+      :height="20"
+      :data-records="visits"
+      :tooltip-title-getter="() => $t('visits')"
+      :items="
+        DEVICES.map((device) => ({
+          id: device.id,
+          label: $t(`devices.${device.id}`),
+          color: device.color,
+        }))
+      "
+    />
     <template #footer>
       <PeriodSelect v-model="period" />
     </template>
