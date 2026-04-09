@@ -4,6 +4,22 @@
     "home_living": "Home & Living",
     "clothing_accessories": "Clothing & Accessories"
   },
+  "categories": {
+    "audio": "Audio",
+    "peripherals": "Peripherals",
+    "charging": "Charging & Power",
+    "furniture": "Furniture",
+    "kitchen": "Kitchen & Dining",
+    "devices": "Devices",
+    "lighting": "Lighting",
+    "footwear": "Footwear",
+    "tops": "Tops & Apparel",
+    "bags": "Bags & Luggage",
+    "outerwear": "Outerwear",
+    "stationery": "Stationery",
+    "wellness": "Wellness",
+    "decor": "Decor"
+  },
   "search": "Search",
   "siteTotalRevenue": "Total revenue for { site }",
   "periodPresets": {
@@ -50,6 +66,8 @@
     "tablet": "Tablet"
   },
   "viewUserReport": "View user report",
+  "productsByRevenue": "Products by revenue",
+  "viewProductReport": "View product report",
   "notImplemented": "Not implemented",
   "onlyOverviewAvailable": "Only the Overview page is currently available.",
   "goBack": "Go back"
