@@ -68,6 +68,39 @@
   "viewUserReport": "View user report",
   "productsByRevenue": "Products by revenue",
   "viewProductReport": "View product report",
+  "transactions": "Transactions",
+  "transactionStatuses": {
+    "completed": "Complete",
+    "cancelled": "Cancelled",
+    "in_progress": "In progress",
+    "failed": "Cancelled",
+    "pending": "Pending"
+  },
+  "transactionDescriptions": {
+    "payment_from": "Payment from {actor}",
+    "refund_to": "Refund to {actor}",
+    "payout_to": "Payout to {actor}",
+    "fee_logistic": "Logistic Fee: {actor}",
+    "adjustment_dispute": "Adjustment: {actor}",
+    "purchase_supply": "Supply Purchase: {actor}"
+  },
+  "description": "Description",
+  "date": "Date",
+  "amount": "Amount",
+  "status": "Status",
+  "actions": "Actions",
+  "viewDetails": "View details",
+  "downloadReceipt": "Download receipt | Download receipts",
+  "allStatuses": "All statuses",
+  "searchForTransactions": "Search for transactions",
+  "noTransactionsFoundForTerm": "No transactions found for {term}.",
+  "clearSearch": "Clear search",
+  "showAllStatuses": "Show all statuses",
+  "pagination": {
+    "next": "Next page",
+    "previous": "Previous page",
+    "itemsInfo": "Showing {from}-{to} of {total}"
+  },
   "notImplemented": "Not implemented",
   "onlyOverviewAvailable": "Only the Overview page is currently available.",
   "goBack": "Go back"

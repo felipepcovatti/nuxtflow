@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 defineProps<{
   title: string | number;
-  subtitle: string;
+  subtitle?: string;
   link?: {
     label: string;
     to: string;
@@ -15,7 +15,7 @@ defineProps<{
         <div class="section-title mb-1 min-h-lh">
           {{ title }}
         </div>
-        <div>{{ subtitle }}</div>
+        <div v-if="subtitle">{{ subtitle }}</div>
       </div>
       <slot name="headerEnd" />
     </header>

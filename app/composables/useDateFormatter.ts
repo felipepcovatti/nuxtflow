@@ -28,6 +28,10 @@ export const useDateFormatter = () => {
     return formatDateToPattern.value(date, "MMM d");
   };
 
+  const formatAsShortDateWithYear = (date: string) => {
+    return formatDateToPattern.value(date, "MMM d, yyyy");
+  };
+
   const formatAsFullDate = (date: string) => {
     return formatDateToPattern.value(date, "PP");
   };
@@ -38,6 +42,7 @@ export const useDateFormatter = () => {
 
   return {
     formatAsShortDate,
+    formatAsShortDateWithYear,
     formatAsFullDate,
     formatAsWeekday,
   };

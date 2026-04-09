@@ -1,5 +1,6 @@
 import {
   addDays,
+  addMinutes,
   isAfter,
   isBefore,
   isEqual,
@@ -84,6 +85,24 @@ export function filterItemsWithDateByDateRange<T extends { date: string }>(
   });
 }
 
+const MINUTES_PER_PERIOD: Record<PeriodPreset, number> = {
+  "7D": 7 * 24 * 60,
+  "30D": 30 * 24 * 60,
+  "90D": 90 * 24 * 60,
+  "1Y": 365 * 24 * 60,
+};
+
+export function filterItemsWithDatetimeByPeriod<T extends { datetime: string }>(
+  items: T[],
+  period: PeriodPreset,
+): T[] {
+  const now = Date.now();
+  const periodMinutes = MINUTES_PER_PERIOD[period];
+  const cutoff = now - periodMinutes * 60_000;
+
+  return items.filter((item) => new Date(item.datetime).getTime() >= cutoff);
+}
+
 export interface DaysFromReferenceTimeItem {
   days_from_reference_time: number;
 }
@@ -102,4 +121,29 @@ export function setDateFromDaysFromReferenceTime<
       date: addDays(reference, days_from_reference_time).toISOString(),
     };
   });
+}
+
+export interface MinutesFromReferenceTimeItem {
+  minutes_from_reference_time: number;
+}
+
+type AbsoluteDatetime<T> = Omit<T, "minutes_from_reference_time"> & {
+  datetime: string;
+};
+
+export function setDatetimeFromMinutesFromNow<
+  T extends MinutesFromReferenceTimeItem,
+>(items: T[], referenceTime?: string): AbsoluteDatetime<T>[] {
+  const reference = parseISO(referenceTime || new Date().toISOString());
+  return items.map<AbsoluteDatetime<T>>(
+    ({ minutes_from_reference_time, ...item }) => {
+      return {
+        ...item,
+        datetime: addMinutes(
+          reference,
+          minutes_from_reference_time,
+        ).toISOString(),
+      };
+    },
+  );
 }

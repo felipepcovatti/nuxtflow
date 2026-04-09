@@ -1,0 +1,34 @@
+import type { PeriodPreset } from "~/constants/api";
+
+export type TransactionType =
+  | "payment_from"
+  | "refund_to"
+  | "payout_to"
+  | "fee_logistic"
+  | "adjustment_dispute"
+  | "purchase_supply";
+
+export type TransactionStatus =
+  | "completed"
+  | "in_progress"
+  | "pending"
+  | "cancelled";
+
+export interface Transaction {
+  id: string;
+  type: TransactionType;
+  actor: string;
+  amount: number;
+  status: TransactionStatus;
+  datetime: string;
+}
+
+export interface TransactionResponse {
+  data: Transaction[];
+  meta: {
+    page: number;
+    page_size: number;
+    total: number;
+    page_count: number;
+  };
+}
