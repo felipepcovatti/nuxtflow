@@ -3,7 +3,7 @@ import { useI18n, type Locale } from "vue-i18n";
 import { format, parseISO, type Locale as DateLocale } from "date-fns";
 import { enUS } from "date-fns/locale";
 
-const daleLocales: Record<Locale, DateLocale> = {
+const dateLocales: Record<Locale, DateLocale> = {
   en: enUS,
 };
 
@@ -12,7 +12,7 @@ export const useDateFormatter = () => {
 
   const dateLocale = computed(() => {
     const lang = locale.value;
-    return daleLocales[lang] || enUS;
+    return dateLocales[lang] || enUS;
   });
 
   const formatDateToPattern = computed(
