@@ -66,16 +66,16 @@ const { groupState, isSelected, toggleSelection, selectedCount } =
       <table class="table">
         <thead class="bg-gray-700">
           <tr class="text-left">
-            <th class="sticky left-0 w-16 bg-gray-700">
+            <th scope="col" class="sticky left-0 w-16 bg-gray-700">
               <div class="flex justify-center">
                 <UiCheckbox v-model="groupState" />
               </div>
             </th>
-            <th>{{ $t("description") }}</th>
-            <th>{{ $t("date") }}</th>
-            <th>{{ $t("amount") }}</th>
-            <th>{{ $t("status") }}</th>
-            <th class="w-28">{{ $t("actions") }}</th>
+            <th scope="col">{{ $t("description") }}</th>
+            <th scope="col">{{ $t("date") }}</th>
+            <th scope="col">{{ $t("amount") }}</th>
+            <th scope="col">{{ $t("status") }}</th>
+            <th scope="col" class="w-28">{{ $t("actions") }}</th>
           </tr>
         </thead>
         <tbody class="divide-y divide-gray-600">
