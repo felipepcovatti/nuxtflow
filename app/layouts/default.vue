@@ -20,6 +20,7 @@ const isNavigationDrawerOpen = ref(false);
         <main class="@container">
           <slot />
         </main>
+        <LayoutFooter />
       </div>
     </div>
     <LayoutNavigationDrawer

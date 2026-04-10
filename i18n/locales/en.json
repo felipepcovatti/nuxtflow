@@ -21,7 +21,7 @@
     "decor": "Decor"
   },
   "search": "Search",
-  "siteTotalRevenue": "Total revenue for { site }",
+  "revenueByDepartment": "Revenue by department",
   "periodPresets": {
     "7D": "Last 7 days",
     "30D": "Last 30 days",
@@ -50,6 +50,14 @@
     "sign-up": "Sign Up",
     "forgot-password": "Forgot Password",
     "reset-password": "Reset Password"
+  },
+  "footerNavigationItems": {
+    "about": "About",
+    "pricing": "Pricing",
+    "help": "Help",
+    "terms-and-conditions": "Terms & conditions",
+    "cookies": "Cookies",
+    "contact": "Contact"
   },
   "totalIncome": "Total Income",
   "totalOutcome": "Total Outcome",

@@ -53,7 +53,7 @@ function itemXGetter(record: DepartmentRevenuesByDate) {
   <UiCard
     class="min-h-149"
     :title="data ? formatAsMoney(data.data.total_revenue) : ''"
-    :subtitle="$t('siteTotalRevenue', { site: 'example.com' })"
+    :subtitle="$t('revenueByDepartment')"
   >
     <template #headerEnd>
       <UiDateRangePicker
