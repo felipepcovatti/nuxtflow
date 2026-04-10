@@ -91,6 +91,7 @@ function getVisitsPercentage(visits: number) {
 
 <template>
   <UiCard
+    :loading="pending"
     :title="data ? formatAsNumber(data.data.total_visits) : ''"
     :subtitle="$t('visitsByCountry')"
     class="min-h-314.75"
@@ -103,8 +104,7 @@ function getVisitsPercentage(visits: number) {
       ref="mapWrapper"
       class="flex h-(--map-height) [--map-height:40vw] @5xl:[--map-height:29.5rem]"
     >
-      <UiSpinner v-if="pending" />
-      <ClientOnly v-else>
+      <ClientOnly>
         <VisSingleContainer
           :data="{ areas: visits }"
           height="var(--map-height)"

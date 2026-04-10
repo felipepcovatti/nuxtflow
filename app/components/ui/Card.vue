@@ -2,6 +2,7 @@
 defineProps<{
   title: string | number;
   subtitle?: string;
+  loading?: boolean;
   link?: {
     label: string;
     to: string;
@@ -9,10 +10,10 @@ defineProps<{
 }>();
 </script>
 <template>
-  <div class="card">
+  <div class="card" :data-loading="loading">
     <header class="flex flex-wrap items-center justify-end gap-6">
       <div class="flex-1">
-        <div class="section-title mb-1 min-h-lh">
+        <div class="section-title mb-1">
           {{ title }}
         </div>
         <div v-if="subtitle">{{ subtitle }}</div>

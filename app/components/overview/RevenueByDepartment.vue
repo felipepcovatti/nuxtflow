@@ -52,6 +52,7 @@ function itemXGetter(record: DepartmentRevenuesByDate) {
 
 <template>
   <UiCard
+    :loading="pending"
     class="min-h-149"
     :title="data ? formatAsMoney(data.data.total_revenue) : ''"
     :subtitle="$t('revenueByDepartment')"

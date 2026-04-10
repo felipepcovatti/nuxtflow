@@ -20,7 +20,7 @@ const query = computed(() => ({
   status: status.value || undefined,
 }));
 
-const { data, refresh } = useApi("/api/transactions", {
+const { data, refresh, pending } = useApi("/api/transactions", {
   query,
   watch: false,
 });
@@ -47,7 +47,7 @@ const { groupState, isSelected, toggleSelection, selectedCount } =
   useCheckboxGroup(transactions);
 </script>
 <template>
-  <UiCard class="min-h-198.5" :title="$t('transactions')">
+  <UiCard class="min-h-198.5" :title="$t('transactions')" :loading="pending">
     <template #headerEnd>
       <button class="button" :disabled="!groupState">
         <Icon name="mdi-download" />
@@ -152,9 +152,9 @@ const { groupState, isSelected, toggleSelection, selectedCount } =
         </button>
       </div>
     </div>
-    <template #footer>
+    <template #footer v-if="data">
       <UiPagination
-        :total="data?.meta.total || 0"
+        :total="data.meta.total"
         :per-page="PAGE_SIZE"
         v-model:page="page"
       />

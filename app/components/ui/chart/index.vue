@@ -26,7 +26,6 @@ const props = withDefaults(
     items: Array<{ id: ItemId; color: string; label: string }>;
     dataRecords: DataRecord[];
     tooltipTitleGetter: (record: DataRecord) => string;
-    loading: boolean;
     hideAxis?: boolean;
     itemXGetter?: (record: DataRecord) => string;
     itemYGetter?: (record: DataRecord, itemId: ItemId) => number;
@@ -162,8 +161,7 @@ watch(hoveredItemId, (id) =>
 <template>
   <div class="flex flex-col gap-6">
     <div ref="chartWrapper" :style="{ height: height + 'px' }">
-      <UiSpinner v-if="loading" />
-      <ClientOnly v-else>
+      <ClientOnly>
         <VisXYContainer :data="dataRecords" :height="height">
           <VisGroupedBar
             v-if="type === 'grouped-bar'"

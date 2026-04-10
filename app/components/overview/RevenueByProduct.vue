@@ -15,6 +15,7 @@ const { formatAsMoney } = useMoneyFormatter();
 </script>
 <template>
   <UiCard
+    :loading="pending"
     :title="data ? formatAsMoney(data.data.total_revenue) : ''"
     :subtitle="$t('productsByRevenue')"
     class="min-h-215.5"
@@ -28,8 +29,7 @@ const { formatAsMoney } = useMoneyFormatter();
         :percentage="data.data.total_revenue_growth_percentage"
       />
     </template>
-    <UiSpinner v-if="pending" />
-    <div v-else class="divide-y divide-gray-700">
+    <div class="divide-y divide-gray-700">
       <div
         v-for="revenue in revenues"
         :key="revenue.product.id"
