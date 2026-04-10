@@ -126,7 +126,11 @@ function getVisitsPercentage(visits: number) {
       </ClientOnly>
     </div>
     <div class="flex flex-col gap-6">
-      <div v-for="country in visitsList" class="flex items-center gap-3">
+      <div
+        v-for="country in visitsList"
+        :key="country.country"
+        class="flex items-center gap-3"
+      >
         <Icon :name="`flag:${country.country.toLowerCase()}-4x3`" />
         <div class="w-40 truncate text-white">
           {{ getCountryName(country.country) }}
