@@ -21,6 +21,10 @@ const range = defineModel<{ start: string; end: string }>({
   required: true,
 });
 
+const emit = defineEmits<{
+  selected: [];
+}>();
+
 const isOpen = ref(false);
 
 const minDate = computed(() => {
@@ -62,6 +66,7 @@ watch(internalRange, ({ end, start }, { start: previousStart }) => {
       .toDate(getLocalTimeZone())
       .toISOString(),
   };
+  emit("selected");
   isOpen.value = false;
 });
 
@@ -94,12 +99,17 @@ const activePreset = computed({
     });
     return preset || null;
   },
-  set(preset: PeriodPreset) {
-    const duration = durationByPreset[preset];
-    internalRange.value = {
-      start: getLocalTodayCalendarDate().subtract(duration).add({ days: 1 }),
-      end: getLocalTodayCalendarDate(),
-    };
+  set(preset?: PeriodPreset) {
+    if (preset) {
+      const duration = durationByPreset[preset];
+      internalRange.value = {
+        start: getLocalTodayCalendarDate().subtract(duration).add({ days: 1 }),
+        end: getLocalTodayCalendarDate(),
+      };
+    } else {
+      isOpen.value = false;
+    }
+    emit("selected");
   },
 });
 </script>

@@ -25,8 +25,9 @@ const dateRange = ref({
   end: endOfToday().toISOString(),
 });
 
-const { data, pending } = useApi("/api/revenue/departments", {
+const { data, pending, refresh } = useApi("/api/revenue/departments", {
   query: dateRange,
+  watch: false,
 });
 
 const revenues = computed(() => data.value?.data.revenues.toReversed() || []);
@@ -58,6 +59,7 @@ function itemXGetter(record: DepartmentRevenuesByDate) {
     <template #headerEnd>
       <UiDateRangePicker
         v-model="dateRange"
+        @selected="refresh"
         minStart="one-year-ago"
         disable-future
       />
