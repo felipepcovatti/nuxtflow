@@ -16,8 +16,7 @@ export type TransactionStatus =
 
 export interface Transaction {
   id: string;
-  type: TransactionType;
-  actor: string;
+  description: string;
   amount: number;
   status: TransactionStatus;
   datetime: string;
@@ -30,5 +29,6 @@ export interface TransactionResponse {
     page_size: number;
     total: number;
     page_count: number;
+    locale: string;
   };
 }

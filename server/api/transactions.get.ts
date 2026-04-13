@@ -19,7 +19,7 @@ export default defineEventHandler(async (event) => {
   const search = String(query.search ?? "");
 
   const searchedTransactions = filteredTransactions.filter((transaction) =>
-    transaction.actor.toLowerCase().includes(search.toLowerCase()),
+    transaction.description.toLowerCase().includes(search.toLowerCase()),
   );
 
   const total = searchedTransactions.length;
@@ -38,6 +38,7 @@ export default defineEventHandler(async (event) => {
       page_size: pageSize,
       total,
       page_count: pageCount,
+      locale: "en-US",
     },
   } satisfies TransactionResponse;
 });

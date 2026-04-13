@@ -97,11 +97,7 @@ const { groupState, isSelected, toggleSelection, selectedCount } =
               </div>
             </td>
             <td class="text-white">
-              <i18n-t :keypath="`transactionDescriptions.${transaction.type}`">
-                <template #actor>
-                  <span class="font-semibold">{{ transaction.actor }}</span>
-                </template>
-              </i18n-t>
+              {{ transaction.description }}
             </td>
             <td class="min-w-30">
               {{ formatAsShortDateWithYear(transaction.datetime) }}
