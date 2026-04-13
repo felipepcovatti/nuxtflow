@@ -100,7 +100,7 @@
   "viewDetails": "View details",
   "downloadReceipt": "Download receipt | Download receipts",
   "allStatuses": "All statuses",
-  "searchForTransactions": "Search for transactions",
+  "searchByTransactionDescription": "Search by transaction description",
   "noTransactionsFoundForTerm": "No transactions found for {term}.",
   "clearSearch": "Clear search",
   "showAllStatuses": "Show all statuses",

@@ -59,7 +59,7 @@ const { groupState, isSelected, toggleSelection, selectedCount } =
       <TransactionStatusSelect v-model="status" />
       <UiSearchBox
         v-model="searchTerm"
-        :placeholder="$t('searchForTransactions')"
+        :placeholder="$t('searchByTransactionDescription')"
       />
     </template>
     <div class="-mx-6 overflow-x-auto" v-if="transactions.length">
