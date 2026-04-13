@@ -21,7 +21,7 @@ defineProps<{
     </DropdownMenuTrigger>
     <DropdownMenuPortal>
       <DropdownMenuContent
-        class="z-100 min-w-44 rounded-lg border border-gray-700 bg-gray-900 p-1 shadow-xl"
+        class="z-100 min-w-44 rounded-lg bg-gray-900 p-1 shadow-lg"
         :side-offset="6"
         :collisionPadding="32"
       >

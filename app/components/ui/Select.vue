@@ -31,7 +31,7 @@ const selected = computed(() =>
 
     <SelectPortal>
       <SelectContent
-        class="z-100 overflow-hidden rounded-lg bg-gray-900 shadow-xl"
+        class="z-100 overflow-hidden rounded-lg bg-gray-900 shadow-lg"
         position="popper"
         :side-offset="4"
       >
