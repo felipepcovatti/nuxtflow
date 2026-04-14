@@ -11,7 +11,7 @@ defineProps<{
 </script>
 <template>
   <div class="card" :data-loading="loading">
-    <header class="flex flex-wrap items-center justify-end gap-6">
+    <header class="flex flex-wrap items-center justify-end gap-6 gap-y-4">
       <div class="flex-1">
         <div class="section-title mb-1">
           {{ title }}
