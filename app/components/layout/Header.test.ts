@@ -3,55 +3,50 @@ import { mountSuspended } from "@nuxt/test-utils/runtime";
 import Header from "./Header.vue";
 
 describe("Header", () => {
-  describe("rendering", () => {
-    it("renders the search input with translated placeholder", async () => {
-      const wrapper = await mountSuspended(Header);
+  it("renders the searchbox and action buttons", async () => {
+    const wrapper = await mountSuspended(Header);
 
-      const input = wrapper.get('input[name="search_field"]');
+    const input = wrapper.findComponent({ name: "UiSearchBox" });
+    expect(input.exists()).toBe(true);
 
-      expect(input.attributes("placeholder")).toBe("Search");
-    });
+    const notificationButton = wrapper.find(
+      'button[aria-label="Notifications"]',
+    );
+    expect(notificationButton.exists()).toBe(true);
 
-    it("contains a logo linking to home", async () => {
-      const wrapper = await mountSuspended(Header);
+    const appsButton = wrapper.find('button[aria-label="Apps"]');
+    expect(appsButton.exists()).toBe(true);
 
-      const homeLink = wrapper.find('a[href="/"]');
-
-      expect(homeLink.exists()).toBe(true);
-
-      expect(homeLink.find('img[alt="Logo image"]').exists()).toBe(true);
-    });
+    const accountButton = wrapper.find('button[aria-label="Account"]');
+    expect(accountButton.exists()).toBe(true);
   });
 
-  describe("interaction", () => {
-    it("emits 'toggleNavigationSidebarPin' when desktop menu button is clicked", async () => {
-      const wrapper = await mountSuspended(Header);
+  it("contains a logo linking to home", async () => {
+    const wrapper = await mountSuspended(Header);
 
-      const button = wrapper.get('button[aria-controls="navigation-sidebar"]');
+    const homeLink = wrapper.find('a[href="/"]');
 
-      await button.trigger("click");
+    expect(homeLink.exists()).toBe(true);
+    expect(homeLink.find("img").attributes("alt")).toBe("Nuxt Logo");
+  });
 
-      expect(wrapper.emitted("toggleNavigationSidebarPin")).toHaveLength(1);
-    });
+  it("emits 'toggleNavigationSidebarPin' when desktop menu button is clicked", async () => {
+    const wrapper = await mountSuspended(Header);
 
-    it("emits 'openNavigationDrawer' when mobile menu button is clicked", async () => {
-      const wrapper = await mountSuspended(Header);
+    const button = wrapper.find('button[aria-controls="navigation-sidebar"]');
 
-      const button = wrapper.get('button[aria-controls="navigation-drawer"]');
+    await button.trigger("click");
 
-      await button.trigger("click");
+    expect(wrapper.emitted("toggleNavigationSidebarPin")).toHaveLength(1);
+  });
 
-      expect(wrapper.emitted("openNavigationDrawer")).toHaveLength(1);
-    });
+  it("emits 'openNavigationDrawer' when mobile menu button is clicked", async () => {
+    const wrapper = await mountSuspended(Header);
 
-    it("updates the input value when typing", async () => {
-      const wrapper = await mountSuspended(Header);
+    const button = wrapper.find('button[aria-controls="navigation-drawer"]');
 
-      const input = wrapper.get('input[name="search_field"]');
+    await button.trigger("click");
 
-      await input.setValue("Nuxt");
-
-      expect((input.element as HTMLInputElement).value).toBe("Nuxt");
-    });
+    expect(wrapper.emitted("openNavigationDrawer")).toHaveLength(1);
   });
 });

@@ -20,7 +20,12 @@
     "wellness": "Wellness",
     "decor": "Decor"
   },
+  "nuxtLogo": "Nuxt Logo",
   "search": "Search",
+  "profilePicture": "Profile picture",
+  "notifications": "Notifications",
+  "apps": "Apps",
+  "account": "Account",
   "revenueByDepartment": "Revenue by department",
   "periodPresets": {
     "7D": "Last 7 days",
