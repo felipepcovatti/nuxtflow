@@ -12,7 +12,6 @@ defineProps<{
   >
     <input
       v-model="term"
-      name="search_field"
       class="h-full w-full rounded-lg border border-gray-600 bg-gray-700 pr-4 pl-11 text-sm text-gray-400"
       :placeholder="placeholder || $t('search')"
     />
