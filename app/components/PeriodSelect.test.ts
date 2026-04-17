@@ -53,4 +53,23 @@ describe("PeriodSelect", () => {
 
     expect(selectedOption.getAttribute("aria-selected")).toBe("true");
   });
+
+  it("updates the modelValue when selecting a different period", async () => {
+    const wrapper = await renderSuspended(PeriodSelect, {
+      props: {
+        modelValue: "30D",
+      },
+    });
+
+    const trigger = await wrapper.findByRole("combobox");
+    await fireEvent.keyDown(trigger, { key: "Enter" });
+
+    const newOption = await wrapper.findByRole("option", {
+      name: "Last 1 year",
+    });
+    await fireEvent.keyDown(newOption, { key: "Enter" });
+
+    expect(wrapper.emitted("update:modelValue")).toBeTruthy();
+    expect(wrapper.emitted("update:modelValue")?.[0]).toEqual(["1Y"]);
+  });
 });
