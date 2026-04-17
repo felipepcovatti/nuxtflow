@@ -75,4 +75,25 @@ describe("Select", () => {
 
     expect(wrapper.get('[role="combobox"]').text()).toBe("Status: Completed");
   });
+
+  it('emits "update:modelValue" with the correct value when an option is selected', async () => {
+    const wrapper = await renderSuspended(Select, {
+      props: {
+        modelValue: "pending",
+        options,
+      },
+    });
+
+    const trigger = await wrapper.findByRole("combobox");
+    await fireEvent.keyDown(trigger, { key: "Enter" });
+
+    const optionToSelect = await wrapper.findByRole("option", {
+      name: "Completed",
+    });
+
+    await fireEvent.keyDown(optionToSelect, { key: "Enter" });
+
+    expect(wrapper.emitted("update:modelValue")).toBeTruthy();
+    expect(wrapper.emitted("update:modelValue")?.[0]).toEqual(["completed"]);
+  });
 });
