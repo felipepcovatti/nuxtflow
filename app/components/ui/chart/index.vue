@@ -15,14 +15,11 @@ import {
   VisCrosshair,
 } from "@unovis/vue";
 import { render } from "vue";
+import type { ChartType } from "~/types/chart";
 
 const props = withDefaults(
   defineProps<{
-    type:
-      | "grouped-bar"
-      | "stacked-bar"
-      | "stacked-area"
-      | "horizontal-stacked-bar";
+    type: ChartType;
     items: Array<{ id: ItemId; color: string; label: string }>;
     dataRecords: DataRecord[];
     tooltipTitleGetter: (record: DataRecord) => string;

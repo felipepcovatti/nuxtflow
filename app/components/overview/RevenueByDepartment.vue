@@ -32,14 +32,9 @@ const { data, pending, refresh } = useApi("/api/revenue/departments", {
 
 const revenues = computed(() => data.value?.data.revenues.toReversed() || []);
 
-type ChartType = "grouped-bar" | "stacked-bar" | "stacked-area";
-
-const chartType = computed<ChartType>(() => {
-  const { length } = revenues.value;
-  if (length < 8) return "grouped-bar";
-  if (length < 31) return "stacked-bar";
-  return "stacked-area";
-});
+const chartType = computed(() =>
+  getRevenueByDepartmentChartType({ days: revenues.value.length }),
+);
 
 function itemXGetter(record: DepartmentRevenuesByDate) {
   if (isToday(record.date)) return $t("today");

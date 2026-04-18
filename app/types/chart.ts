@@ -1,4 +1,10 @@
 import type { Department } from "./revenue";
+
+export type ChartType =
+  | "grouped-bar"
+  | "stacked-bar"
+  | "stacked-area"
+  | "horizontal-stacked-bar";
 export interface LegendItem {
   color: string;
   label: string;
