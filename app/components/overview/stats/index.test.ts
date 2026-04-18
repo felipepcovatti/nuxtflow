@@ -57,7 +57,7 @@ describe("OverviewStats", () => {
   ];
 
   it.each(cards)(
-    "passes correct values to each card",
+    "renders $title in the correct card with appropriate props",
     async ({ index, ...props }) => {
       const wrapper = await mountSuspended(Index);
       const card = wrapper.findAllComponents({ name: "OverviewStatsCard" })[
