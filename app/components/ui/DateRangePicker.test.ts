@@ -65,7 +65,7 @@ describe("DateRangePicker", () => {
         end: "2026-04-14T23:59:59.999Z",
       },
     ]);
-    expect(wrapper.emitted("selected")).toHaveLength(2);
+    expect(wrapper.emitted("selected")).toHaveLength(1);
   });
 
   it("emits update:modelValue with correct dates when selecting 30D preset", async () => {
@@ -90,6 +90,7 @@ describe("DateRangePicker", () => {
         end: "2026-04-14T23:59:59.999Z",
       },
     ]);
+    expect(wrapper.emitted("selected")).toHaveLength(1);
   });
 
   it("emits update:modelValue with correct dates when selecting 90D preset", async () => {
@@ -114,6 +115,7 @@ describe("DateRangePicker", () => {
         end: "2026-04-14T23:59:59.999Z",
       },
     ]);
+    expect(wrapper.emitted("selected")).toHaveLength(1);
   });
 
   it("emits update:modelValue with correct dates when selecting 1Y preset", async () => {
@@ -138,6 +140,7 @@ describe("DateRangePicker", () => {
         end: "2026-04-14T23:59:59.999Z",
       },
     ]);
+    expect(wrapper.emitted("selected")).toHaveLength(1);
   });
 
   it("emits update:modelValue with correct dates when selecting a custom range", async () => {
@@ -198,6 +201,7 @@ describe("DateRangePicker", () => {
         end: "2026-04-14T23:59:59.999Z",
       },
     ]);
+    expect(wrapper.emitted("selected")).toHaveLength(1);
   });
 
   it("marks 7D as active when modelValue matches last 7 days ending today", async () => {

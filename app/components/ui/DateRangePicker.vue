@@ -100,7 +100,7 @@ const activePreset = computed({
     return preset || null;
   },
   set(preset?: PeriodPreset) {
-    if (preset) {
+    if (preset && preset !== activePreset.value) {
       const duration = durationByPreset[preset];
       internalRange.value = {
         start: getLocalTodayCalendarDate().subtract(duration).add({ days: 1 }),
@@ -108,8 +108,8 @@ const activePreset = computed({
       };
     } else {
       isOpen.value = false;
+      emit("selected");
     }
-    emit("selected");
   },
 });
 </script>
