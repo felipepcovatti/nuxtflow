@@ -3,12 +3,12 @@ import { mockNuxtImport } from "@nuxt/test-utils/runtime";
 import { useNavigation } from "./useNavigation";
 import type { NavigationItem } from "~/constants/navigation";
 
-const { mRoute } = vi.hoisted(() => ({
-  mRoute: { path: "/home" },
+const { mockedRoute } = vi.hoisted(() => ({
+  mockedRoute: { path: "/home" },
 }));
 
 mockNuxtImport("useRoute", () => {
-  return () => mRoute;
+  return () => mockedRoute;
 });
 
 vi.mock("~/constants/navigation", () => ({
@@ -24,95 +24,62 @@ vi.mock("~/constants/navigation", () => ({
 
 describe("useNavigation", () => {
   beforeEach(() => {
-    mRoute.path = "/home";
+    mockedRoute.path = "/home";
   });
 
-  describe("initial state", () => {
-    it("initializes expandedItems with all items that have subItems", () => {
-      const { expandedItems } = useNavigation();
+  it("initializes all items, with group items expanded by default", () => {
+    const { expandedItems } = useNavigation();
 
-      expect(expandedItems.value).toEqual(["admin"]);
-    });
+    expect(expandedItems.value).toEqual(["admin"]);
   });
 
-  describe("getItemState", () => {
-    it("returns 'active' when top-level route matches exactly", () => {
-      const { getItemState } = useNavigation();
+  it("determines item state (active/inactive) correctly for items group-items", () => {
+    const { getItemState } = useNavigation();
 
-      const item: NavigationItem = {
-        path: "home",
-        icon: "home-icon",
-      };
+    const homeItem: NavigationItem = { path: "home", icon: "home-icon" };
+    const adminItem: NavigationItem = {
+      path: "admin",
+      icon: "admin-icon",
+      subItems: ["users", "settings"],
+    };
 
-      expect(getItemState(item)).toBe("active");
-    });
+    expect(getItemState(homeItem)).toBe("active");
+    expect(getItemState(adminItem)).toBe("inactive");
 
-    it("returns 'active' when route matches a subItem", () => {
-      mRoute.path = "/admin/users";
+    mockedRoute.path = "/admin/users";
 
-      const { getItemState } = useNavigation();
-
-      const parent: NavigationItem = {
-        path: "admin",
-        icon: "admin-icon",
-        subItems: ["users", "settings"],
-      };
-
-      expect(getItemState(parent)).toBe("active");
-    });
-
-    it("returns 'inactive' when route does not match item", () => {
-      mRoute.path = "/home";
-
-      const { getItemState } = useNavigation();
-
-      const parent: NavigationItem = {
-        path: "admin",
-        icon: "admin-icon",
-        subItems: ["users", "settings"],
-      };
-
-      expect(getItemState(parent)).toBe("inactive");
-    });
+    expect(getItemState(homeItem)).toBe("inactive");
+    expect(getItemState(adminItem)).toBe("active");
   });
 
-  describe("collapseAllItems", () => {
-    it("clears all expanded items", () => {
-      const { expandedItems, collapseAllItems } = useNavigation();
+  it("collapses all expanded group-items when collapseAllItems is called", () => {
+    const { expandedItems, collapseAllItems } = useNavigation();
 
-      expect(expandedItems.value.length).toBeGreaterThan(0);
+    expect(expandedItems.value).toEqual(["admin"]);
 
-      collapseAllItems();
+    collapseAllItems();
 
-      expect(expandedItems.value).toEqual([]);
-    });
+    expect(expandedItems.value).toEqual([]);
   });
 
-  describe("expandActiveItem", () => {
-    it("adds the active parent path to expandedItems if it has subItems", () => {
-      mRoute.path = "/admin/settings";
+  it("expands active item if it is a group-item, when expandActiveItem is called", async () => {
+    const { expandedItems, collapseAllItems, expandActiveItem, getItemState } =
+      useNavigation();
 
-      const { expandedItems, collapseAllItems, expandActiveItem } =
-        useNavigation();
+    collapseAllItems();
 
-      collapseAllItems();
-      expect(expandedItems.value).toEqual([]);
+    expandActiveItem();
 
-      expandActiveItem();
+    expect(expandedItems.value).toEqual([]);
 
-      expect(expandedItems.value).toContain("admin");
-    });
+    mockedRoute.path = "/admin/users";
 
-    it("does nothing if active item has no subItems", () => {
-      mRoute.path = "/home";
+    collapseAllItems();
 
-      const { expandedItems, collapseAllItems, expandActiveItem } =
-        useNavigation();
+    expect(expandedItems.value).toEqual([]);
 
-      collapseAllItems();
-      expandActiveItem();
+    expandActiveItem();
 
-      expect(expandedItems.value).toEqual([]);
-    });
+    expect(expandedItems.value).toContain("admin");
   });
 });
