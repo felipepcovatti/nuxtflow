@@ -33,6 +33,7 @@
     "90D": "Last 90 days",
     "1Y": "Last 1 year"
   },
+  "selectThePeriod": "Select the period",
   "dateRangePresets": "Date range presets",
   "today": "Today",
   "yesterday": "Yesterday",

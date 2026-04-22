@@ -5,6 +5,7 @@ export interface SelectOption<T extends string = string> {
 }
 
 const props = defineProps<{
+  triggerAriaLabel: string;
   options: SelectOption<T>[];
   bordered?: boolean;
 }>();
@@ -18,7 +19,10 @@ const selected = computed(() =>
 
 <template>
   <SelectRoot v-model="modelValue">
-    <SelectTrigger :class="['button', { 'border-transparent': !bordered }]">
+    <SelectTrigger
+      :class="['button', { 'border-transparent': !bordered }]"
+      :aria-label="triggerAriaLabel"
+    >
       <SelectValue v-if="selected" as-child>
         <span>
           <slot :selected="selected">

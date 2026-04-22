@@ -20,6 +20,7 @@ describe("Select", () => {
       props: {
         modelValue: "pending",
         options,
+        triggerAriaLabel: "Select status",
       },
     });
 
@@ -31,16 +32,17 @@ describe("Select", () => {
       props: {
         modelValue: "pending",
         options,
+        triggerAriaLabel: "Select status",
       },
     });
 
     const trigger = await wrapper.findByRole("combobox");
     await fireEvent.keyDown(trigger, { key: "Enter" });
-    const optionElements = await wrapper.findAllByRole("option");
-    expect(optionElements).toHaveLength(options.length);
-    expect(optionElements[0]?.textContent).toBe("All statuses");
-    expect(optionElements[1]?.textContent).toBe("Pending");
-    expect(optionElements[2]?.textContent).toBe("Completed");
+    const statusOptions = await wrapper.findAllByRole("option");
+    expect(statusOptions).toHaveLength(options.length);
+    expect(statusOptions.at(0)?.textContent).toBe("All statuses");
+    expect(statusOptions.at(1)?.textContent).toBe("Pending");
+    expect(statusOptions.at(2)?.textContent).toBe("Completed");
   });
 
   it("marks the current option as selected when opened", async () => {
@@ -48,6 +50,7 @@ describe("Select", () => {
       props: {
         modelValue: "pending",
         options,
+        triggerAriaLabel: "Select status",
       },
     });
 
@@ -66,6 +69,7 @@ describe("Select", () => {
       props: {
         modelValue: "completed",
         options,
+        triggerAriaLabel: "Select status",
       },
       slots: {
         default: ({ selected }: { selected: SelectOption<string> }) =>
@@ -81,6 +85,7 @@ describe("Select", () => {
       props: {
         modelValue: "pending",
         options,
+        triggerAriaLabel: "Select status",
       },
     });
 

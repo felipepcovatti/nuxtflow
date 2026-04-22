@@ -10,6 +10,7 @@ defineProps<{
 </script>
 <template>
   <UiSelect
+    :trigger-aria-label="$t('selectThePeriod')"
     :options="
       PERIOD_PRESETS.map<SelectOption>((period) => ({
         label: $t(`periodPresets.${period}`),
