@@ -4,6 +4,7 @@ import RevenueByProduct from "./RevenueByProduct.vue";
 import type { RevenueByProductResponse } from "~/types/revenue";
 
 mockNuxtImport("useApi", async () => {
+  const { ref } = await import("vue");
   return () => ({
     data: ref<Partial<RevenueByProductResponse>>({
       data: {
