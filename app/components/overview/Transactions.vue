@@ -1,50 +1,22 @@
 <script setup lang="ts">
-import type { PeriodPreset } from "~/constants/api";
-import type { TransactionStatus } from "~/types/transactions";
-import TransactionStatusSelect from "./TransactionStatusSelect.vue";
-
-const PAGE_SIZE = 10;
-
-const page = ref(1);
-
-const searchTerm = ref<string>("");
-
-const debouncedSearchTerm = refDebounced(searchTerm, 200);
-
-const status = ref<TransactionStatus | null>(null);
-
-const query = computed(() => ({
-  page: page.value,
-  page_size: PAGE_SIZE,
-  search: debouncedSearchTerm.value || undefined,
-  status: status.value || undefined,
-}));
-
-const { data, refresh, pending } = useApi("/api/transactions", {
-  query,
-  watch: false,
-});
-
-watch(query, (query, { page: previousPage }) => {
-  const samePage = previousPage === query.page;
-  if (samePage) {
-    groupState.value = false;
-  }
-  if (query.page !== 1 && samePage) {
-    page.value = 1;
-  } else {
-    refresh();
-  }
-});
-
-const transactions = computed(() => data.value?.data || []);
-
 const { formatAsShortDateWithYear } = useDateFormatter();
 
 const { formatAsMoney } = useMoneyFormatter();
 
-const { groupState, isSelected, toggleSelection, selectedCount } =
-  useCheckboxGroup(transactions);
+const {
+  page,
+  searchTerm,
+  pageSize,
+  pending,
+  total,
+  transactions,
+  status,
+  debouncedSearchTerm,
+  groupState,
+  isSelected,
+  toggleSelection,
+  selectedCount,
+} = useTransactions();
 </script>
 <template>
   <UiCard class="min-h-198.5" :title="$t('transactions')" :loading="pending">
@@ -55,13 +27,13 @@ const { groupState, isSelected, toggleSelection, selectedCount } =
           {{ $t("downloadReceipt", { count: selectedCount }) }}
         </span>
       </button>
-      <TransactionStatusSelect v-model="status" />
+      <OverviewTransactionStatusSelect v-model="status" />
       <UiSearchBox
         v-model="searchTerm"
         :placeholder="$t('searchByTransactionDescription')"
       />
     </template>
-    <div class="-mx-6 overflow-x-auto" v-if="transactions.length">
+    <div v-if="transactions.length" class="-mx-6 overflow-x-auto">
       <table class="table">
         <thead class="bg-gray-700">
           <tr class="text-left">
@@ -159,12 +131,8 @@ const { groupState, isSelected, toggleSelection, selectedCount } =
         </button>
       </div>
     </div>
-    <template #footer v-if="data">
-      <UiPagination
-        :total="data.meta.total"
-        :per-page="PAGE_SIZE"
-        v-model:page="page"
-      />
+    <template #footer v-if="total">
+      <UiPagination :total="total" :per-page="pageSize" v-model:page="page" />
     </template>
   </UiCard>
 </template>

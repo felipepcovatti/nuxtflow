@@ -1,5 +1,3 @@
-import type { PeriodPreset } from "~/constants/api";
-
 export type TransactionType =
   | "payment_from"
   | "refund_to"
@@ -20,6 +18,13 @@ export interface Transaction {
   amount: number;
   status: TransactionStatus;
   datetime: string;
+}
+
+export interface TransactionsQuery {
+  page_size: number;
+  page: number;
+  search?: string;
+  status?: TransactionStatus;
 }
 
 export interface TransactionResponse {
