@@ -28,7 +28,6 @@ export interface TransactionResponse {
     page: number;
     page_size: number;
     total: number;
-    page_count: number;
     locale: string;
   };
 }

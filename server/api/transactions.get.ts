@@ -29,15 +29,12 @@ export default defineEventHandler(async (event) => {
 
   const paginatedTransactions = searchedTransactions.slice(start, end);
 
-  const pageCount = Math.ceil(total / pageSize);
-
   return {
     data: paginatedTransactions,
     meta: {
       page,
       page_size: pageSize,
       total,
-      page_count: pageCount,
       locale: "en-US",
     },
   } satisfies TransactionResponse;
