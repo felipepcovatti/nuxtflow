@@ -1,32 +1,21 @@
 <script lang="ts" setup>
 import type { TransactionStatus } from "~/types/transactions";
 
-defineProps<{
+const props = defineProps<{
   status: TransactionStatus;
 }>();
 </script>
 <template>
   <div
-    :data-status="status"
-    class="inline-flex rounded-lg px-2.5 py-0.75 text-xs font-semibold whitespace-nowrap"
+    :data-status="props.status"
+    :class="[
+      'inline-flex rounded-lg px-2.5 py-0.75 text-xs font-semibold whitespace-nowrap',
+      'data-[status=completed]:bg-green-900 data-[status=completed]:text-green-300',
+      'data-[status=pending]:bg-yellow-900 data-[status=pending]:text-yellow-300',
+      'data-[status=in\\_progress]:bg-pink-900 data-[status=in\\_progress]:text-pink-300',
+      'data-[status=cancelled]:bg-red-900 data-[status=cancelled]:text-red-300',
+    ]"
   >
-    {{ $t(`transactionStatuses.${status}`) }}
+    {{ $t(`transactionStatuses.${props.status}`) }}
   </div>
 </template>
-<style scoped>
-@reference "@/assets/css/main.css";
-div {
-  &[data-status="completed"] {
-    @apply bg-green-900 text-green-300;
-  }
-  &[data-status="pending"] {
-    @apply bg-yellow-900 text-yellow-300;
-  }
-  &[data-status="in_progress"] {
-    @apply bg-pink-900 text-pink-300;
-  }
-  &[data-status="cancelled"] {
-    @apply bg-red-900 text-red-300;
-  }
-}
-</style>
