@@ -31,6 +31,7 @@ const selectedOption = computed<TransactionStatusSelectValue>({
     v-model="selectedOption"
     @update:model-value=""
     bordered
+    :trigger-aria-label="$t('filterByStatus')"
     v-slot="{ selected }"
   >
     <template v-if="selected.value !== 'all'">

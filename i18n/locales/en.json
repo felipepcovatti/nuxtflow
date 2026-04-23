@@ -98,10 +98,13 @@
     "adjustment_dispute": "Adjustment: {actor}",
     "purchase_supply": "Supply Purchase: {actor}"
   },
+  "selectTransactionsInCurrentPage": "Select the transaction in current page | Select the {count} transactions in current page",
+  "selectTransaction": "Select transaction \"{description}\"",
   "description": "Description",
   "date": "Date",
   "amount": "Amount",
   "status": "Status",
+  "filterByStatus": "Filter by status",
   "actions": "Actions",
   "viewDetails": "View details",
   "downloadReceipt": "Download receipt | Download receipts",

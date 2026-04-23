@@ -68,7 +68,14 @@ const { groupState, isSelected, toggleSelection, selectedCount } =
           <tr class="text-left">
             <th scope="col" class="sticky left-0 w-16 bg-gray-700">
               <div class="flex justify-center">
-                <UiCheckbox v-model="groupState" />
+                <UiCheckbox
+                  v-model="groupState"
+                  :aria-label="
+                    $t('selectTransactionsInCurrentPage', {
+                      count: transactions.length,
+                    })
+                  "
+                />
               </div>
             </th>
             <th scope="col">{{ $t("description") }}</th>
@@ -93,6 +100,11 @@ const { groupState, isSelected, toggleSelection, selectedCount } =
                   class="checkbox"
                   :model-value="isSelected(transaction.id)"
                   @update:model-value="toggleSelection(transaction.id)"
+                  :aria-label="
+                    $t('selectTransaction', {
+                      description: transaction.description,
+                    })
+                  "
                 />
               </div>
             </td>
