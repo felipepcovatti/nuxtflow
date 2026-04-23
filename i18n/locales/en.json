@@ -106,7 +106,7 @@
   "filterByStatus": "Filter by status",
   "actions": "Actions",
   "viewDetails": "View details",
-  "downloadReceipt": "Download receipt | Download receipts",
+  "downloadReceipt": "Download receipts | Download receipt | Download receipts ({count})",
   "allStatuses": "All statuses",
   "searchByTransactionDescription": "Search by transaction description",
   "noTransactionsFoundForTerm": "No transactions found for {term}.",

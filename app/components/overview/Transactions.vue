@@ -52,8 +52,7 @@ const { groupState, isSelected, toggleSelection, selectedCount } =
       <button class="button" :disabled="!groupState">
         <Icon name="mdi-download" />
         <span>
-          {{ $t("downloadReceipt", selectedCount) }}
-          <span v-if="selectedCount > 1">({{ selectedCount }})</span>
+          {{ $t("downloadReceipt", { count: selectedCount }) }}
         </span>
       </button>
       <TransactionStatusSelect v-model="status" />
