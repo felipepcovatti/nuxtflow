@@ -1,4 +1,12 @@
-import { describe, it, expect, afterEach, beforeEach, vi } from "vitest";
+import {
+  describe,
+  it,
+  expect,
+  afterEach,
+  vi,
+  afterAll,
+  beforeAll,
+} from "vitest";
 import { mountSuspended } from "@nuxt/test-utils/runtime";
 import Chart from "./index.vue";
 
@@ -15,13 +23,15 @@ vi.mock("@unovis/vue", () => ({
 }));
 
 describe("Chart", () => {
-  // Prevent unhandled errors from charting library background timers
-  beforeEach(() => {
+  beforeAll(() => {
     vi.useFakeTimers();
   });
 
   afterEach(() => {
     vi.runOnlyPendingTimers();
+  });
+
+  afterAll(() => {
     vi.useRealTimers();
   });
 
