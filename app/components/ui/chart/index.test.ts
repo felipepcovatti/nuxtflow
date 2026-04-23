@@ -46,84 +46,44 @@ describe("Chart", () => {
     { month: "Mar", item1: 200, item2: 300 },
   ];
 
+  const chartTypes = [
+    {
+      type: "stacked-bar",
+      selector: "[data-test='stacked-bar']",
+    },
+    {
+      type: "horizontal-stacked-bar",
+      selector: "[data-test='stacked-bar']",
+    },
+    {
+      type: "grouped-bar",
+      selector: "[data-test='grouped-bar']",
+    },
+    { type: "stacked-area", selector: "[data-test='area']" },
+  ] as const;
+
   describe("rendering", () => {
-    it("renders with stacked-bar type", async () => {
-      const wrapper = await mountSuspended(Chart, {
-        props: {
-          type: "stacked-bar",
-          items: mockItems,
-          dataRecords: mockDataRecords,
-          tooltipTitleGetter: (record) => record.month,
-        },
-      });
+    it.each(chartTypes)(
+      'renders the "$type" variant with tooltip and legend',
+      async ({ type, selector }) => {
+        const wrapper = await mountSuspended(Chart, {
+          props: {
+            type,
+            items: mockItems,
+            dataRecords: mockDataRecords,
+            tooltipTitleGetter: (record) => record.month,
+          },
+        });
 
-      expect(wrapper.find("[data-test='stacked-bar']").exists()).toBe(true);
-    });
+        expect(wrapper.find(selector).exists()).toBe(true);
+        expect(wrapper.find("[data-test='tooltip']").exists()).toBe(true);
 
-    it("renders with horizontal-stacked-bar type", async () => {
-      const wrapper = await mountSuspended(Chart, {
-        props: {
-          type: "horizontal-stacked-bar",
-          items: mockItems,
-          dataRecords: mockDataRecords,
-          tooltipTitleGetter: (record) => record.month,
-        },
-      });
-
-      expect(wrapper.find("[data-test='stacked-bar']").exists()).toBe(true);
-    });
-
-    it("renders with grouped-bar type", async () => {
-      const wrapper = await mountSuspended(Chart, {
-        props: {
-          type: "grouped-bar",
-          items: mockItems,
-          dataRecords: mockDataRecords,
-          tooltipTitleGetter: (record) => record.month,
-        },
-      });
-
-      expect(wrapper.find("[data-test='grouped-bar']").exists()).toBe(true);
-    });
-
-    it("renders with stacked-area type", async () => {
-      const wrapper = await mountSuspended(Chart, {
-        props: {
-          type: "stacked-area",
-          items: mockItems,
-          dataRecords: mockDataRecords,
-          tooltipTitleGetter: (record) => record.month,
-        },
-      });
-      expect(wrapper.find("[data-test='area']").exists()).toBe(true);
-    });
-
-    it("hides axis when hideAxis is true", async () => {
-      const wrapper = await mountSuspended(Chart, {
-        props: {
-          type: "stacked-bar",
-          items: mockItems,
-          dataRecords: mockDataRecords,
-          tooltipTitleGetter: (record) => record.month,
-          hideAxis: true,
-        },
-      });
-
-      expect(wrapper.find("[data-test='axis']").exists()).toBe(false);
-    });
-
-    it("renders tooltip", async () => {
-      const wrapper = await mountSuspended(Chart, {
-        props: {
-          type: "stacked-bar",
-          items: mockItems,
-          dataRecords: mockDataRecords,
-          tooltipTitleGetter: (record) => record.month,
-        },
-      });
-
-      expect(wrapper.find("[data-test='tooltip']").exists()).toBe(true);
-    });
+        const legendItems = wrapper.findAllComponents({
+          name: "UiChartLegendItem",
+        });
+        expect(legendItems).toHaveLength(mockItems.length);
+      },
+    );
 
     it("renders crosshair for stacked-area", async () => {
       const wrapper = await mountSuspended(Chart, {
@@ -138,20 +98,18 @@ describe("Chart", () => {
       expect(wrapper.find("[data-test='crosshair']").exists()).toBe(true);
     });
 
-    it("renders legend for items", async () => {
+    it("hides axis when hideAxis is true", async () => {
       const wrapper = await mountSuspended(Chart, {
         props: {
           type: "stacked-bar",
           items: mockItems,
           dataRecords: mockDataRecords,
           tooltipTitleGetter: (record) => record.month,
+          hideAxis: true,
         },
       });
 
-      const legendItems = wrapper.findAllComponents({
-        name: "UiChartLegendItem",
-      });
-      expect(legendItems).toHaveLength(mockItems.length);
+      expect(wrapper.find("[data-test='axis']").exists()).toBe(false);
     });
   });
 });
