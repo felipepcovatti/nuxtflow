@@ -77,9 +77,7 @@ describe("Drawer", () => {
 
     const nav = wrapper.getComponent({ name: "LayoutNavigationItems" });
 
-    nav.vm.$emit("select");
-
-    await nextTick();
+    await nav.vm.$emit("select");
 
     expect(wrapper.emitted("update:open")?.[0]).toEqual([false]);
   });
