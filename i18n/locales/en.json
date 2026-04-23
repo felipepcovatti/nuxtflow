@@ -87,7 +87,6 @@
     "completed": "Complete",
     "cancelled": "Cancelled",
     "in_progress": "In progress",
-    "failed": "Cancelled",
     "pending": "Pending"
   },
   "transactionDescriptions": {
