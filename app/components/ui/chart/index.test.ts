@@ -82,6 +82,10 @@ describe("Chart", () => {
           name: "UiChartLegendItem",
         });
         expect(legendItems).toHaveLength(mockItems.length);
+        expect(legendItems.map((item) => item.props())).toEqual([
+          { color: "#ff0000", label: "Item 1" },
+          { color: "#00ff00", label: "Item 2" },
+        ]);
       },
     );
 
