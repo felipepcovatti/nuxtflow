@@ -3,8 +3,6 @@
   setup
   generic="DataRecord extends Record<string, any>, ItemId extends string"
 >
-import { UiChartTooltipContent } from "#components";
-import { Area, GroupedBar, StackedBar } from "@unovis/ts";
 import {
   VisXYContainer,
   VisStackedBar,
@@ -14,7 +12,6 @@ import {
   VisTooltip,
   VisCrosshair,
 } from "@unovis/vue";
-import { render } from "vue";
 import type { ChartType } from "~/types/chart";
 
 const props = withDefaults(
@@ -34,126 +31,31 @@ const props = withDefaults(
   },
 );
 
-const chartWrapperRef = useTemplateRef("chartWrapper");
-
-function handleMutedState({
-  attribute,
-  value,
-}:
-  | { attribute: "data-item-id"; value: string | null }
-  | { attribute: "data-item-position"; value: PositionType | null }) {
-  if (!chartWrapperRef.value) return;
-  const elements = chartWrapperRef.value.querySelectorAll(`[${attribute}]`);
-  elements.forEach((element) => {
-    element.classList.toggle(
-      "muted",
-      value !== null && value.toString() !== element.getAttribute(attribute),
-    );
-  });
-}
-
 const { isExtraSmall } = useIsExtraSmall();
 
-function colorGetter(_: DataRecord, index: number) {
-  return props.items[index]?.color ?? "";
-}
+const wrapperRef = useTemplateRef("chartWrapper");
 
-function renderTooltip(record: DataRecord): HTMLDivElement {
-  const items = props.items.map((item) => {
-    return {
-      color: item.color,
-      label: item.label,
-      value: props.itemYGetter(record, item.id),
-    };
-  });
-  const tooltip = document.createElement("div");
-  const content: VNode = h(UiChartTooltipContent, {
-    items:
-      props.type === "grouped-bar" || props.type === "horizontal-stacked-bar"
-        ? items
-        : items.reverse(),
-    title: props.tooltipTitleGetter(record),
-  });
-  render(content, tooltip);
-  return tooltip;
-}
-
-const dataGetters = computed(() => {
-  return props.items.map((item) => {
-    return (record: DataRecord) => props.itemYGetter(record, item.id);
-  });
+const {
+  areaAttributes,
+  barAttributes,
+  barEvents,
+  colorGetter,
+  getXAxisTick,
+  itemYGetters,
+  muteOtherBars,
+  renderTooltip,
+  unmuteAllBars,
+  tooltipTriggers,
+  itemXGetter,
+} = useChart({
+  getType: () => props.type,
+  getDataRecords: () => props.dataRecords,
+  items: props.items,
+  tooltipTitleGetter: props.tooltipTitleGetter,
+  xAxisTickGetter: props.itemXGetter,
+  itemYGetter: props.itemYGetter,
+  wrapperRef,
 });
-
-const itemPositionGetter = (_: DataRecord, index: number) => {
-  return index;
-};
-
-const barSelectors = computed(() => {
-  if (props.type === "stacked-area") return;
-  return props.type === "grouped-bar"
-    ? GroupedBar.selectors
-    : StackedBar.selectors;
-});
-
-type PositionType = ReturnType<typeof itemPositionGetter>;
-
-const hoveredItemPosition = ref<PositionType | null>(null);
-
-watch(hoveredItemPosition, (position) =>
-  handleMutedState({ attribute: "data-item-position", value: position }),
-);
-
-const barEvents = computed(() => {
-  if (!barSelectors.value) return {};
-  return {
-    [barSelectors.value.barGroup]: {
-      mouseenter: (_: DataRecord, __: MouseEvent, index: number) => {
-        hoveredItemPosition.value = index;
-      },
-      mouseleave: () => (hoveredItemPosition.value = null),
-    },
-  };
-});
-
-const barAttributes = computed(() => {
-  if (!barSelectors.value) return {};
-  return {
-    [barSelectors.value.barGroup]: {
-      "data-item-position": itemPositionGetter,
-    },
-    [barSelectors.value.bar]: {
-      "data-item-id": (_: DataRecord, index: number) =>
-        props.items[index % props.items.length]?.id,
-    },
-  };
-});
-
-const AREA_ATRIBUTES = {
-  [Area.selectors.area]: {
-    "data-item-id": (_: DataRecord, index: number) =>
-      props.items[index % props.items.length]?.id,
-  },
-} as const;
-
-const xTickFormat = (value: number) => {
-  if (!Number.isInteger(value)) return "";
-  const record = props.dataRecords[value];
-  if (!record || !props.itemXGetter) return value;
-  return props.itemXGetter(record);
-};
-
-const triggers = computed(() => {
-  if (!barSelectors.value) return {};
-  return {
-    [barSelectors.value.barGroup]: renderTooltip,
-  };
-});
-
-const hoveredItemId = ref<string | null>(null);
-
-watch(hoveredItemId, (id) =>
-  handleMutedState({ attribute: "data-item-id", value: id }),
-);
 </script>
 <template>
   <div class="flex flex-col gap-6">
@@ -162,8 +64,8 @@ watch(hoveredItemId, (id) =>
         <VisXYContainer :data="dataRecords" :height="height">
           <VisGroupedBar
             v-if="type === 'grouped-bar'"
-            :x="itemPositionGetter"
-            :y="dataGetters"
+            :x="itemXGetter"
+            :y="itemYGetters"
             :rounded-corners="4"
             :color="colorGetter"
             :events="barEvents"
@@ -173,8 +75,8 @@ watch(hoveredItemId, (id) =>
             v-else-if="
               type === 'stacked-bar' || type === 'horizontal-stacked-bar'
             "
-            :x="itemPositionGetter"
-            :y="dataGetters"
+            :x="itemXGetter"
+            :y="itemYGetters"
             :rounded-corners="4"
             :bar-padding="0.25"
             :color="colorGetter"
@@ -186,10 +88,10 @@ watch(hoveredItemId, (id) =>
           />
           <VisArea
             v-else
-            :x="itemPositionGetter"
-            :y="dataGetters"
+            :x="itemXGetter"
+            :y="itemYGetters"
             :rounded-corners="4"
-            :attributes="AREA_ATRIBUTES"
+            :attributes="areaAttributes"
             :color="colorGetter"
           />
           <VisAxis
@@ -200,7 +102,7 @@ watch(hoveredItemId, (id) =>
             :tick-line="undefined"
             :domain-line="false"
             :tick-text-angle="isExtraSmall ? 90 : 0"
-            :tick-format="xTickFormat"
+            :tick-format="getXAxisTick"
             :tick-text-align="isExtraSmall ? 'left' : 'center'"
           />
           <VisAxis
@@ -211,7 +113,7 @@ watch(hoveredItemId, (id) =>
             :domain-line="false"
           />
           <VisTooltip
-            :triggers="triggers"
+            :triggers="tooltipTriggers"
             :attributes="{ 'data-selector': 'tooltip' }"
             :horizontal-shift="12"
             horizontal-placement="left"
@@ -229,8 +131,8 @@ watch(hoveredItemId, (id) =>
         v-for="item in items"
         :key="item.id"
         class="cursor-default"
-        @mouseenter="hoveredItemId = String(item.id)"
-        @mouseleave="hoveredItemId = null"
+        @mouseenter="muteOtherBars(item.id)"
+        @mouseleave="unmuteAllBars"
       >
         <UiChartLegendItem :color="item.color" :label="item.label" />
       </div>

@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import type { TransactionStatus } from "~/types/transactions";
 import type { SelectOption } from "../ui/Select.vue";
-import { TRANSACTION_STATUSES } from "~/constants/transaction";
+import { TRANSACTION_STATUSES } from "~/constants/transactions";
 
 type TransactionStatusSelectValue = TransactionStatus | "all";
 

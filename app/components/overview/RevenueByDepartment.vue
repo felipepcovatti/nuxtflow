@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Department, DepartmentRevenuesByDate } from "~/types/revenue";
+import type { DepartmentRevenuesByDate } from "~/types/revenue";
 import { ref, computed } from "vue";
 import {
   addDays,
@@ -9,12 +9,7 @@ import {
   isYesterday,
   startOfToday,
 } from "date-fns";
-
-const DEPARTMENTS: ReadonlyArray<{ id: Department; color: string }> = [
-  { id: "electronics", color: "var(--color-primary-700)" },
-  { id: "home_living", color: "var(--color-orange-300)" },
-  { id: "clothing_accessories", color: "var(--color-teal-400)" },
-];
+import { DEPARTMENTS } from "~/constants/revenues";
 
 const { formatAsMoney } = useMoneyFormatter();
 const { formatAsShortDate, formatAsWeekday, formatAsFullDate } =
@@ -62,7 +57,6 @@ function itemXGetter(record: DepartmentRevenuesByDate) {
     </template>
     <UiChart
       :type="chartType"
-      :loading="pending"
       :data-records="revenues"
       :item-x-getter="itemXGetter"
       :tooltip-title-getter="(record) => formatAsFullDate(record.date)"

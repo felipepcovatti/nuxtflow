@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { PeriodPreset } from "~/constants/api";
-import type { Device } from "~/types/visits";
+import { DEVICES } from "~/constants/visits";
 
 const period = ref<PeriodPreset>("7D");
 
@@ -13,34 +13,12 @@ const visits = computed(() => {
   return visits ? [visits] : [];
 });
 
-const DEVICES: ReadonlyArray<{ id: Device; color: string; icon: string }> = [
-  {
-    id: "desktop",
-    color: "var(--color-primary-700)",
-    icon: "flowbite:desktop-pc-solid",
-  },
-  {
-    id: "mobile",
-    color: "var(--color-orange-300)",
-    icon: "flowbite:mobile-phone-solid",
-  },
-  {
-    id: "tablet",
-    color: "var(--color-teal-400)",
-    icon: "flowbite:tablet-solid",
-  },
-];
-
-function getVisitsPercentage(visits: number) {
-  if (!data.value?.data.total_visits) return "";
-  return ((visits / data.value.data.total_visits) * 100).toFixed(1) + "%";
-}
-
 const { formatAsCompactNumber } = useNumberFormatter();
 </script>
 
 <template>
   <UiCard
+    :loading="pending"
     :title="formatAsCompactNumber(data?.data.total_visits ?? 0)"
     :subtitle="$t('visitsByDevice')"
     :link="{ label: $t('viewUserReport'), to: 'user-report' }"
@@ -64,7 +42,12 @@ const { formatAsCompactNumber } = useNumberFormatter();
         </header>
         <template v-if="data">
           <div class="section-title">
-            {{ getVisitsPercentage(data.data.visits[device.id]) }}
+            {{
+              getPercentage({
+                value: data.data.visits[device.id],
+                total: data.data.total_visits,
+              })
+            }}
           </div>
           <div>
             {{ formatAsCompactNumber(data.data.visits[device.id]) }}
@@ -75,7 +58,6 @@ const { formatAsCompactNumber } = useNumberFormatter();
     <UiChart
       type="horizontal-stacked-bar"
       hide-axis
-      :loading="pending"
       :height="20"
       :data-records="visits"
       :tooltip-title-getter="() => $t('visits')"

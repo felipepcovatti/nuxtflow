@@ -1,24 +1,17 @@
-import type { Department } from "./revenue";
-
-export type ChartType =
+export type BarChartType =
   | "grouped-bar"
   | "stacked-bar"
-  | "stacked-area"
   | "horizontal-stacked-bar";
+
+export type ChartType = BarChartType | "stacked-area";
 export interface LegendItem {
   color: string;
   label: string;
   value?: string | number;
 }
 
-export interface RevenueProductValue {
-  product_id: string;
-  amount: number;
+export interface ChartItem<ItemId extends string> {
+  id: ItemId;
+  label: string;
+  color: string;
 }
-
-export type DepartmentRevenuesChartRecord = {
-  date: string;
-  days_from_today: number;
-} & {
-  [department in Department]: number;
-};

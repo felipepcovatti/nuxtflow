@@ -6,11 +6,12 @@ export const usePercentage = (
 ) => {
   const value = computed(() => getValue());
 
-  const percentage = computed(() => {
-    if (value.value === Infinity) return "∞";
-    if (value.value === -Infinity) return "-∞";
-    return Math.abs(value.value).toFixed(1) + "%";
-  });
+  const percentage = computed(() =>
+    getPercentage({
+      value: Math.abs(value.value),
+      total: 100,
+    }),
+  );
 
   const trend = computed<Trend>(() => {
     if (!value.value) return "constant";

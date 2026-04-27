@@ -39,3 +39,10 @@ export type VisitsByDeviceResponse = {
     period: PeriodPreset;
   };
 };
+
+export interface Country extends CountryVisitsRecord {
+  name: string;
+  color: string;
+  formattedVisits: string;
+  icon: string;
+}

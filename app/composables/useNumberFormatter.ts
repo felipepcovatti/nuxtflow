@@ -13,9 +13,12 @@ export const useNumberFormatter = () => {
   const formatAsNumber = (value: number) => numberFormatter.value.format(value);
   const formatAsCompactNumber = (value: number) =>
     compactNumberFormatter.value.format(value);
+  const formatAsPercentage = (value: number) =>
+    numberFormatter.value.format(value) + "%";
 
   return {
     formatAsNumber,
     formatAsCompactNumber,
+    formatAsPercentage,
   };
 };
