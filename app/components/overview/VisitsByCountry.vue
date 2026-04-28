@@ -28,7 +28,6 @@ const { formatAsNumber } = useNumberFormatter();
       <PeriodSelect v-model="period" bordered />
     </template>
     <div
-      ref="mapWrapper"
       class="flex h-(--map-height) [--map-height:40vw] @5xl:[--map-height:29.5rem]"
     >
       <ClientOnly>
@@ -52,34 +51,10 @@ const { formatAsNumber } = useNumberFormatter();
         </VisSingleContainer>
       </ClientOnly>
     </div>
-    <div class="flex flex-col gap-6">
-      <div
-        v-for="country in highestVisitCountries"
-        :key="country.country"
-        class="flex items-center gap-3"
-      >
-        <Icon :name="country.icon" />
-        <div class="w-40 truncate text-white">
-          {{ country.name }}
-        </div>
-        <div class="flex flex-1 rounded-md bg-gray-700">
-          <div
-            v-if="totalVisits !== undefined"
-            :style="{
-              width: getPercentage({
-                value: country.visits,
-                total: totalVisits,
-              }),
-            }"
-            class="bg-primary-700 rounded-md text-right text-xs/relaxed text-white transition-[width]"
-          >
-            <span class="mx-2">
-              {{ country.formattedVisits }}
-            </span>
-          </div>
-        </div>
-      </div>
-    </div>
+    <OverviewVisitsByCountryList
+      :countries="highestVisitCountries"
+      :total-visits="totalVisits || 0"
+    />
   </UiCard>
 </template>
 <style scoped>
