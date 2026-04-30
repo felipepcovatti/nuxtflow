@@ -28,33 +28,10 @@ const { formatAsCompactNumber } = useNumberFormatter();
         :percentage="data.data.total_visits_growth_percentage"
       />
     </template>
-    <div class="flex flex-wrap justify-between gap-3">
-      <div
-        v-for="device in DEVICES"
-        :key="device.id"
-        class="flex min-h-21 flex-col justify-between"
-      >
-        <header class="flex items-center gap-1">
-          <Icon :name="device.icon" />
-          <div class="text-white">
-            {{ $t(`devices.${device.id}`) }}
-          </div>
-        </header>
-        <template v-if="data">
-          <div class="section-title">
-            {{
-              getPercentage({
-                value: data.data.visits[device.id],
-                total: data.data.total_visits,
-              })
-            }}
-          </div>
-          <div>
-            {{ formatAsCompactNumber(data.data.visits[device.id]) }}
-          </div>
-        </template>
-      </div>
-    </div>
+    <OverviewVisitsByDeviceStats
+      :stats="data?.data.visits"
+      :total-visits="data?.data.total_visits ?? 0"
+    />
     <UiChart
       type="horizontal-stacked-bar"
       hide-axis
