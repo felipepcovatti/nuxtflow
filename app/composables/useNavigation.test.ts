@@ -63,7 +63,7 @@ describe("useNavigation", () => {
   });
 
   it("expands active item if it is a group-item, when expandActiveItem is called", async () => {
-    const { expandedItems, collapseAllItems, expandActiveItem, getItemState } =
+    const { expandedItems, collapseAllItems, expandActiveItem } =
       useNavigation();
 
     collapseAllItems();
