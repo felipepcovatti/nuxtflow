@@ -1,13 +1,5 @@
 <script setup lang="ts">
-const router = useRouter();
-
-function goBack() {
-  if (window.history.state?.back) {
-    router.back();
-  } else {
-    navigateTo("/");
-  }
-}
+const { goBack } = useHistory();
 </script>
 
 <template>
