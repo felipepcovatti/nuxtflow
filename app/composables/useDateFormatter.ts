@@ -1,43 +1,55 @@
 import { computed } from "vue";
-import { useI18n, type Locale } from "vue-i18n";
-import { format, parseISO, type Locale as DateLocale } from "date-fns";
-import { enUS } from "date-fns/locale";
-
-const dateLocales: Record<Locale, DateLocale> = {
-  en: enUS,
-};
+import { parseISO } from "date-fns";
+import { useI18n } from "vue-i18n";
 
 export const useDateFormatter = () => {
   const { locale } = useI18n({ useScope: "global" });
 
-  const dateLocale = computed(() => {
-    const lang = locale.value;
-    return dateLocales[lang] || enUS;
-  });
+  const shortDateFormatter = computed(
+    () =>
+      new Intl.DateTimeFormat(locale.value, {
+        month: "short",
+        day: "numeric",
+      }),
+  );
 
-  const formatDateToPattern = computed(
-    () => (date: string, pattern: string) => {
-      const parsedDate = parseISO(date);
-      return format(parsedDate, pattern, {
-        locale: dateLocale.value,
-      });
-    },
+  const shortDateWithYearFormatter = computed(
+    () =>
+      new Intl.DateTimeFormat(locale.value, {
+        month: "short",
+        day: "numeric",
+        year: "numeric",
+      }),
+  );
+
+  const fullDateFormatter = computed(
+    () =>
+      new Intl.DateTimeFormat(locale.value, {
+        dateStyle: "medium",
+      }),
+  );
+
+  const weekdayFormatter = computed(
+    () =>
+      new Intl.DateTimeFormat(locale.value, {
+        weekday: "long",
+      }),
   );
 
   const formatAsShortDate = (date: string) => {
-    return formatDateToPattern.value(date, "MMM d");
+    return shortDateFormatter.value.format(parseISO(date));
   };
 
   const formatAsShortDateWithYear = (date: string) => {
-    return formatDateToPattern.value(date, "MMM d, yyyy");
+    return shortDateWithYearFormatter.value.format(parseISO(date));
   };
 
   const formatAsFullDate = (date: string) => {
-    return formatDateToPattern.value(date, "PP");
+    return fullDateFormatter.value.format(parseISO(date));
   };
 
   const formatAsWeekday = (date: string) => {
-    return formatDateToPattern.value(date, "EEEE");
+    return weekdayFormatter.value.format(parseISO(date));
   };
 
   return {

@@ -1,11 +1,10 @@
-import { formatISO } from "date-fns";
 import { mockNuxtImport, registerEndpoint } from "@nuxt/test-utils/runtime";
 import { getHeaders, type RequestHeaders } from "h3";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { useApi } from "./useApi";
 
 const FROZEN_NOW = new Date("2026-01-01T00:00:00.000Z");
-const DEFAULT_REFERENCE_TIME = formatISO(FROZEN_NOW);
+const DEFAULT_REFERENCE_TIME = FROZEN_NOW.toISOString();
 
 const { mockedReferenceTime } = vi.hoisted(() => ({
   mockedReferenceTime: {
