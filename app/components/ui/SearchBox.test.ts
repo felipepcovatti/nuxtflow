@@ -1,39 +1,28 @@
 import { describe, it, expect } from "vitest";
-import { mount } from "@vue/test-utils";
+import { mountSuspended } from "@nuxt/test-utils/runtime";
 import SearchBox from "./SearchBox.vue";
 
-function mountSearchBox(props?: Record<string, unknown>) {
-  return mount(SearchBox, {
+async function mountSearchBox(props?: Record<string, unknown>) {
+  return await mountSuspended(SearchBox, {
     props: {
       modelValue: "",
       ...props,
-    },
-    global: {
-      mocks: {
-        $t: (key: string) => (key === "search" ? "Search" : key),
-      },
-      stubs: {
-        Icon: {
-          name: "NuxtIcon",
-          template: "<span data-test='icon' />",
-        },
-      },
     },
   });
 }
 
 describe("SearchBox", () => {
   it("renders the search input with translated placeholder", async () => {
-    const wrapper = mountSearchBox();
+    const wrapper = await mountSearchBox();
 
     const input = wrapper.get("input");
 
     expect(input.attributes("placeholder")).toBe("Search");
-    expect(wrapper.find(".iconify").exists()).toBe(true);
+    expect(wrapper.findComponent({ name: "NuxtIcon" }).exists()).toBe(true);
   });
 
   it("renders the current model value in the input", async () => {
-    const wrapper = mountSearchBox({ modelValue: "Nuxt" });
+    const wrapper = await mountSearchBox({ modelValue: "Nuxt" });
 
     const input = wrapper.get("input");
 
@@ -41,7 +30,7 @@ describe("SearchBox", () => {
   });
 
   it("uses the large size variant and custom placeholder when provided", async () => {
-    const wrapper = mountSearchBox({
+    const wrapper = await mountSearchBox({
       large: true,
       placeholder: "Search transactions",
     });
@@ -54,7 +43,7 @@ describe("SearchBox", () => {
   });
 
   it("emits update:modelValue when typing", async () => {
-    const wrapper = mountSearchBox();
+    const wrapper = await mountSearchBox();
 
     const input = wrapper.get("input");
 

@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { mount } from "@vue/test-utils";
+import { mountSuspended } from "@nuxt/test-utils/runtime";
 import Content from "./Content.vue";
 
 describe("Content", () => {
@@ -8,8 +8,8 @@ describe("Content", () => {
     { label: "Cost", color: "orange", value: 50 },
   ];
 
-  it("renders the title", () => {
-    const wrapper = mount(Content, {
+  it("renders the title", async () => {
+    const wrapper = await mountSuspended(Content, {
       props: {
         title: "January",
         items,
@@ -19,8 +19,8 @@ describe("Content", () => {
     expect(wrapper.text()).toContain("January");
   });
 
-  it("renders the correct number of legend items", () => {
-    const wrapper = mount(Content, {
+  it("renders the correct number of legend items", async () => {
+    const wrapper = await mountSuspended(Content, {
       props: {
         title: "January",
         items,
@@ -38,8 +38,8 @@ describe("Content", () => {
     expect(legendItems).toHaveLength(2);
   });
 
-  it("forwards props to UiChartLegendItem", () => {
-    const wrapper = mount(Content, {
+  it("forwards props to UiChartLegendItem", async () => {
+    const wrapper = await mountSuspended(Content, {
       props: {
         title: "January",
         items,

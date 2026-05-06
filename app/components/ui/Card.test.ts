@@ -1,10 +1,10 @@
 import { describe, it, expect } from "vitest";
-import { mount } from "@vue/test-utils";
+import { mountSuspended } from "@nuxt/test-utils/runtime";
 import Card from "./Card.vue";
 
 describe("Card", () => {
-  it("renders title, subtitle and content", () => {
-    const wrapper = mount(Card, {
+  it("renders title, subtitle and content", async () => {
+    const wrapper = await mountSuspended(Card, {
       props: {
         title: "Revenue",
         subtitle: "January 2026",
@@ -20,8 +20,8 @@ describe("Card", () => {
     expect(wrapper.get('[data-test="content"]').text()).toBe("Main Content");
   });
 
-  it("renders headerEnd slot content within the header", () => {
-    const wrapper = mount(Card, {
+  it("renders headerEnd slot content within the header", async () => {
+    const wrapper = await mountSuspended(Card, {
       props: { title: "Header", subtitle: "With Action" },
       slots: {
         headerEnd: "<button data-test='header-btn'>Action</button>",

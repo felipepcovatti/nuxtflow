@@ -1,10 +1,10 @@
 import { describe, it, expect } from "vitest";
+import { mountSuspended } from "@nuxt/test-utils/runtime";
 import Item from "./Item.vue";
-import { mount } from "@vue/test-utils";
 
 describe("Item", () => {
   it("renders with a label and value", async () => {
-    const wrapper = mount(Item, {
+    const wrapper = await mountSuspended(Item, {
       props: {
         label: "Item A",
         color: "blue",
@@ -17,7 +17,7 @@ describe("Item", () => {
   });
 
   it("renders with label only", async () => {
-    const wrapper = mount(Item, {
+    const wrapper = await mountSuspended(Item, {
       props: {
         label: "Total",
         color: "green",
@@ -29,7 +29,7 @@ describe("Item", () => {
   });
 
   it("applies the correct background color to the bullet", async () => {
-    const wrapper = mount(Item, {
+    const wrapper = await mountSuspended(Item, {
       props: { label: "Test", color: "orange" },
     });
 
