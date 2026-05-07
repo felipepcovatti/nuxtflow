@@ -1,6 +1,6 @@
 import type { Trend } from "~/types/stats";
 
-export const usePercentage = (
+export const useGrowthPercentage = (
   getValue: () => number,
   { invertedSentiment }: { invertedSentiment?: boolean } = {},
 ) => {

@@ -4,9 +4,12 @@ const props = defineProps<{
   inverted?: boolean;
 }>();
 
-const { arrowIcon, color, percentage } = usePercentage(() => props.percentage, {
-  invertedSentiment: props.inverted,
-});
+const { arrowIcon, color, percentage } = useGrowthPercentage(
+  () => props.percentage,
+  {
+    invertedSentiment: props.inverted,
+  },
+);
 </script>
 
 <template>
