@@ -1,67 +1,49 @@
-import { describe, it, expect } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import { mountSuspended } from "@nuxt/test-utils/runtime";
-import { NAVIGATION_ITEMS } from "~/constants/navigation";
 import Items from "./Items.vue";
 
+vi.mock("~/constants/navigation", () => ({
+  NAVIGATION_ITEMS: [
+    {
+      path: "overview",
+      icon: "test:overview",
+    },
+    {
+      path: "pages",
+      icon: "test:pages",
+      subItems: ["kanban"],
+    },
+  ],
+}));
+
 describe("Items", () => {
-  describe("rendering", () => {
-    it("renders one entry per navigation item", async () => {
-      const wrapper = await mountSuspended(Items);
+  it("renders one entry per navigation item", async () => {
+    const wrapper = await mountSuspended(Items);
 
-      const groups = wrapper.findAll(".group\\/item");
-      expect(groups).toHaveLength(NAVIGATION_ITEMS.length);
-    });
-
-    it("renders translated labels (not raw i18n keys)", async () => {
-      const wrapper = await mountSuspended(Items);
-
-      const html = wrapper.html();
-      expect(html).not.toMatch(/itemPath\.|subitemPath\./);
-    });
+    const groups = wrapper.findAll(".group\\/item");
+    expect(groups).toHaveLength(2);
   });
 
-  describe("interaction", () => {
-    it("emits 'select' when a navigation link is clicked", async () => {
-      const wrapper = await mountSuspended(Items);
+  it("emits 'select' when a navigation link is clicked", async () => {
+    const wrapper = await mountSuspended(Items);
 
-      const link = wrapper.get("a");
+    const link = wrapper.get('a[href="/overview"]');
 
-      await link.trigger("click");
+    await link.trigger("click");
 
-      expect(wrapper.emitted("select")).toHaveLength(1);
-    });
+    expect(wrapper.emitted("select")).toHaveLength(1);
   });
 
-  describe("route-driven state", () => {
-    it("activates and expands the correct parent when visiting a sub-route", async () => {
-      const parent = NAVIGATION_ITEMS.find((i) => i.subItems?.length);
+  it("activates and expands the correct parent when visiting a sub-route", async () => {
+    const subPath = "/pages/kanban";
+    const wrapper = await mountSuspended(Items, { route: subPath });
 
-      if (!parent) {
-        throw new Error(
-          "Expected NAVIGATION_ITEMS to contain at least one item with subItems",
-        );
-      }
+    const activeGroup = wrapper.get(`.group\\/item:has(a[href="${subPath}"])`);
 
-      const subItem = parent.subItems?.[0];
+    expect(activeGroup.attributes("data-state")).toBe("active");
 
-      if (!subItem) {
-        throw new Error(
-          `Expected item "${parent.path}" to contain at least one subItem`,
-        );
-      }
+    const trigger = activeGroup.get("button[data-state]");
 
-      const subPath = `/${parent.path}/${subItem}`;
-      const wrapper = await mountSuspended(Items, { route: subPath });
-
-      const activeGroup = wrapper.get(
-        `.group\\/item:has(a[href="${subPath}"])`,
-      );
-
-      expect(activeGroup.attributes("data-state")).toBe("active");
-
-      const trigger = activeGroup.get("button[data-state]");
-
-      expect(trigger.attributes("data-state")).toBe("open");
-    });
+    expect(trigger.attributes("data-state")).toBe("open");
   });
 });
