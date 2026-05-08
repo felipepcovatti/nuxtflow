@@ -3,24 +3,6 @@ import { mountSuspended, mockNuxtImport } from "@nuxt/test-utils/runtime";
 import VisitsByCountry from "./VisitsByCountry.vue";
 import type { Country } from "~/types/visits";
 
-vi.mock("@unovis/vue", () => ({
-  VisSingleContainer: {
-    name: "VisSingleContainer",
-    template: "<div data-test='single-container'><slot /></div>",
-    props: ["data", "height"],
-  },
-  VisTooltip: {
-    name: "VisTooltip",
-    template: "<div data-test='tooltip' />",
-    props: ["triggers", "attributes", "verticalPlacement", "verticalShift"],
-  },
-  VisTopoJSONMap: {
-    name: "VisTopoJSONMap",
-    template: "<div data-test='topojson-map' />",
-    props: ["topojson", "areaColor", "areaId", "zoomExtent", "duration"],
-  },
-}));
-
 mockNuxtImport("useCountries", async () => {
   const { ref } = await import("vue");
   return () => ({
@@ -62,16 +44,7 @@ mockNuxtImport("useCountries", async () => {
     ]),
     pending: ref(false),
     period: ref("30D"),
-    tooltipTriggers: ref({
-      feature: ({ id }: { id: string }) => {
-        const tooltip = document.createElement("div");
-        tooltip.textContent = id;
-        return tooltip;
-      },
-    }),
     totalVisits: ref<number | undefined>(2000),
-    countryCodeGetter: ({ country }: Country) => country,
-    countryColorGetter: ({ color }: Country) => color,
   });
 });
 
@@ -93,39 +66,28 @@ describe("VisitsByCountry", () => {
     expect(periodSelect.props("bordered")).toBe(true);
   });
 
-  it("passes countries and tooltip triggers to the map components", async () => {
+  it("forwards countries to the VisitsMap child", async () => {
     const wrapper = await mountSuspended(VisitsByCountry);
 
-    const container = wrapper.getComponent({ name: "VisSingleContainer" });
-    expect(container.props("data")).toEqual({
-      areas: [
-        {
-          country: "US",
-          visits: 1200,
-          formattedVisits: "1,200",
-          name: "United States",
-          icon: "flag:us-4x3",
-          color: "#2563eb",
-        },
-        {
-          country: "BR",
-          visits: 800,
-          formattedVisits: "800",
-          name: "Brazil",
-          icon: "flag:br-4x3",
-          color: "#16a34a",
-        },
-      ],
-    });
-
-    const map = wrapper.getComponent({ name: "VisTopoJSONMap" });
-    expect(map.props("areaId")({ country: "BR" })).toBe("BR");
-    expect(map.props("areaColor")({ color: "#16a34a" })).toBe("#16a34a");
-
-    const tooltip = wrapper.getComponent({ name: "VisTooltip" });
-    const tooltipNode = tooltip.props("triggers").feature({ id: "BR" });
-    expect(tooltipNode.textContent).toBe("BR");
-    expect(tooltip.props("attributes")).toEqual({ "data-selector": "tooltip" });
+    const map = wrapper.getComponent({ name: "VisitsMap" });
+    expect(map.props("countries")).toEqual([
+      {
+        country: "US",
+        visits: 1200,
+        formattedVisits: "1,200",
+        name: "United States",
+        icon: "flag:us-4x3",
+        color: "#2563eb",
+      },
+      {
+        country: "BR",
+        visits: 800,
+        formattedVisits: "800",
+        name: "Brazil",
+        icon: "flag:br-4x3",
+        color: "#16a34a",
+      },
+    ]);
   });
 
   it("forwards countries and totalVisits to the VisitsByCountryList child", async () => {

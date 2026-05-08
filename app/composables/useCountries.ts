@@ -1,4 +1,3 @@
-import { TopoJSONMap } from "@unovis/ts";
 import type { PeriodPreset } from "~/constants/api";
 import type { Country } from "~/types/visits";
 
@@ -40,32 +39,11 @@ export function useCountries() {
       .slice(0, COUNTRIES_SHOWN_IN_LEGEND);
   });
 
-  const tooltipTriggers = computed(() => ({
-    [TopoJSONMap.selectors.feature]: ({
-      data,
-      id,
-    }: {
-      data?: Country;
-      id: string;
-    }) =>
-      getCountryTooltip({
-        country: data?.name || id,
-        label: t("visits"),
-        visits: data?.formattedVisits || "0",
-      }),
-  }));
-
-  const countryCodeGetter = ({ country }: Country) => country;
-  const countryColorGetter = ({ color }: Country) => color;
-
   return {
     period,
     countries,
     pending,
     totalVisits,
     highestVisitCountries,
-    tooltipTriggers,
-    countryCodeGetter,
-    countryColorGetter,
   };
 }

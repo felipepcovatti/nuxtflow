@@ -1,7 +1,7 @@
-import { MapTooltipContent } from "#components";
 import { render } from "vue";
+import MapTooltipContent from "~/components/visits-map/tooltip/Content.vue";
 import { COUNTRY_COLORS, DEFAULT_COUNTRY_COLOR } from "~/constants/visits";
-import type { CountryVisitsRecord } from "~/types/visits";
+import type { Country, CountryVisitsRecord } from "~/types/visits";
 
 export function getCountryColor({
   visits,
@@ -38,6 +38,10 @@ export function getHighestAndLowestCountryVisits(
   const lowest = Math.min(...values);
   return { highest, lowest };
 }
+
+export const visitsMapCountryCodeGetter = ({ country }: Country) => country;
+
+export const visitsMapCountryColorGetter = ({ color }: Country) => color;
 
 export function getCountryTooltip({
   country,
