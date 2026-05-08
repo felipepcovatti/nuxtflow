@@ -1,7 +1,7 @@
 <script
   lang="ts"
   setup
-  generic="DataRecord extends Record<string, any>, ItemId extends string"
+  generic="GroupRecord extends Record<string, any>, ItemId extends string"
 >
 import {
   VisXYContainer,
@@ -18,11 +18,11 @@ const props = withDefaults(
   defineProps<{
     type: ChartType;
     items: Array<{ id: ItemId; color: string; label: string }>;
-    dataRecords: DataRecord[];
-    tooltipTitleGetter: (record: DataRecord) => string;
+    groupRecords: GroupRecord[];
+    tooltipTitleGetter: (record: GroupRecord) => string;
     hideAxis?: boolean;
-    itemXGetter?: (record: DataRecord) => string;
-    itemYGetter?: (record: DataRecord, itemId: ItemId) => number;
+    groupXGetter?: (record: GroupRecord) => string;
+    itemYGetter?: (record: GroupRecord, itemId: ItemId) => number;
     height?: number;
   }>(),
   {
@@ -40,19 +40,18 @@ const {
   barAttributes,
   barEvents,
   colorGetter,
-  getXAxisTick,
+  getGroupX,
   itemYGetters,
-  muteOtherBars,
+  muteOtherItems,
   renderTooltip,
-  unmuteAllBars,
+  unmuteAll,
   tooltipTriggers,
-  itemXGetter,
 } = useChart({
   getType: () => props.type,
-  getDataRecords: () => props.dataRecords,
+  getGroupRecords: () => props.groupRecords,
   items: props.items,
   tooltipTitleGetter: props.tooltipTitleGetter,
-  xAxisTickGetter: props.itemXGetter,
+  groupXGetter: props.groupXGetter,
   itemYGetter: props.itemYGetter,
   wrapperRef,
 });
@@ -61,10 +60,10 @@ const {
   <div class="flex flex-col gap-6">
     <div ref="chartWrapper" :style="{ height: height + 'px' }">
       <ClientOnly>
-        <VisXYContainer :data="dataRecords" :height="height">
+        <VisXYContainer :data="groupRecords" :height="height">
           <VisGroupedBar
             v-if="type === 'grouped-bar'"
-            :x="itemXGetter"
+            :x="chartGroupXGetter"
             :y="itemYGetters"
             :rounded-corners="4"
             :color="colorGetter"
@@ -75,7 +74,7 @@ const {
             v-else-if="
               type === 'stacked-bar' || type === 'horizontal-stacked-bar'
             "
-            :x="itemXGetter"
+            :x="chartGroupXGetter"
             :y="itemYGetters"
             :rounded-corners="4"
             :bar-padding="0.25"
@@ -88,7 +87,7 @@ const {
           />
           <VisArea
             v-else
-            :x="itemXGetter"
+            :x="chartGroupXGetter"
             :y="itemYGetters"
             :rounded-corners="4"
             :attributes="areaAttributes"
@@ -102,7 +101,7 @@ const {
             :tick-line="undefined"
             :domain-line="false"
             :tick-text-angle="isExtraSmall ? 90 : 0"
-            :tick-format="getXAxisTick"
+            :tick-format="getGroupX"
             :tick-text-align="isExtraSmall ? 'left' : 'center'"
           />
           <VisAxis
@@ -131,8 +130,8 @@ const {
         v-for="item in items"
         :key="item.id"
         class="cursor-default"
-        @mouseenter="muteOtherBars(item.id)"
-        @mouseleave="unmuteAllBars"
+        @mouseenter="muteOtherItems(item.id)"
+        @mouseleave="unmuteAll"
       >
         <UiChartLegendItem :color="item.color" :label="item.label" />
       </div>

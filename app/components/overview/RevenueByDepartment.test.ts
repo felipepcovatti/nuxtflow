@@ -44,7 +44,7 @@ function mountRevenueByDepartment() {
         UiChart: {
           name: "UiChart",
           template: "<div />",
-          props: ["type", "dataRecords", "items"],
+          props: ["type", "groupRecords", "groupXGetter", "items"],
         },
       },
     },
@@ -88,9 +88,9 @@ describe("RevenueByDepartment", () => {
 
     const chart = wrapper.getComponent({ name: "UiChart" });
 
-    expect(chart.props("dataRecords")).toHaveLength(2);
-    expect(chart.props("dataRecords").at(0).date).toContain("2026-04-02");
-    expect(chart.props("dataRecords").at(1).date).toContain("2026-04-01");
+    expect(chart.props("groupRecords")).toHaveLength(2);
+    expect(chart.props("groupRecords").at(0).date).toContain("2026-04-02");
+    expect(chart.props("groupRecords").at(1).date).toContain("2026-04-01");
   });
 
   it("refreshes the data when the date range emits 'selected'", async () => {

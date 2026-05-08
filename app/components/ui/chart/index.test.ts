@@ -40,7 +40,7 @@ describe("Chart", () => {
     { id: "item2", color: "#00ff00", label: "Item 2" },
   ];
 
-  const mockDataRecords = [
+  const mockGroupRecords = [
     { month: "Jan", item1: 100, item2: 200 },
     { month: "Feb", item1: 150, item2: 250 },
     { month: "Mar", item1: 200, item2: 300 },
@@ -70,7 +70,7 @@ describe("Chart", () => {
           props: {
             type,
             items: mockItems,
-            dataRecords: mockDataRecords,
+            groupRecords: mockGroupRecords,
             tooltipTitleGetter: (record) => record.month,
           },
         });
@@ -94,7 +94,7 @@ describe("Chart", () => {
         props: {
           type: "stacked-area",
           items: mockItems,
-          dataRecords: mockDataRecords,
+          groupRecords: mockGroupRecords,
           tooltipTitleGetter: (record) => record.month,
         },
       });
@@ -107,7 +107,7 @@ describe("Chart", () => {
         props: {
           type: "stacked-bar",
           items: mockItems,
-          dataRecords: mockDataRecords,
+          groupRecords: mockGroupRecords,
           tooltipTitleGetter: (record) => record.month,
           hideAxis: true,
         },

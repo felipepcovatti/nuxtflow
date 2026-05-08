@@ -27,7 +27,7 @@ function mountVisitsByDevice() {
         UiChart: {
           name: "UiChart",
           template: "<div />",
-          props: ["type", "dataRecords", "items"],
+          props: ["type", "groupRecords", "items"],
         },
       },
     },
@@ -58,7 +58,7 @@ describe("VisitsByDevice", () => {
     const wrapper = await mountVisitsByDevice();
 
     const chart = wrapper.getComponent({ name: "UiChart" });
-    expect(chart.props("dataRecords")).toEqual([
+    expect(chart.props("groupRecords")).toEqual([
       { desktop: 1200, mobile: 600, tablet: 200 },
     ]);
 

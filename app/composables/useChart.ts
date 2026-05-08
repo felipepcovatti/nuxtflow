@@ -1,28 +1,28 @@
-import { UiChartTooltipContent } from "#components";
 import { Area } from "@unovis/ts";
 import { render, h, type TemplateRef } from "vue";
+import UiChartTooltipContent from "~/components/ui/chart/tooltip/Content.vue";
 import { SELECTOR_BY_BAR_CHART_TYPE } from "~/constants/chart";
 import type { ChartItem, ChartType } from "~/types/chart";
 
 export function useChart<
-  Data extends Record<string, any>,
+  GroupRecord extends Record<string, any>,
   ItemId extends string,
 >({
   wrapperRef,
   getType,
   items,
-  getDataRecords,
+  getGroupRecords,
   tooltipTitleGetter,
-  xAxisTickGetter,
+  groupXGetter,
   itemYGetter,
 }: {
   wrapperRef: TemplateRef<HTMLDivElement>;
   getType: () => ChartType;
-  getDataRecords: () => Data[];
+  getGroupRecords: () => GroupRecord[];
   items: ChartItem<ItemId>[];
-  tooltipTitleGetter: (record: Data) => string;
-  xAxisTickGetter?: (record: Data) => string;
-  itemYGetter: (record: Data, itemId: ItemId) => number;
+  tooltipTitleGetter: (record: GroupRecord) => string;
+  groupXGetter?: (record: GroupRecord) => string;
+  itemYGetter: (record: GroupRecord, itemId: ItemId) => number;
 }) {
   const chartType = computed(() => getType());
 
@@ -36,7 +36,7 @@ export function useChart<
     value,
   }:
     | { attribute: "data-item-id"; value: string }
-    | { attribute: "data-item-position"; value: number }) {
+    | { attribute: "data-group-x"; value: number }) {
     if (!wrapperRef.value) return;
     const elements = wrapperRef.value.querySelectorAll(`[${attribute}]`);
     elements.forEach((element) => {
@@ -47,24 +47,24 @@ export function useChart<
     });
   }
 
-  function unmuteAllBars() {
+  function unmuteAll() {
     if (!wrapperRef.value) return;
     const elements = wrapperRef.value.querySelectorAll(
-      `[data-item-id], [data-item-position]`,
+      `[data-item-id], [data-group-x]`,
     );
     elements.forEach((element) => {
       element.classList.remove("muted");
     });
   }
 
-  function muteOtherBars(id: string) {
+  function muteOtherItems(id: string) {
     muteOthers({ attribute: "data-item-id", value: id });
   }
-  function muteOtherBarGroups(position: number) {
-    muteOthers({ attribute: "data-item-position", value: position });
+  function muteOtherGroups(x: number) {
+    muteOthers({ attribute: "data-group-x", value: x });
   }
 
-  function renderTooltip(record: Data): HTMLDivElement {
+  function renderTooltip(record: GroupRecord): HTMLDivElement {
     const tooltipItems = items.map((item) => {
       return {
         color: item.color,
@@ -89,51 +89,48 @@ export function useChart<
     if (!barSelectors.value) return {};
     return {
       [barSelectors.value.barGroup]: {
-        mouseenter: (_: Data, __: MouseEvent, index: number) => {
-          muteOtherBarGroups(index);
+        mouseenter: (_: GroupRecord, __: MouseEvent, index: number) => {
+          muteOtherGroups(index);
         },
-        mouseleave: unmuteAllBars,
+        mouseleave: unmuteAll,
       },
     };
   });
 
-  function itemXGetter(_: Data, index: number) {
-    return index;
-  }
   const barAttributes = computed(() => {
     if (!barSelectors.value) return {};
     return {
       [barSelectors.value.bar]: {
-        "data-item-id": (_: Data, index: number) =>
+        "data-item-id": (_: GroupRecord, index: number) =>
           items[index % items.length]?.id,
       },
       [barSelectors.value.barGroup]: {
-        "data-item-position": itemXGetter,
+        "data-group-x": chartGroupXGetter,
       },
     };
   });
 
   const areaAttributes = {
     [Area.selectors.area]: {
-      "data-item-id": (_: Data, index: number) =>
+      "data-item-id": (_: GroupRecord, index: number) =>
         items[index % items.length]?.id,
     },
   } as const;
 
-  function getXAxisTick(value: number) {
+  function getGroupX(value: number) {
     if (!Number.isInteger(value)) return "";
-    const records = getDataRecords();
+    const records = getGroupRecords();
     const record = records[value];
-    if (!record || !xAxisTickGetter) return value;
-    return xAxisTickGetter(record);
+    if (!record || !groupXGetter) return value;
+    return groupXGetter(record);
   }
 
-  function colorGetter(_: Data, index: number) {
+  function colorGetter(_: GroupRecord, index: number) {
     return items[index]?.color ?? "";
   }
 
   const itemYGetters = computed(() =>
-    items.map((item) => (record: Data) => itemYGetter(record, item.id)),
+    items.map((item) => (record: GroupRecord) => itemYGetter(record, item.id)),
   );
 
   const tooltipTriggers = computed(() => {
@@ -144,16 +141,15 @@ export function useChart<
   });
 
   return {
-    unmuteAllBars,
-    muteOtherBars,
+    unmuteAll,
+    muteOtherItems,
     barAttributes,
     barEvents,
     renderTooltip,
-    getXAxisTick,
+    getGroupX,
     colorGetter,
     itemYGetters,
     areaAttributes,
-    itemXGetter,
     tooltipTriggers,
   };
 }

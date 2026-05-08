@@ -57,8 +57,8 @@ function itemXGetter(record: DepartmentRevenuesByDate) {
     </template>
     <UiChart
       :type="chartType"
-      :data-records="revenues"
-      :item-x-getter="itemXGetter"
+      :group-records="revenues"
+      :group-x-getter="itemXGetter"
       :tooltip-title-getter="(record) => formatAsFullDate(record.date)"
       :item-y-getter="(record, id) => record.revenues[id]"
       :items="

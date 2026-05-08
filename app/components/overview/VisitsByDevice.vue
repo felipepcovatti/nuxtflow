@@ -36,7 +36,7 @@ const { formatAsCompactNumber } = useNumberFormatter();
       type="horizontal-stacked-bar"
       hide-axis
       :height="20"
-      :data-records="visits"
+      :group-records="visits"
       :tooltip-title-getter="() => $t('visits')"
       :items="
         DEVICES.map((device) => ({
