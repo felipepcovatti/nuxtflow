@@ -12,7 +12,7 @@ export function useCountries() {
 
   const totalVisits = computed(() => data.value?.data.total_visits);
 
-  const { locale, t } = useI18n({ useScope: "global" });
+  const { locale } = useI18n({ useScope: "global" });
 
   const localCountryNames = computed(
     () => new Intl.DisplayNames([locale.value], { type: "region" }),
