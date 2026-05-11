@@ -4,6 +4,19 @@ import UiChartTooltipContent from "~/components/ui/chart/tooltip/Content.vue";
 import { SELECTOR_BY_BAR_CHART_TYPE } from "~/constants/chart";
 import type { ChartItem, ChartType } from "~/types/chart";
 
+export interface UseChartOptions<
+  GroupRecord extends Record<string, any> = Record<string, any>,
+  ItemId extends string = string,
+> {
+  wrapperRef: TemplateRef<HTMLDivElement>;
+  getType: () => ChartType;
+  getGroupRecords: () => GroupRecord[];
+  items: ChartItem<ItemId>[];
+  tooltipTitleGetter: (record: GroupRecord) => string;
+  groupXGetter?: (record: GroupRecord) => string;
+  itemYGetter: (record: GroupRecord, itemId: ItemId) => number;
+}
+
 export function useChart<
   GroupRecord extends Record<string, any>,
   ItemId extends string,
@@ -15,15 +28,7 @@ export function useChart<
   tooltipTitleGetter,
   groupXGetter,
   itemYGetter,
-}: {
-  wrapperRef: TemplateRef<HTMLDivElement>;
-  getType: () => ChartType;
-  getGroupRecords: () => GroupRecord[];
-  items: ChartItem<ItemId>[];
-  tooltipTitleGetter: (record: GroupRecord) => string;
-  groupXGetter?: (record: GroupRecord) => string;
-  itemYGetter: (record: GroupRecord, itemId: ItemId) => number;
-}) {
+}: UseChartOptions<GroupRecord, ItemId>) {
   const chartType = computed(() => getType());
 
   const barSelectors = computed(() => {
