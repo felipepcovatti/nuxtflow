@@ -48,9 +48,23 @@ mockNuxtImport("useCountries", async () => {
   });
 });
 
+async function mountVisitsByCountry() {
+  return mountSuspended(VisitsByCountry, {
+    global: {
+      stubs: {
+        VisitsMap: {
+          name: "VisitsMap",
+          props: ["countries"],
+          template: "<div />",
+        },
+      },
+    },
+  });
+}
+
 describe("VisitsByCountry", () => {
   it("renders the formatted summary, link, and period select", async () => {
-    const wrapper = await mountSuspended(VisitsByCountry);
+    const wrapper = await mountVisitsByCountry();
 
     expect(wrapper.text()).toContain("2,000");
     expect(wrapper.text()).toContain("Visits by country");
@@ -67,7 +81,7 @@ describe("VisitsByCountry", () => {
   });
 
   it("forwards countries to the VisitsMap child", async () => {
-    const wrapper = await mountSuspended(VisitsByCountry);
+    const wrapper = await mountVisitsByCountry();
 
     const map = wrapper.getComponent({ name: "VisitsMap" });
     expect(map.props("countries")).toEqual([
@@ -91,7 +105,7 @@ describe("VisitsByCountry", () => {
   });
 
   it("forwards countries and totalVisits to the VisitsByCountryList child", async () => {
-    const wrapper = await mountSuspended(VisitsByCountry);
+    const wrapper = await mountVisitsByCountry();
 
     const list = wrapper.getComponent({
       name: "OverviewVisitsByCountryList",
