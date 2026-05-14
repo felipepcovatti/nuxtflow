@@ -5,6 +5,7 @@ export function calculateGrowth({
   before: number;
   now: number;
 }): number {
+  if (before === 0 && now === 0) return 0;
   return ((now - before) / Math.abs(before)) * 100;
 }
 
