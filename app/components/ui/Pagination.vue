@@ -27,11 +27,11 @@ const to = computed(() => Math.min(page.value * props.perPage, props.total));
     </div>
 
     <PaginationRoot
+      v-model:page="page"
       :total="total"
       :items-per-page="perPage"
       :sibling-count="0"
       show-edges
-      v-model:page="page"
       class="ml-auto flex items-center select-none"
     >
       <PaginationList

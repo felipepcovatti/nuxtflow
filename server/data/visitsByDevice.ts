@@ -1,4 +1,4 @@
-import { DeviceVisitsInPeriod } from "~/types/visits";
+import type { DeviceVisitsInPeriod } from "~/types/visits";
 
 export default new Map([
   [

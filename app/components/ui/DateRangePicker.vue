@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import {
-  CalendarDate,
+  type CalendarDate,
   CalendarDateTime,
   getLocalTimeZone,
   isEqualDay,
@@ -178,8 +178,8 @@ const activePreset = computed({
 
           <DateRangePickerGrid
             v-for="month in grid"
-            class="mt-3"
             :key="month.value.toString()"
+            class="mt-3"
           >
             <DateRangePickerGridHead>
               <DateRangePickerGridRow class="mb-1 flex">

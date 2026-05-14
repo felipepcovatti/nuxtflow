@@ -50,9 +50,9 @@ function itemXGetter(record: DepartmentRevenuesByDate) {
     <template #headerEnd>
       <UiDateRangePicker
         v-model="dateRange"
-        @selected="refresh"
-        minStart="one-year-ago"
+        min-start="one-year-ago"
         disable-future
+        @selected="refresh"
       />
     </template>
     <UiChart

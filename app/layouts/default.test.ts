@@ -30,7 +30,9 @@ describe("layouts/default", () => {
     const wrapper = await mountLayout();
 
     expect(
-      wrapper.findComponent({ name: "LayoutNavigationSidebar" }).props("pinned"),
+      wrapper
+        .findComponent({ name: "LayoutNavigationSidebar" })
+        .props("pinned"),
     ).toBe(true);
     expect(
       wrapper.findComponent({ name: "LayoutNavigationDrawer" }).props("open"),
@@ -44,7 +46,9 @@ describe("layouts/default", () => {
     await header.vm.$emit("toggleNavigationSidebarPin");
 
     expect(
-      wrapper.findComponent({ name: "LayoutNavigationSidebar" }).props("pinned"),
+      wrapper
+        .findComponent({ name: "LayoutNavigationSidebar" })
+        .props("pinned"),
     ).toBe(false);
   });
 

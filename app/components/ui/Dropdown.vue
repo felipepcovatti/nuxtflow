@@ -23,13 +23,13 @@ defineProps<{
       <DropdownMenuContent
         class="z-100 min-w-44 rounded-lg bg-gray-900 p-1 shadow-lg"
         :side-offset="6"
-        :collisionPadding="32"
+        :collision-padding="32"
       >
         <DropdownMenuItem
           v-for="action in items"
           :key="action.label"
-          @select="action.action()"
           class="group data-highlighted:bg-primary-700 flex cursor-pointer items-center gap-2 rounded-md px-4 py-2 text-sm text-gray-300 data-highlighted:text-white"
+          @select="action.action()"
         >
           <Icon v-if="action.icon" :name="action.icon" />
           <span>{{ action.label }}</span>

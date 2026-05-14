@@ -14,7 +14,11 @@ const { mockedReferenceTime } = vi.hoisted(() => ({
 
 mockNuxtImport("useState", () => {
   return <T>(key?: string, init?: () => T) => {
-    if (key === "referenceTime" && mockedReferenceTime.value === undefined && init) {
+    if (
+      key === "referenceTime" &&
+      mockedReferenceTime.value === undefined &&
+      init
+    ) {
       mockedReferenceTime.value = init() as string;
     }
 

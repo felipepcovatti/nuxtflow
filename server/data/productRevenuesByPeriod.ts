@@ -1,5 +1,5 @@
-import { PeriodPreset } from "~/constants/api";
-import { PeriodProductRevenue } from "~/types/revenue";
+import type { PeriodPreset } from "~/constants/api";
+import type { PeriodProductRevenue } from "~/types/revenue";
 
 export default new Map<PeriodPreset, PeriodProductRevenue>([
   [

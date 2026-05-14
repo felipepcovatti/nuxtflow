@@ -16,9 +16,9 @@ defineExpose({
 
 <template>
   <AccordionRoot
+    v-model="expandedItems"
     as="nav"
     type="multiple"
-    v-model="expandedItems"
     class="flex w-full flex-col gap-2 overflow-x-auto p-3 pointer-coarse:gap-1"
   >
     <div

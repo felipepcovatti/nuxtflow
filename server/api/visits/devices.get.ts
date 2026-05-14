@@ -1,4 +1,4 @@
-import { VisitsByDeviceResponse } from "~/types/visits";
+import type { VisitsByDeviceResponse } from "~/types/visits";
 import visitsByDevice from "~~/server/data/visitsByDevice";
 import { getPeriod, getPeriodData } from "~~/server/utils/api";
 

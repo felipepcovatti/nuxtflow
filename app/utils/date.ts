@@ -1,5 +1,5 @@
+import type { CalendarDate } from "@internationalized/date";
 import {
-  CalendarDate,
   getLocalTimeZone,
   parseAbsoluteToLocal,
   toCalendarDate,

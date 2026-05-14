@@ -27,12 +27,12 @@ const selectedOption = computed<TransactionStatusSelectValue>({
 </script>
 <template>
   <UiSelect
-    :options="options"
+    v-slot="{ selected }"
     v-model="selectedOption"
-    @update:model-value=""
+    :options="options"
     bordered
     :trigger-aria-label="$t('filterByStatus')"
-    v-slot="{ selected }"
+    @update:model-value=""
   >
     <template v-if="selected.value !== 'all'">
       {{ $t("status") }}: {{ selected.label }}

@@ -33,9 +33,9 @@ watch(isPinned, (fixed) => {
 <template>
   <div
     :data-expanded="isExpanded"
+    class="hidden w-14 overflow-x-hidden bg-gray-800 text-white transition-[width] duration-200 ease-in-out hover:delay-200 data-[expanded=true]:w-64 sm:block"
     @mouseleave="!isPinned && (isExpanded = false)"
     @mouseenter="!isPinned && (isExpanded = true)"
-    class="hidden w-14 overflow-x-hidden bg-gray-800 text-white transition-[width] duration-200 ease-in-out hover:delay-200 data-[expanded=true]:w-64 sm:block"
   >
     <LayoutNavigationItems ref="navigation-items" />
   </div>

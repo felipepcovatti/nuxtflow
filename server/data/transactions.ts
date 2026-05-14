@@ -1,8 +1,6 @@
-import { Transaction } from "~/types/transactions";
-import {
-  MinutesFromReferenceTimeItem,
-  setDatetimeFromMinutesFromNow,
-} from "../utils/api";
+import type { Transaction } from "~/types/transactions";
+import type { MinutesFromReferenceTimeItem } from "../utils/api";
+import { setDatetimeFromMinutesFromNow } from "../utils/api";
 
 type RelativeDatetimeTransaction = Omit<Transaction, "datetime"> &
   MinutesFromReferenceTimeItem;

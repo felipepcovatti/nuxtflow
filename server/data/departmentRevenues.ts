@@ -1,4 +1,4 @@
-import { DepartmentRevenuesByDate } from "~/types/revenue";
+import type { DepartmentRevenuesByDate } from "~/types/revenue";
 
 type RelativeDateDepartmentRevenue = Omit<DepartmentRevenuesByDate, "date"> &
   DaysFromReferenceTimeItem;

@@ -42,7 +42,7 @@ const { t } = useI18n();
       class="data-[state=open]:animate-slide-from-left data-[state=closed]:animate-slide-to-left fixed top-0 bottom-0 left-0 z-31 flex w-64 flex-col items-start bg-gray-800"
       :aria-describedby="undefined"
     >
-      <VisuallyHidden asChild>
+      <VisuallyHidden as-child>
         <DialogTitle>{{ t("navigation") }}</DialogTitle>
       </VisuallyHidden>
       <div class="flex h-(--header-height) shrink-0 items-center gap-3 px-4">

@@ -7,7 +7,8 @@ import {
   isValid,
   parseISO,
 } from "date-fns";
-import { PERIOD_PRESETS, PeriodPreset } from "~/constants/api";
+import type { PeriodPreset } from "~/constants/api";
+import { PERIOD_PRESETS } from "~/constants/api";
 
 function isIsoDate(date: string): boolean {
   return isValid(parseISO(date));

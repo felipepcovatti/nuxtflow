@@ -1,4 +1,4 @@
-import {
+import type {
   ProductRevenueRecord,
   RevenueByProductResponse,
 } from "~/types/revenue";

@@ -12,6 +12,6 @@ defineProps<LegendItem>();
         {{ value }}
       </div>
     </div>
-    <div class="text-gray-400" v-else>{{ label }}</div>
+    <div v-else class="text-gray-400">{{ label }}</div>
   </div>
 </template>

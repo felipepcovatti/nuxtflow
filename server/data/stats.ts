@@ -1,4 +1,4 @@
-import { Stats } from "~/types/stats";
+import type { Stats } from "~/types/stats";
 
 export default {
   income: {

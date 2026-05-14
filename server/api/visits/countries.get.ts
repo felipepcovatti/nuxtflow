@@ -1,4 +1,4 @@
-import { VisitsByCountryResponse } from "../../../app/types/visits";
+import type { VisitsByCountryResponse } from "../../../app/types/visits";
 import visitsByCountry from "~~/server/data/visitsByCountry";
 import { getPeriod, getPeriodData } from "~~/server/utils/api";
 

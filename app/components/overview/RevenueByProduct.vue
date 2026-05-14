@@ -24,7 +24,7 @@ const { formatAsMoney } = useMoneyFormatter();
       to: '/product-report',
     }"
   >
-    <template #headerEnd v-if="data">
+    <template v-if="data" #headerEnd>
       <GrowthPercentage
         :percentage="data.data.total_revenue_growth_percentage"
       />

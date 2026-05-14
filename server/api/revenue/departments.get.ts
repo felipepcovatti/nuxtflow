@@ -1,4 +1,4 @@
-import { RevenuesByDepartmentResponse } from "~/types/revenue";
+import type { RevenuesByDepartmentResponse } from "~/types/revenue";
 import getDepartmentRevenues from "~~/server/data/departmentRevenues";
 
 export default defineEventHandler(async (event) => {

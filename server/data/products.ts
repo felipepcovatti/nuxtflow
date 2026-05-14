@@ -1,4 +1,4 @@
-import { Product } from "~/types/revenue";
+import type { Product } from "~/types/revenue";
 
 export default [
   {

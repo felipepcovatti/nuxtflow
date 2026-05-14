@@ -1,4 +1,4 @@
-import { TransactionResponse } from "~/types/transactions";
+import type { TransactionResponse } from "~/types/transactions";
 import getTransactions from "../data/transactions";
 
 export default defineEventHandler(async (event) => {

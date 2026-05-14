@@ -70,12 +70,12 @@ const {
                 <UiCheckbox
                   class="checkbox"
                   :model-value="isSelected(transaction.id)"
-                  @update:model-value="toggleSelection(transaction.id)"
                   :aria-label="
                     $t('selectTransaction', {
                       description: transaction.description,
                     })
                   "
+                  @update:model-value="toggleSelection(transaction.id)"
                 />
               </div>
             </td>
@@ -131,8 +131,8 @@ const {
         </button>
       </div>
     </div>
-    <template #footer v-if="total">
-      <UiPagination :total="total" :per-page="pageSize" v-model:page="page" />
+    <template v-if="total" #footer>
+      <UiPagination v-model:page="page" :total="total" :per-page="pageSize" />
     </template>
   </UiCard>
 </template>

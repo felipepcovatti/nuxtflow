@@ -14,18 +14,18 @@ const searchTerm = ref("");
     <div class="flex flex-1 items-center gap-3">
       <div class="hidden sm:flex">
         <button
-          @click="$emit('toggleNavigationSidebarPin')"
           class="icon-button"
           aria-controls="navigation-sidebar"
+          @click="$emit('toggleNavigationSidebarPin')"
         >
           <Icon name="mdi-menu" size="1.5rem" />
         </button>
       </div>
       <div class="flex sm:hidden">
         <button
-          @click="$emit('openNavigationDrawer')"
           class="icon-button"
           aria-controls="navigation-drawer"
+          @click="$emit('openNavigationDrawer')"
         >
           <Icon name="mdi-menu" size="1.5rem" />
         </button>

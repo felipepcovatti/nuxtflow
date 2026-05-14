@@ -10,6 +10,7 @@ defineProps<{
 </script>
 <template>
   <UiSelect
+    v-model="period"
     :trigger-aria-label="$t('selectThePeriod')"
     :options="
       PERIOD_PRESETS.map<SelectOption>((period) => ({
@@ -17,7 +18,6 @@ defineProps<{
         value: period,
       }))
     "
-    v-model="period"
     :bordered="bordered"
   />
 </template>
