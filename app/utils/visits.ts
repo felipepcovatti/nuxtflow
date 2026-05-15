@@ -1,7 +1,15 @@
 import { COUNTRY_COLORS, DEFAULT_COUNTRY_COLOR } from "~/constants/visits";
 import type { Country, CountryVisitsRecord } from "~/types/visits";
 
-export function getCountryColor({
+function getHighestAndLowestCountryVisits(visits: CountryVisitsRecord[]) {
+  if (visits.length === 0) return { highest: 0, lowest: 0 };
+  const values = visits.map(({ visits }) => visits).filter((visit) => visit);
+  const highest = Math.max(...values);
+  const lowest = Math.min(...values);
+  return { highest, lowest };
+}
+
+function getCountryColor({
   visits,
   highest,
   lowest,
@@ -27,14 +35,10 @@ export function getCountryColor({
   return COUNTRY_COLORS[index] ?? DEFAULT_COUNTRY_COLOR;
 }
 
-export function getHighestAndLowestCountryVisits(
-  visits: CountryVisitsRecord[],
-) {
-  if (visits.length === 0) return { highest: 0, lowest: 0 };
-  const values = visits.map(({ visits }) => visits);
-  const highest = Math.max(...values);
-  const lowest = Math.min(...values);
-  return { highest, lowest };
+export function generateCountryColorGetter(visits: CountryVisitsRecord[]) {
+  const { highest, lowest } = getHighestAndLowestCountryVisits(visits);
+  return ({ visits }: CountryVisitsRecord) =>
+    getCountryColor({ visits, highest, lowest });
 }
 
 export const visitsMapCountryCodeGetter = ({ country }: Country) => country;

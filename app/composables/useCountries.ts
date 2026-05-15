@@ -21,7 +21,7 @@ export function useCountries() {
   const { formatAsNumber } = useNumberFormatter();
 
   const countries = computed<Country[]>(() => {
-    const { highest, lowest } = getHighestAndLowestCountryVisits(
+    const getCountryColor = generateCountryColorGetter(
       data.value?.data.visits ?? [],
     );
     return (data.value?.data.visits ?? []).map((visit) => ({
@@ -29,7 +29,7 @@ export function useCountries() {
       icon: `flag:${visit.country.toLowerCase()}-4x3`,
       formattedVisits: formatAsNumber(visit.visits),
       name: localCountryNames.value.of(visit.country) ?? visit.country,
-      color: getCountryColor({ visits: visit.visits, highest, lowest }),
+      color: getCountryColor(visit),
     }));
   });
 
