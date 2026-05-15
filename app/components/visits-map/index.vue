@@ -8,20 +8,7 @@ defineProps<{
   countries: Country[];
 }>();
 
-const tooltipTriggers = computed(() => ({
-  [TopoJSONMap.selectors.feature]: ({
-    data,
-    id,
-  }: {
-    data?: Country;
-    id: string;
-  }) =>
-    getCountryTooltip({
-      country: data?.name || id,
-      label: $t("visits"),
-      visits: data?.formattedVisits || "0",
-    }),
-}));
+const { tooltipTriggers } = useVisitsMap();
 </script>
 <template>
   <div

@@ -1,19 +1,19 @@
 <script lang="ts" setup>
 defineProps<{
-  title: string;
-  label: string;
-  value: string | number;
+  country: string;
+  visits: string;
+  visitsLabel: string;
 }>();
 </script>
 <template>
   <div>
     <div class="text-gray-400">
-      {{ title }}
+      {{ country }}
     </div>
     <div class="mt-1 flex gap-1">
-      <div class="text-gray-400">{{ label }}:</div>
+      <div class="text-gray-400">{{ visitsLabel }}:</div>
       <div>
-        {{ value }}
+        {{ visits }}
       </div>
     </div>
   </div>
