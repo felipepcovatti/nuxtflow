@@ -69,7 +69,7 @@ export function useChart<
     muteOthers({ attribute: "data-group-x", value: x });
   }
 
-  function renderTooltip(record: GroupRecord): HTMLDivElement {
+  function generateTooltipHtml(record: GroupRecord): HTMLDivElement {
     const tooltipItems = items.map((item) => {
       return {
         color: item.color,
@@ -141,7 +141,7 @@ export function useChart<
   const tooltipTriggers = computed(() => {
     if (!barSelectors.value) return {};
     return {
-      [barSelectors.value.barGroup]: renderTooltip,
+      [barSelectors.value.barGroup]: generateTooltipHtml,
     };
   });
 
@@ -150,7 +150,7 @@ export function useChart<
     muteOtherItems,
     barAttributes,
     barEvents,
-    renderTooltip,
+    generateTooltipHtml,
     getGroupX,
     colorGetter,
     itemYGetters,

@@ -43,7 +43,7 @@ const {
   getGroupX,
   itemYGetters,
   muteOtherItems,
-  renderTooltip,
+  generateTooltipHtml,
   unmuteAll,
   tooltipTriggers,
 } = useChart({
@@ -119,7 +119,7 @@ const {
           />
           <VisCrosshair
             v-if="type === 'stacked-area'"
-            :template="renderTooltip"
+            :template="generateTooltipHtml"
             :color="colorGetter"
           />
         </VisXYContainer>

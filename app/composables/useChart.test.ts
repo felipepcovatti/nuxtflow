@@ -129,11 +129,11 @@ describe("useChart", () => {
   });
 
   it("reverses tooltip item order for stacked bars", () => {
-    const { renderTooltip } = getUseChart({
+    const { generateTooltipHtml } = getUseChart({
       getType: () => "stacked-bar",
     });
 
-    const tooltip = renderTooltip(firstRecord);
+    const tooltip = generateTooltipHtml(firstRecord);
     expect(tooltip.textContent).toContain("January");
     const returnsIndex = tooltip.textContent?.indexOf("Returns:");
     const salesIndex = tooltip.textContent?.indexOf("Sales:");
@@ -143,11 +143,11 @@ describe("useChart", () => {
   });
 
   it("keeps tooltip item order for horizontal stacked bars", () => {
-    const { renderTooltip } = getUseChart({
+    const { generateTooltipHtml } = getUseChart({
       getType: () => "horizontal-stacked-bar",
     });
 
-    const tooltip = renderTooltip(firstRecord);
+    const tooltip = generateTooltipHtml(firstRecord);
     expect(tooltip.textContent).toContain("January");
     const salesIndex = tooltip.textContent?.indexOf("Sales:");
     const returnsIndex = tooltip.textContent?.indexOf("Returns:");
