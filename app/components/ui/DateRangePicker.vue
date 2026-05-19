@@ -4,7 +4,6 @@ import {
   CalendarDateTime,
   getLocalTimeZone,
   isEqualDay,
-  type DateDuration,
 } from "@internationalized/date";
 import type { PeriodPreset } from "~/types/time";
 import { DURATION_BY_PRESET, PERIOD_PRESETS } from "~/constants/time";
