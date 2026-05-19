@@ -1,119 +1,142 @@
-import {
-  describe,
-  it,
-  expect,
-  afterEach,
-  vi,
-  afterAll,
-  beforeAll,
-} from "vitest";
+import { describe, it, expect, vi } from "vitest";
 import { mountSuspended } from "@nuxt/test-utils/runtime";
 import Chart from "./index.vue";
+import type { ChartType } from "~/types/chart";
 
 vi.mock("@unovis/vue", () => ({
   VisXYContainer: {
-    template: "<div ><slot /></div>",
+    name: "VisXYContainer",
+    template: "<div><slot/></div>",
+    props: ["data", "height"],
   },
-  VisStackedBar: { template: "<div data-test='stacked-bar' />" },
-  VisGroupedBar: { template: "<div data-test='grouped-bar' />" },
-  VisArea: { template: "<div data-test='area' />" },
-  VisAxis: { template: "<div data-test='axis' />" },
-  VisTooltip: { template: "<div data-test='tooltip' />" },
-  VisCrosshair: { template: "<div data-test='crosshair' />" },
+  VisStackedBar: {
+    name: "VisStackedBar",
+    template: "<div />",
+    props: [
+      "x",
+      "y",
+      "roundedCorners",
+      "color",
+      "events",
+      "attributes",
+      "orientation",
+      "barPadding",
+    ],
+  },
+  VisGroupedBar: {
+    name: "VisGroupedBar",
+    template: "<div />",
+    props: ["x", "y", "roundedCorners", "color", "events", "attributes"],
+  },
+  VisArea: {
+    name: "VisArea",
+    template: "<div />",
+    props: ["x", "y", "roundedCorners", "attributes", "color"],
+  },
+  VisAxis: {
+    name: "VisAxis",
+    template: "<div />",
+    props: [
+      "type",
+      "tickRotation",
+      "gridLine",
+      "tickLine",
+      "domainLine",
+      "tickTextAngle",
+      "tickFormat",
+      "tickTextAlign",
+    ],
+  },
+  VisTooltip: {
+    name: "VisTooltip",
+    template: "<div />",
+    props: [
+      "triggers",
+      "attributes",
+      "verticalPlacement",
+      "verticalShift",
+      "horizontalShift",
+      "horizontalPlacement",
+    ],
+  },
+  VisCrosshair: {
+    name: "VisCrosshair",
+    template: "<div />",
+    props: ["template", "color"],
+  },
 }));
 
+async function mountChart({
+  type,
+  hideAxis,
+}: {
+  type: ChartType;
+  hideAxis?: boolean;
+}) {
+  return await mountSuspended(Chart, {
+    props: {
+      type,
+      items: [
+        { id: "item1", color: "#ff0000", label: "Item 1" },
+        { id: "item2", color: "#00ff00", label: "Item 2" },
+      ],
+      groupRecords: [
+        { month: "Jan", item1: 100, item2: 200 },
+        { month: "Feb", item1: 150, item2: 250 },
+        { month: "Mar", item1: 200, item2: 300 },
+      ],
+      tooltipTitleGetter: ({ month }) => month,
+      hideAxis,
+    },
+  });
+}
+
 describe("Chart", () => {
-  beforeAll(() => {
-    vi.useFakeTimers();
-  });
-
-  afterEach(() => {
-    vi.runOnlyPendingTimers();
-  });
-
-  afterAll(() => {
-    vi.useRealTimers();
-  });
-
-  const mockItems = [
-    { id: "item1", color: "#ff0000", label: "Item 1" },
-    { id: "item2", color: "#00ff00", label: "Item 2" },
-  ];
-
-  const mockGroupRecords = [
-    { month: "Jan", item1: 100, item2: 200 },
-    { month: "Feb", item1: 150, item2: 250 },
-    { month: "Mar", item1: 200, item2: 300 },
-  ];
-
-  const chartTypes = [
+  it.each([
     {
       type: "stacked-bar",
-      selector: "[data-test='stacked-bar']",
+      component: "VisStackedBar",
     },
     {
       type: "horizontal-stacked-bar",
-      selector: "[data-test='stacked-bar']",
+      component: "VisStackedBar",
     },
     {
       type: "grouped-bar",
-      selector: "[data-test='grouped-bar']",
+      component: "VisGroupedBar",
     },
-    { type: "stacked-area", selector: "[data-test='area']" },
-  ] as const;
+    {
+      type: "stacked-area",
+      component: "VisArea",
+    },
+  ] as const)(
+    'renders the "$type" variant with tooltip and legend',
+    async ({ type, component }) => {
+      const wrapper = await mountChart({ type });
 
-  describe("rendering", () => {
-    it.each(chartTypes)(
-      'renders the "$type" variant with tooltip and legend',
-      async ({ type, selector }) => {
-        const wrapper = await mountSuspended(Chart, {
-          props: {
-            type,
-            items: mockItems,
-            groupRecords: mockGroupRecords,
-            tooltipTitleGetter: (record) => record.month,
-          },
-        });
+      expect(wrapper.findComponent({ name: component }).exists()).toBe(true);
+      expect(wrapper.findComponent({ name: "VisTooltip" }).exists()).toBe(true);
 
-        expect(wrapper.find(selector).exists()).toBe(true);
-        expect(wrapper.find("[data-test='tooltip']").exists()).toBe(true);
-
-        const legendItems = wrapper.findAllComponents({
-          name: "UiChartLegendItem",
-        });
-        expect(legendItems).toHaveLength(mockItems.length);
-        expect(legendItems.map((item) => item.props())).toEqual([
-          { color: "#ff0000", label: "Item 1" },
-          { color: "#00ff00", label: "Item 2" },
-        ]);
-      },
-    );
-
-    it("renders crosshair for stacked-area", async () => {
-      const wrapper = await mountSuspended(Chart, {
-        props: {
-          type: "stacked-area",
-          items: mockItems,
-          groupRecords: mockGroupRecords,
-          tooltipTitleGetter: (record) => record.month,
-        },
+      const legendItems = wrapper.findAllComponents({
+        name: "UiChartLegendItem",
       });
+      expect(legendItems).toHaveLength(2);
+      expect(legendItems.map((item) => item.props())).toEqual([
+        { color: "#ff0000", label: "Item 1" },
+        { color: "#00ff00", label: "Item 2" },
+      ]);
+    },
+  );
 
-      expect(wrapper.find("[data-test='crosshair']").exists()).toBe(true);
-    });
+  it("renders crosshair for stacked-area", async () => {
+    const wrapper = await mountChart({ type: "stacked-area" });
 
-    it("hides axis when hideAxis is true", async () => {
-      const wrapper = await mountSuspended(Chart, {
-        props: {
-          type: "stacked-bar",
-          items: mockItems,
-          groupRecords: mockGroupRecords,
-          tooltipTitleGetter: (record) => record.month,
-          hideAxis: true,
-        },
-      });
+    expect(wrapper.findComponent({ name: "VisCrosshair" }).exists()).toBe(true);
+  });
 
-      expect(wrapper.find("[data-test='axis']").exists()).toBe(false);
-    });
+  it("hides axis when hideAxis is true", async () => {
+    const wrapper = await mountChart({ type: "stacked-bar", hideAxis: true });
+
+    expect(wrapper.findComponent({ name: "VisAxis" }).exists()).toBe(false);
   });
 });
