@@ -9,7 +9,6 @@ import {
 
 import { PERIOD_PRESETS, type PeriodPreset } from "~/constants/api";
 
-const { locale } = useI18n();
 const { formatAsShortDate } = useDateFormatter();
 
 const props = defineProps<{
@@ -120,7 +119,7 @@ const activePreset = computed({
     v-model:open="isOpen"
     :min-value="minDate"
     :max-value="maxDate"
-    :locale="locale"
+    :locale="$i18n.locale"
   >
     <DateRangePickerTrigger class="button min-w-39 justify-start gap-2">
       <Icon name="flowbite:calendar-month-solid" />
