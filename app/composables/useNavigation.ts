@@ -1,4 +1,5 @@
-import { NAVIGATION_ITEMS, type NavigationItem } from "~/constants/navigation";
+import { NAVIGATION_ITEMS } from "~/constants/navigation";
+import type { NavigationItem } from "~/types/navigation";
 
 export const useNavigation = () => {
   const route = useRoute();

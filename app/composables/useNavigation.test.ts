@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { mockNuxtImport } from "@nuxt/test-utils/runtime";
 import { useNavigation } from "./useNavigation";
-import type { NavigationItem } from "~/constants/navigation";
+import type { NavigationItem } from "~/types/navigation";
 
 const { mockedRoute } = vi.hoisted(() => ({
   mockedRoute: { path: "/home" },

@@ -1,8 +1,4 @@
-export interface NavigationItem {
-  path: string;
-  icon: string;
-  subItems?: string[];
-}
+import type { NavigationItem } from "~/types/navigation";
 
 export const NAVIGATION_ITEMS: ReadonlyArray<NavigationItem> = [
   {
