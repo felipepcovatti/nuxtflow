@@ -29,8 +29,6 @@ whenever(
     isOpen.value = false;
   },
 );
-
-const { t } = useI18n();
 </script>
 
 <template>
@@ -43,7 +41,7 @@ const { t } = useI18n();
       :aria-describedby="undefined"
     >
       <VisuallyHidden as-child>
-        <DialogTitle>{{ t("navigation") }}</DialogTitle>
+        <DialogTitle>{{ $t("navigation") }}</DialogTitle>
       </VisuallyHidden>
       <div class="flex h-(--header-height) shrink-0 items-center gap-3 px-4">
         <DialogClose class="icon-button">
@@ -55,10 +53,3 @@ const { t } = useI18n();
     </DialogContent>
   </DialogRoot>
 </template>
-<i18n lang="json">
-{
-  "en": {
-    "navigation": "Navigation"
-  }
-}
-</i18n>

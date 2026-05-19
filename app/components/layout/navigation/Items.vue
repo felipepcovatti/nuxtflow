@@ -3,8 +3,6 @@ import { NAVIGATION_ITEMS } from "~/constants/navigation";
 
 defineEmits(["select"]);
 
-const { t } = useI18n();
-
 const { getItemState, expandedItems, collapseAllItems, expandActiveItem } =
   useNavigation();
 
@@ -34,7 +32,7 @@ defineExpose({
         >
           <AccordionTrigger>
             <Icon :name="item.icon" class="item-icon" />
-            {{ t(`itemPath.${item.path}`) }}
+            {{ $t(`navigationItems.${item.path}`) }}
             <Icon
               name="radix-icons:caret-down"
               size="1.25rem"
@@ -53,7 +51,7 @@ defineExpose({
             class="menu-item pl-9!"
             @click="$emit('select')"
           >
-            {{ t(`subitemPath.${subItem}`) }}
+            {{ $t(`navigationSubitems.${subItem}`) }}
           </NuxtLink>
         </AccordionContent>
       </AccordionItem>
@@ -64,7 +62,7 @@ defineExpose({
         @click="$emit('select')"
       >
         <Icon :name="item.icon" class="item-icon" />
-        {{ t(`itemPath.${item.path}`) }}
+        {{ $t(`navigationItems.${item.path}`) }}
       </NuxtLink>
     </div>
   </AccordionRoot>
@@ -103,29 +101,3 @@ defineExpose({
   }
 }
 </style>
-
-<i18n lang="json">
-{
-  "en": {
-    "itemPath": {
-      "overview": "Overview",
-      "pages": "Pages",
-      "e-commerce": "E-commerce",
-      "messages": "Messages",
-      "authentication": "Authentication"
-    },
-    "subitemPath": {
-      "kanban": "Kanban",
-      "calendar": "Calendar",
-      "chat-room": "Chat Room",
-      "product-list": "Product List",
-      "billing": "Billing",
-      "invoice": "Invoice",
-      "sign-in": "Sign In",
-      "sign-up": "Sign Up",
-      "forgot-password": "Forgot Password",
-      "reset-password": "Reset Password"
-    }
-  }
-}
-</i18n>
