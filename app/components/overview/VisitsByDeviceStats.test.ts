@@ -31,7 +31,6 @@ describe("VisitsByDeviceStats", () => {
         totalVisits: 0,
       },
     });
-    console.log(wrapper.text());
     expect(wrapper.text()).not.toContain("%");
   });
 });
