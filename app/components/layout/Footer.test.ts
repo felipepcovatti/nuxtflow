@@ -3,7 +3,7 @@ import { mountSuspended } from "@nuxt/test-utils/runtime";
 import Footer from "./Footer.vue";
 
 const { mockedFooterNavigationItems } = vi.hoisted(() => ({
-  mockedFooterNavigationItems: ["company", "support", "legal"],
+  mockedFooterNavigationItems: ["about", "pricing", "help"],
 }));
 
 vi.mock("~/constants/navigation", () => ({
