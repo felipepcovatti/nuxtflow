@@ -6,8 +6,8 @@ import {
   isEqualDay,
   type DateDuration,
 } from "@internationalized/date";
-
-import { PERIOD_PRESETS, type PeriodPreset } from "~/constants/api";
+import type { PeriodPreset } from "~/types/time";
+import { DURATION_BY_PRESET, PERIOD_PRESETS } from "~/constants/time";
 
 const { formatAsShortDate } = useDateFormatter();
 
@@ -78,13 +78,6 @@ watch(isOpen, (open) => {
   }
 });
 
-const durationByPreset: Record<PeriodPreset, DateDuration> = {
-  "7D": { days: 7 },
-  "30D": { days: 30 },
-  "90D": { days: 90 },
-  "1Y": { years: 1 },
-};
-
 const activePreset = computed({
   get() {
     const { end, start } = internalRange.value;
@@ -92,7 +85,7 @@ const activePreset = computed({
     const today = getLocalTodayCalendarDate();
     if (!isEqualDay(end, today)) return null;
     const preset = PERIOD_PRESETS.find((preset) => {
-      const duration = durationByPreset[preset];
+      const duration = DURATION_BY_PRESET[preset];
       const presetStart = today.subtract(duration).add({ days: 1 });
       return isEqualDay(start, presetStart);
     });
@@ -100,7 +93,7 @@ const activePreset = computed({
   },
   set(preset?: PeriodPreset) {
     if (preset && preset !== activePreset.value) {
-      const duration = durationByPreset[preset];
+      const duration = DURATION_BY_PRESET[preset];
       internalRange.value = {
         start: getLocalTodayCalendarDate().subtract(duration).add({ days: 1 }),
         end: getLocalTodayCalendarDate(),

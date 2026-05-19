@@ -1,4 +1,4 @@
-import type { PeriodPreset } from "~/constants/api";
+import type { PeriodPreset } from "~/types/time";
 import type { Country } from "~/types/visits";
 
 const COUNTRIES_SHOWN_IN_LEGEND = 12;

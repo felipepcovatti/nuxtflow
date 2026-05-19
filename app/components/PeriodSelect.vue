@@ -1,5 +1,6 @@
 <script lang="ts" setup>
-import { PERIOD_PRESETS, type PeriodPreset } from "~/constants/api";
+import { PERIOD_PRESETS } from "~/constants/time";
+import type { PeriodPreset } from "~/types/time";
 import type { SelectOption } from "./ui/Select.vue";
 
 const period = defineModel<PeriodPreset>({ required: true });

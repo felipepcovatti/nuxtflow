@@ -1,4 +1,4 @@
-import type { PeriodPreset } from "~/constants/api";
+import type { PeriodPreset } from "~/types/time";
 
 export interface CountryVisitsRecord {
   country: string;

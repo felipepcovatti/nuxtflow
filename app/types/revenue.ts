@@ -1,4 +1,4 @@
-import type { PeriodPreset } from "~/constants/api";
+import type { PeriodPreset } from "~/types/time";
 
 export type Department = "electronics" | "home_living" | "clothing_accessories";
 

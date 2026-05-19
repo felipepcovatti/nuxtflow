@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { PeriodPreset } from "~/constants/api";
+import type { PeriodPreset } from "~/types/time";
 
 const period = ref<PeriodPreset>("7D");
 
