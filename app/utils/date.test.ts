@@ -12,7 +12,10 @@ vi.mock("@internationalized/date", async () => {
   };
 });
 
-import { getLocalTodayCalendarDate, toLocalCalendarDate } from "./date";
+import {
+  getLocalTodayCalendarDate,
+  getLocalCalendarDateFromDate,
+} from "./date";
 
 describe("app/utils/date", () => {
   beforeEach(() => {
@@ -39,7 +42,7 @@ describe("app/utils/date", () => {
       ["2018-07-01T00:00:00+00:00", { year: 2018, month: 7, day: 1 }],
       ["2045-11-30T15:45:00Z", { year: 2045, month: 11, day: 30 }],
     ])("converts %s to %o", (date, expected) => {
-      const localCalendarDate = toLocalCalendarDate(date);
+      const localCalendarDate = getLocalCalendarDateFromDate(date);
 
       expect(localCalendarDate).toMatchObject(expected);
     });

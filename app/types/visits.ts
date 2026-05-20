@@ -1,4 +1,4 @@
-import type { PeriodPreset } from "~/types/time";
+import type { DateRangePreset } from "~/types/date";
 
 export interface CountryVisitsRecord {
   country: string;
@@ -10,12 +10,12 @@ export interface PeriodCountryVisits {
   visits: CountryVisitsRecord[];
 }
 
-export type CountryVisitsInPeriod = Map<PeriodPreset, PeriodCountryVisits>;
+export type CountryVisitsInPeriod = Map<DateRangePreset, PeriodCountryVisits>;
 
 export interface VisitsByCountryResponse {
   data: PeriodCountryVisits;
   meta: {
-    period: PeriodPreset;
+    period: DateRangePreset;
   };
 }
 
@@ -31,12 +31,12 @@ export interface PeriodDeviceVisits {
   visits: DeviceVisits;
 }
 
-export type DeviceVisitsInPeriod = Map<PeriodPreset, PeriodDeviceVisits>;
+export type DeviceVisitsInPeriod = Map<DateRangePreset, PeriodDeviceVisits>;
 
 export type VisitsByDeviceResponse = {
   data: PeriodDeviceVisits;
   meta: {
-    period: PeriodPreset;
+    period: DateRangePreset;
   };
 };
 

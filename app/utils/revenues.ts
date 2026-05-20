@@ -1,4 +1,5 @@
 import type { ChartType } from "~/types/chart";
+import type { Department, DepartmentRevenuesByDate } from "~/types/revenue";
 
 type RevenueChartType = Exclude<ChartType, "horizontal-stacked-bar">;
 
@@ -15,3 +16,8 @@ export function getRevenueByDepartmentChartType({
     return "stacked-area";
   }
 }
+
+export const departmentRevenuesRevenueGetter = (
+  record: DepartmentRevenuesByDate,
+  id: Department,
+) => record.revenues[id];

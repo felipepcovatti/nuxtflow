@@ -1,7 +1,7 @@
-import type { PeriodPreset } from "~/types/time";
+import type { DateRangePreset } from "~/types/date";
 import type { PeriodProductRevenue } from "~/types/revenue";
 
-export default new Map<PeriodPreset, PeriodProductRevenue>([
+export default new Map<DateRangePreset, PeriodProductRevenue>([
   [
     "7D",
     {

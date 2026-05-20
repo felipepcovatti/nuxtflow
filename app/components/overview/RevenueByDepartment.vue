@@ -1,66 +1,33 @@
 <script setup lang="ts">
-import type { DepartmentRevenuesByDate } from "~/types/revenue";
-import { ref, computed } from "vue";
-import {
-  addDays,
-  endOfToday,
-  isAfter,
-  isToday,
-  isYesterday,
-  startOfToday,
-} from "date-fns";
 import { DEPARTMENTS } from "~/constants/revenues";
 
-const { formatAsMoney } = useMoneyFormatter();
-const { formatAsShortDate, formatAsWeekday, formatAsFullDate } =
-  useDateFormatter();
-
-const dateRange = ref({
-  start: addDays(startOfToday(), -6).toISOString(),
-  end: endOfToday().toISOString(),
-});
-
-const { data, pending, refresh } = useApi("/api/revenue/departments", {
-  query: dateRange,
-  watch: false,
-});
-
-const revenues = computed(() => data.value?.data.revenues.toReversed() || []);
-
-const chartType = computed(() =>
-  getRevenueByDepartmentChartType({ days: revenues.value.length }),
-);
-
-function itemXGetter(record: DepartmentRevenuesByDate) {
-  if (isToday(record.date)) return $t("today");
-  if (isYesterday(record.date)) return $t("yesterday");
-  if (isAfter(record.date, addDays(endOfToday(), -7)))
-    return formatAsWeekday(record.date);
-  return formatAsShortDate(record.date);
-}
+const {
+  pending,
+  dateRange,
+  revenues,
+  totalRevenue,
+  revenuesDateGetter,
+  revenuesFullDateGetter,
+  chartType,
+} = useDepartmentRevenues();
 </script>
 
 <template>
   <UiCard
     :loading="pending"
     class="min-h-149"
-    :title="data ? formatAsMoney(data.data.total_revenue) : ''"
+    :title="totalRevenue"
     :subtitle="$t('revenueByDepartment')"
   >
     <template #headerEnd>
-      <UiDateRangePicker
-        v-model="dateRange"
-        min-start="one-year-ago"
-        disable-future
-        @selected="refresh"
-      />
+      <UiDateRangePicker v-model="dateRange" />
     </template>
     <UiChart
       :type="chartType"
       :group-records="revenues"
-      :group-x-getter="itemXGetter"
-      :tooltip-title-getter="(record) => formatAsFullDate(record.date)"
-      :item-y-getter="(record, id) => record.revenues[id]"
+      :group-x-getter="revenuesDateGetter"
+      :tooltip-title-getter="revenuesFullDateGetter"
+      :item-y-getter="departmentRevenuesRevenueGetter"
       :items="
         DEPARTMENTS.map(({ id, color }) => ({
           id,

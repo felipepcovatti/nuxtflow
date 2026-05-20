@@ -1,10 +1,10 @@
-import type { PeriodPreset } from "~/types/time";
+import type { DateRangePreset } from "~/types/date";
 import type { Country } from "~/types/visits";
 
 const COUNTRIES_SHOWN_IN_LEGEND = 12;
 
 export function useCountries() {
-  const period = ref<PeriodPreset>("30D");
+  const period = ref<DateRangePreset>("30D");
 
   const { data, pending } = useApi("/api/visits/countries", {
     query: { period },

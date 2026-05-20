@@ -1,9 +1,9 @@
 <script lang="ts" setup>
-import { PERIOD_PRESETS } from "~/constants/time";
-import type { PeriodPreset } from "~/types/time";
+import { DATE_RANGE_PRESETS } from "~/constants/date";
+import type { DateRangePreset } from "~/types/date";
 import type { SelectOption } from "./ui/Select.vue";
 
-const period = defineModel<PeriodPreset>({ required: true });
+const period = defineModel<DateRangePreset>({ required: true });
 
 defineProps<{
   bordered?: boolean;
@@ -14,7 +14,7 @@ defineProps<{
     v-model="period"
     :trigger-aria-label="$t('selectThePeriod')"
     :options="
-      PERIOD_PRESETS.map<SelectOption>((period) => ({
+      DATE_RANGE_PRESETS.map<SelectOption>((period) => ({
         label: $t(`periodPresets.${period}`),
         value: period,
       }))

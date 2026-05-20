@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import type { PeriodPreset } from "~/types/time";
+import type { DateRangePreset } from "~/types/date";
 
-const period = ref<PeriodPreset>("7D");
+const period = ref<DateRangePreset>("7D");
 
 const { data, pending } = useApi("/api/revenue/products", {
   query: {

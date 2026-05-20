@@ -7,8 +7,8 @@ import {
   isValid,
   parseISO,
 } from "date-fns";
-import type { PeriodPreset } from "~/types/time";
-import { PERIOD_PRESETS } from "~/constants/time";
+import type { DateRangePreset } from "~/types/date";
+import { DATE_RANGE_PRESETS } from "~/constants/date";
 
 function isIsoDate(date: string): boolean {
   return isValid(parseISO(date));
@@ -45,7 +45,7 @@ export function getDateRange(query: EventHandlerRequest["query"]): {
 }
 
 export function getPeriod(query: EventHandlerRequest["query"]) {
-  const period = PERIOD_PRESETS.find((period) => period === query?.period);
+  const period = DATE_RANGE_PRESETS.find((period) => period === query?.period);
   if (!period) {
     throw createError({
       statusCode: 400,
@@ -57,7 +57,7 @@ export function getPeriod(query: EventHandlerRequest["query"]) {
 
 export function getPeriodData<Data>(
   query: EventHandlerRequest["query"],
-  dataByPeriod: Map<PeriodPreset, Data>,
+  dataByPeriod: Map<DateRangePreset, Data>,
 ) {
   const period = getPeriod(query);
   const data = dataByPeriod.get(period);
@@ -86,7 +86,7 @@ export function filterItemsWithDateByDateRange<T extends { date: string }>(
   });
 }
 
-const MINUTES_PER_PERIOD: Record<PeriodPreset, number> = {
+const MINUTES_PER_PERIOD: Record<DateRangePreset, number> = {
   "7D": 7 * 24 * 60,
   "30D": 30 * 24 * 60,
   "90D": 90 * 24 * 60,
@@ -95,7 +95,7 @@ const MINUTES_PER_PERIOD: Record<PeriodPreset, number> = {
 
 export function filterItemsWithDatetimeByPeriod<T extends { datetime: string }>(
   items: T[],
-  period: PeriodPreset,
+  period: DateRangePreset,
 ): T[] {
   const now = Date.now();
   const periodMinutes = MINUTES_PER_PERIOD[period];

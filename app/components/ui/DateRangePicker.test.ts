@@ -65,7 +65,6 @@ describe("DateRangePicker", () => {
         end: "2026-04-14T23:59:59.999Z",
       },
     ]);
-    expect(wrapper.emitted("selected")).toHaveLength(1);
   });
 
   it("emits update:modelValue with correct dates when selecting 30D preset", async () => {
@@ -90,7 +89,6 @@ describe("DateRangePicker", () => {
         end: "2026-04-14T23:59:59.999Z",
       },
     ]);
-    expect(wrapper.emitted("selected")).toHaveLength(1);
   });
 
   it("emits update:modelValue with correct dates when selecting 90D preset", async () => {
@@ -115,7 +113,6 @@ describe("DateRangePicker", () => {
         end: "2026-04-14T23:59:59.999Z",
       },
     ]);
-    expect(wrapper.emitted("selected")).toHaveLength(1);
   });
 
   it("emits update:modelValue with correct dates when selecting 1Y preset", async () => {
@@ -140,7 +137,6 @@ describe("DateRangePicker", () => {
         end: "2026-04-14T23:59:59.999Z",
       },
     ]);
-    expect(wrapper.emitted("selected")).toHaveLength(1);
   });
 
   it("emits update:modelValue with correct dates when selecting a custom range", async () => {
@@ -172,7 +168,6 @@ describe("DateRangePicker", () => {
         end: "2026-04-10T23:59:59.999Z",
       },
     ]);
-    expect(wrapper.emitted("selected")).toHaveLength(1);
   });
 
   it("auto-completes end date with today when closed after selecting only a start date", async () => {
@@ -201,7 +196,6 @@ describe("DateRangePicker", () => {
         end: "2026-04-14T23:59:59.999Z",
       },
     ]);
-    expect(wrapper.emitted("selected")).toHaveLength(1);
   });
 
   it("marks 7D as active when modelValue matches last 7 days ending today", async () => {
@@ -221,10 +215,9 @@ describe("DateRangePicker", () => {
     expect(presetOption.getAttribute("aria-selected")).toBe("true");
   });
 
-  it("does not allow selecting a future date when disableFuture is true", async () => {
+  it("does not allow selecting a future date", async () => {
     const wrapper = await renderSuspended(DateRangePicker, {
       props: {
-        disableFuture: true,
         modelValue: {
           start: "2026-04-08T00:00:00.000Z",
           end: "2026-04-14T23:59:59.999Z",
@@ -245,10 +238,9 @@ describe("DateRangePicker", () => {
     expect(wrapper.emitted("update:modelValue")).toBeUndefined();
   });
 
-  it("does not allow selecting a date before the minStart boundary", async () => {
+  it("does not allow selecting a date prior to one year ago", async () => {
     const wrapper = await renderSuspended(DateRangePicker, {
       props: {
-        minStart: "one-year-ago",
         modelValue: {
           start: "2025-04-15T00:00:00.000Z",
           end: "2025-04-19T23:59:59.999Z",

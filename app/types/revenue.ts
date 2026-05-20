@@ -1,4 +1,4 @@
-import type { PeriodPreset } from "~/types/time";
+import type { DateRangePreset } from "~/types/date";
 
 export type Department = "electronics" | "home_living" | "clothing_accessories";
 
@@ -72,7 +72,7 @@ export interface RevenueByProductResponse {
     total_revenue_growth_percentage: number;
   };
   meta: {
-    period: PeriodPreset;
+    period: DateRangePreset;
     locale: string;
   };
 }

@@ -1,113 +1,18 @@
 <script setup lang="ts">
-import {
-  type CalendarDate,
-  CalendarDateTime,
-  getLocalTimeZone,
-  isEqualDay,
-} from "@internationalized/date";
-import type { PeriodPreset } from "~/types/time";
-import { DURATION_BY_PRESET, PERIOD_PRESETS } from "~/constants/time";
+import { DATE_RANGE_PRESETS } from "~/constants/date";
+import type { DateRange } from "~/types/date";
 
-const { formatAsShortDate } = useDateFormatter();
-
-const props = defineProps<{
-  minStart?: "one-year-ago";
-  disableFuture?: boolean;
-}>();
-
-const range = defineModel<{ start: string; end: string }>({
+const range = defineModel<DateRange>({
   required: true,
 });
 
-const emit = defineEmits<{
-  selected: [];
-}>();
-
-const isOpen = ref(false);
-
-const minDate = computed(() => {
-  if (props.minStart === "one-year-ago") {
-    return getLocalTodayCalendarDate().subtract({ years: 1 }).add({ days: 1 });
-  }
-  return undefined;
-});
-
-const maxDate = computed(() => {
-  if (props.disableFuture) {
-    return getLocalTodayCalendarDate();
-  }
-  return undefined;
-});
-
-const internalRange = shallowRef<{
-  start: CalendarDate | undefined;
-  end: CalendarDate | undefined;
-}>({
-  start: toLocalCalendarDate(range.value.start),
-  end: toLocalCalendarDate(range.value.end),
-});
-
-watch(internalRange, ({ end, start }, { start: previousStart }) => {
-  if (!start) {
-    internalRange.value = {
-      start: previousStart || toLocalCalendarDate(range.value.start),
-      end,
-    };
-    return;
-  }
-  if (!end) return;
-  range.value = {
-    start: new CalendarDateTime(start.year, start.month, start.day, 0, 0, 0, 0)
-      .toDate(getLocalTimeZone())
-      .toISOString(),
-    end: new CalendarDateTime(end.year, end.month, end.day, 23, 59, 59, 999)
-      .toDate(getLocalTimeZone())
-      .toISOString(),
-  };
-  emit("selected");
-  isOpen.value = false;
-});
-
-watch(isOpen, (open) => {
-  if (!open && internalRange.value.start && !internalRange.value.end) {
-    internalRange.value = {
-      start: internalRange.value.start,
-      end: getLocalTodayCalendarDate(),
-    };
-  }
-});
-
-const activePreset = computed({
-  get() {
-    const { end, start } = internalRange.value;
-    if (!start || !end) return null;
-    const today = getLocalTodayCalendarDate();
-    if (!isEqualDay(end, today)) return null;
-    const preset = PERIOD_PRESETS.find((preset) => {
-      const duration = DURATION_BY_PRESET[preset];
-      const presetStart = today.subtract(duration).add({ days: 1 });
-      return isEqualDay(start, presetStart);
-    });
-    return preset || null;
-  },
-  set(preset?: PeriodPreset) {
-    if (preset && preset !== activePreset.value) {
-      const duration = DURATION_BY_PRESET[preset];
-      internalRange.value = {
-        start: getLocalTodayCalendarDate().subtract(duration).add({ days: 1 }),
-        end: getLocalTodayCalendarDate(),
-      };
-    } else {
-      isOpen.value = false;
-      emit("selected");
-    }
-  },
-});
+const { minDate, maxDate, rangeModel, isOpen, presetModel, formatedRange } =
+  useDateRangePicker(range);
 </script>
 
 <template>
   <DateRangePickerRoot
-    v-model="internalRange"
+    v-model="rangeModel"
     v-model:open="isOpen"
     :min-value="minDate"
     :max-value="maxDate"
@@ -116,12 +21,12 @@ const activePreset = computed({
     <DateRangePickerTrigger class="button min-w-39 justify-start gap-2">
       <Icon name="flowbite:calendar-month-solid" />
       <div class="flex flex-1 justify-between gap-1">
-        <div v-if="internalRange.start">
-          {{ formatAsShortDate(internalRange.start.toString()) }}
+        <div v-if="formatedRange.start">
+          {{ formatedRange.start }}
         </div>
-        <div v-if="internalRange.end">-</div>
-        <div v-if="internalRange.end">
-          {{ formatAsShortDate(internalRange.end.toString()) }}
+        <div v-if="formatedRange.end">-</div>
+        <div v-if="formatedRange.end">
+          {{ formatedRange.end }}
         </div>
       </div>
     </DateRangePickerTrigger>
@@ -131,13 +36,10 @@ const activePreset = computed({
       class="z-50 mt-2 ml-10 rounded-lg bg-gray-900 p-3 text-gray-200 shadow-lg"
     >
       <div class="flex flex-col gap-4 lg:flex-row">
-        <ListboxRoot
-          v-model="activePreset"
-          :aria-label="$t('dateRangePresets')"
-        >
+        <ListboxRoot v-model="presetModel" :aria-label="$t('dateRangePresets')">
           <ListboxContent class="flex flex-col gap-1">
             <ListboxItem
-              v-for="preset in PERIOD_PRESETS"
+              v-for="preset in DATE_RANGE_PRESETS"
               :key="preset"
               :value="preset"
               :class="[
