@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { VisSingleContainer, VisTooltip, VisTopoJSONMap } from "@unovis/vue";
 import { WorldMapTopoJSON } from "@unovis/ts/maps";
-import { TopoJSONMap } from "@unovis/ts";
 import type { Country } from "~/types/visits";
 
 defineProps<{
