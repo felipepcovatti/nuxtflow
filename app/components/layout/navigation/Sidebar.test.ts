@@ -2,13 +2,11 @@ import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 import { mountSuspended } from "@nuxt/test-utils/runtime";
 import Sidebar from "./Sidebar.vue";
 
-// ✅ Create spies in a hoisted block
 const { expandActiveItem, collapseAllItems } = vi.hoisted(() => ({
   expandActiveItem: vi.fn(),
   collapseAllItems: vi.fn(),
 }));
 
-// ✅ Now mock the component
 vi.mock("~/components/layout/navigation/Items.vue", () => ({
   default: {
     name: "LayoutNavigationItems",
@@ -48,12 +46,10 @@ describe("Sidebar", () => {
       props: { pinned: false },
     });
 
-    // First expand
     await wrapper.trigger("mouseenter");
 
     expect(wrapper.attributes("data-expanded")).toBe("true");
 
-    // Then collapse
     await wrapper.trigger("mouseleave");
 
     expect(collapseAllItems).toHaveBeenCalledTimes(1);
