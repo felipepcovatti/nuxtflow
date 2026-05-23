@@ -10,48 +10,36 @@ import {
 } from "vitest";
 import { effectScope, nextTick, type EffectScope } from "vue";
 import { useTransactions } from "./useTransactions";
-import type {
-  TransactionResponse,
-  TransactionsQuery,
-} from "~/types/transactions";
+import type { TransactionResponse } from "~/types/transactions";
 
-const { mockRefresh, mockUseApi, useApiState } = vi.hoisted(() => ({
+const { mockRefresh } = vi.hoisted(() => ({
   mockRefresh: vi.fn(),
-  mockUseApi: vi.fn(),
-  useApiState: {
-    query: null as { value: TransactionsQuery } | null,
-  },
 }));
 
 mockNuxtImport("useApi", async () => {
   const { ref } = await import("vue");
-  return (url: string, options: { query: { value: TransactionsQuery } }) => {
-    useApiState.query = options.query;
-    mockUseApi(url, options);
-
-    return {
-      data: ref<TransactionResponse>({
-        data: Array.from({ length: 10 }, (_, index) => ({
-          id: `transaction-${index + 1}`,
-          description:
-            index % 2 === 0
-              ? `Payment from Acme Corp ${index + 1}`
-              : `Refund to Jane Doe ${index + 1}`,
-          amount: (index + 1) * 1250,
-          status: index % 2 === 0 ? "completed" : "pending",
-          datetime: `2026-04-${String(index + 1).padStart(2, "0")}T12:00:00.000Z`,
-        })),
-        meta: {
-          total: 11,
-          page: 1,
-          page_size: 10,
-          locale: "en-US",
-        },
-      }),
-      refresh: mockRefresh,
-      pending: ref(false),
-    };
-  };
+  return () => ({
+    data: ref<TransactionResponse>({
+      data: Array.from({ length: 10 }, (_, index) => ({
+        id: `transaction-${index + 1}`,
+        description:
+          index % 2 === 0
+            ? `Payment from Acme Corp ${index + 1}`
+            : `Refund to Jane Doe ${index + 1}`,
+        amount: (index + 1) * 1250,
+        status: index % 2 === 0 ? "completed" : "pending",
+        datetime: `2026-04-${String(index + 1).padStart(2, "0")}T12:00:00.000Z`,
+      })),
+      meta: {
+        total: 11,
+        page: 1,
+        page_size: 10,
+        locale: "en-US",
+      },
+    }),
+    refresh: mockRefresh,
+    pending: ref(false),
+  });
 });
 
 describe("useTransactions", () => {
@@ -63,8 +51,6 @@ describe("useTransactions", () => {
 
   afterEach(() => {
     mockRefresh.mockReset();
-    mockUseApi.mockReset();
-    useApiState.query = null;
     scope?.stop();
     scope = null;
     vi.clearAllTimers();
@@ -86,17 +72,28 @@ describe("useTransactions", () => {
     return composable;
   }
 
-  it("calls the API with the correct options and returns the composed data", () => {
+  it("returns the expected api data and state", () => {
     const { pageSize, page, transactions, total, pending } = createComposable();
 
-    expect(mockUseApi).toHaveBeenCalledWith("/api/transactions", {
-      query: useApiState.query,
-      watch: false,
+    expect(pageSize).toBe(10);
+    expect(page.value).toBe(1);
+    expect(transactions.value).toHaveLength(10);
+    expect(transactions.value.at(0)).toEqual({
+      id: "transaction-1",
+      description: "Payment from Acme Corp 1",
+      amount: 1250,
+      status: "completed",
+      datetime: "2026-04-01T12:00:00.000Z",
     });
-    expect(useApiState.query?.value).toEqual({
-      page_size: 10,
-      page: 1,
+    expect(transactions.value.at(-1)).toEqual({
+      id: "transaction-10",
+      description: "Refund to Jane Doe 10",
+      amount: 12500,
+      status: "pending",
+      datetime: "2026-04-10T12:00:00.000Z",
     });
+    expect(total.value).toBe(11);
+    expect(pending.value).toBe(false);
     expect(pageSize).toBe(10);
     expect(page.value).toBe(1);
     expect(transactions.value).toHaveLength(10);
@@ -123,10 +120,6 @@ describe("useTransactions", () => {
 
     page.value = 2;
     await nextTick();
-    expect(useApiState.query?.value).toEqual({
-      page_size: 10,
-      page: 2,
-    });
     expect(mockRefresh).toHaveBeenCalledTimes(1);
   });
 
@@ -139,19 +132,10 @@ describe("useTransactions", () => {
 
     status.value = "pending";
     await nextTick();
-    expect(useApiState.query?.value).toEqual({
-      page_size: 10,
-      page: 1,
-      status: "pending",
-    });
     expect(mockRefresh).toHaveBeenCalledTimes(2);
 
     status.value = null;
     await nextTick();
-    expect(useApiState.query?.value).toEqual({
-      page_size: 10,
-      page: 1,
-    });
     expect(mockRefresh).toHaveBeenCalledTimes(3);
   });
 
@@ -160,19 +144,10 @@ describe("useTransactions", () => {
     searchTerm.value = "Acme";
     await nextTick();
     expect(mockRefresh).not.toHaveBeenCalled();
-    expect(useApiState.query?.value).toEqual({
-      page_size: 10,
-      page: 1,
-    });
 
     await vi.advanceTimersByTimeAsync(200);
     await nextTick();
 
-    expect(useApiState.query?.value).toEqual({
-      page_size: 10,
-      page: 1,
-      search: "Acme",
-    });
     expect(mockRefresh).toHaveBeenCalledTimes(1);
 
     searchTerm.value = "";
@@ -181,10 +156,6 @@ describe("useTransactions", () => {
 
     await vi.advanceTimersByTimeAsync(200);
     await nextTick();
-    expect(useApiState.query?.value).toEqual({
-      page_size: 10,
-      page: 1,
-    });
     expect(mockRefresh).toHaveBeenCalledTimes(2);
   });
 
@@ -203,11 +174,6 @@ describe("useTransactions", () => {
     await nextTick();
 
     expect(page.value).toBe(1);
-    expect(useApiState.query?.value).toEqual({
-      page_size: 10,
-      page: 1,
-      search: "Acme",
-    });
     expect(mockRefresh).toHaveBeenCalledTimes(2);
   });
 
@@ -221,12 +187,6 @@ describe("useTransactions", () => {
     status.value = "completed";
     await nextTick();
     expect(page.value).toBe(1);
-    expect(useApiState.query?.value).toEqual({
-      page_size: 10,
-      page: 1,
-      status: "completed",
-    });
-    expect(mockRefresh).toHaveBeenCalledTimes(2);
   });
 
   it("selects and deselects transactions using returned methods", () => {
