@@ -53,7 +53,6 @@ describe("useTransactions", () => {
     mockRefresh.mockReset();
     scope?.stop();
     scope = null;
-    vi.clearAllTimers();
   });
 
   afterAll(() => {

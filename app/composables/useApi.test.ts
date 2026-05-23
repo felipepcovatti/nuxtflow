@@ -1,6 +1,6 @@
 import { mockNuxtImport, registerEndpoint } from "@nuxt/test-utils/runtime";
 import { getHeaders, type RequestHeaders } from "h3";
-import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 import { useApi } from "./useApi";
 
 const FROZEN_NOW = new Date("2026-01-01T00:00:00.000Z");
@@ -45,14 +45,8 @@ function registerEndpointAndReturnHeadersGetter(
 
 describe("useApi", () => {
   beforeEach(() => {
-    vi.useFakeTimers();
     vi.setSystemTime(FROZEN_NOW);
     mockedReferenceTime.value = undefined;
-  });
-
-  afterEach(() => {
-    mockedReferenceTime.value = undefined;
-    vi.useRealTimers();
   });
 
   it("should fetch data from the endpoint", async () => {

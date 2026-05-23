@@ -1,4 +1,12 @@
-import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
+import {
+  describe,
+  it,
+  expect,
+  vi,
+  beforeEach,
+  beforeAll,
+  afterAll,
+} from "vitest";
 import { mountSuspended } from "@nuxt/test-utils/runtime";
 import Sidebar from "./Sidebar.vue";
 
@@ -19,13 +27,16 @@ vi.mock("~/components/layout/navigation/Items.vue", () => ({
 }));
 
 describe("Sidebar", () => {
-  beforeEach(() => {
+  beforeAll(() => {
     vi.useFakeTimers();
+  });
+
+  beforeEach(() => {
     expandActiveItem.mockClear();
     collapseAllItems.mockClear();
   });
 
-  afterEach(() => {
+  afterAll(() => {
     vi.useRealTimers();
   });
 
@@ -66,7 +77,7 @@ describe("Sidebar", () => {
 
     await wrapper.setProps({ pinned: true });
 
-    vi.runAllTimers();
+    vi.advanceTimersToNextFrame();
 
     expect(expandActiveItem).toHaveBeenCalledTimes(1);
     expect(wrapper.attributes("data-expanded")).toBe("true");
