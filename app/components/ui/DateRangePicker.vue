@@ -6,8 +6,15 @@ const range = defineModel<DateRange>({
   required: true,
 });
 
+const emit = defineEmits<{
+  selected: [];
+}>();
+
 const { minDate, maxDate, rangeModel, isOpen, presetModel, formatedRange } =
-  useDateRangePicker(range);
+  useDateRangePicker({
+    range,
+    onRangeSelected: () => emit("selected"),
+  });
 </script>
 
 <template>

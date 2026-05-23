@@ -9,6 +9,7 @@ const {
   revenuesDateGetter,
   revenuesFullDateGetter,
   chartType,
+  refresh,
 } = useDepartmentRevenues();
 </script>
 
@@ -20,7 +21,7 @@ const {
     :subtitle="$t('revenueByDepartment')"
   >
     <template #headerEnd>
-      <UiDateRangePicker v-model="dateRange" />
+      <UiDateRangePicker v-model="dateRange" @selected="refresh" />
     </template>
     <UiChart
       :type="chartType"

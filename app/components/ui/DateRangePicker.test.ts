@@ -260,4 +260,105 @@ describe("DateRangePicker", () => {
     await fireEvent.click(outOfRangeDay);
     expect(wrapper.emitted("update:modelValue")).toBeUndefined();
   });
+
+  it("emits selected when a new date range is selected", async () => {
+    const wrapper = await renderSuspended(DateRangePicker, {
+      props: {
+        modelValue: {
+          start: "2026-04-07T00:00:00.000Z",
+          end: "2026-04-14T23:59:59.999Z",
+        },
+      },
+    });
+
+    const triggerButton = await wrapper.findByRole("button");
+    await fireEvent.click(triggerButton);
+
+    const startDayButton = await wrapper.findByRole("button", {
+      name: "Wednesday, April 8, 2026",
+    });
+    await fireEvent.click(startDayButton);
+
+    const endDayButton = await wrapper.findByRole("button", {
+      name: "Friday, April 10, 2026",
+    });
+    await fireEvent.click(endDayButton);
+
+    expect(wrapper.emitted("selected")).toBeTruthy();
+  });
+
+  it("emits selected when a new preset is selected", async () => {
+    const wrapper = await renderSuspended(DateRangePicker, {
+      props: {
+        modelValue: {
+          start: "2023-01-01T00:00:00.000Z",
+          end: "2023-01-31T23:59:59.999Z",
+        },
+      },
+    });
+
+    const triggerButton = await wrapper.findByRole("button");
+    await fireEvent.click(triggerButton);
+
+    const presetOption = await wrapper.findByText("Last 1 year");
+    await fireEvent.click(presetOption);
+
+    expect(wrapper.emitted("selected")).toBeTruthy();
+  });
+
+  it("emits selected also when the active preset is selected again", async () => {
+    const wrapper = await renderSuspended(DateRangePicker, {
+      props: {
+        modelValue: {
+          start: "2023-01-01T00:00:00.000Z",
+          end: "2023-01-31T23:59:59.999Z",
+        },
+      },
+    });
+
+    const triggerButton = await wrapper.findByRole("button");
+    await fireEvent.click(triggerButton);
+
+    const presetOption = await wrapper.findByText("Last 1 year");
+
+    await fireEvent.click(presetOption);
+
+    await fireEvent.click(triggerButton);
+
+    await fireEvent.click(presetOption);
+
+    expect(wrapper.emitted("selected")).toHaveLength(2);
+  });
+
+  it("emits selected also when the current range is selected again", async () => {
+    const wrapper = await renderSuspended(DateRangePicker, {
+      props: {
+        modelValue: {
+          start: "2026-04-07T00:00:00.000Z",
+          end: "2026-04-14T23:59:59.999Z",
+        },
+      },
+    });
+
+    const triggerButton = await wrapper.findByRole("button");
+    await fireEvent.click(triggerButton);
+
+    const startDayButton = await wrapper.findByRole("button", {
+      name: "Wednesday, April 8, 2026",
+    });
+    const endDayButton = await wrapper.findByRole("button", {
+      name: "Friday, April 10, 2026",
+    });
+
+    await fireEvent.click(startDayButton);
+    await fireEvent.click(endDayButton);
+
+    expect(wrapper.emitted("selected")).toHaveLength(1);
+    await fireEvent.click(triggerButton);
+
+    await fireEvent.click(startDayButton);
+    await fireEvent.click(endDayButton);
+
+    expect(wrapper.emitted("selected")).toHaveLength(2);
+  });
 });

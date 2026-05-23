@@ -10,7 +10,13 @@ type PickerRangeModel = ShallowRef<{
   end: CalendarDateRange["end"] | undefined;
 }>;
 
-export function useDateRangePicker(range: Ref<DateRange>) {
+export function useDateRangePicker({
+  range,
+  onRangeSelected,
+}: {
+  range: Ref<DateRange>;
+  onRangeSelected: () => void;
+}) {
   const minDate = computed(() => getLocalOneYearAgoCalendarDate());
   const maxDate = computed(() => getLocalTodayCalendarDate());
 
@@ -31,6 +37,7 @@ export function useDateRangePicker(range: Ref<DateRange>) {
     if (!end) return;
     range.value = getLocalDateRangeFromCalendarDateRange({ start, end });
     isOpen.value = false;
+    onRangeSelected();
   });
 
   watch(isOpen, (open) => {
@@ -53,6 +60,7 @@ export function useDateRangePicker(range: Ref<DateRange>) {
         rangeModel.value = getLocalCalendarDateRangeFromPreset(preset);
       } else {
         isOpen.value = false;
+        onRangeSelected();
       }
     },
   });

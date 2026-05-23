@@ -3,8 +3,9 @@ import type { DepartmentRevenuesByDate } from "~/types/revenue";
 
 export function useDepartmentRevenues() {
   const dateRange = ref(getLocal7DaysDateRange());
-  const { data, pending } = useApi("/api/revenue/departments", {
+  const { data, pending, refresh } = useApi("/api/revenue/departments", {
     query: dateRange,
+    watch: false,
   });
 
   const { formatAsMoney } = useMoneyFormatter();
@@ -48,5 +49,6 @@ export function useDepartmentRevenues() {
     revenuesDateGetter,
     chartType,
     revenuesFullDateGetter,
+    refresh,
   };
 }
