@@ -1,6 +1,4 @@
-import { computed } from "vue";
 import { parseISO } from "date-fns";
-import { useI18n } from "vue-i18n";
 
 export const useDateFormatter = () => {
   const { locale } = useI18n({ useScope: "global" });

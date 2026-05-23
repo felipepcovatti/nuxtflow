@@ -1,5 +1,5 @@
 import { Area } from "@unovis/ts";
-import { render, h, type TemplateRef } from "vue";
+import { render, type TemplateRef } from "vue";
 import UiChartTooltipContent from "~/components/ui/chart/tooltip/Content.vue";
 import { SELECTOR_BY_BAR_CHART_TYPE } from "~/constants/chart";
 import type { ChartItem, ChartType } from "~/types/chart";

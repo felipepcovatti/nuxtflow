@@ -1,4 +1,4 @@
-import { computed, ref, type Ref } from "vue";
+import type { Ref } from "vue";
 
 export const useCheckboxGroup = <T extends { id: string }>(items: Ref<T[]>) => {
   const selectedSet = ref(new Set<string>());
