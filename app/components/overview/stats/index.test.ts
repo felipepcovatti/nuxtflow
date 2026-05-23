@@ -1,6 +1,8 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { mountSuspended } from "@nuxt/test-utils/runtime";
 import Index from "./index.vue";
+import type { Stats } from "~/types/stats";
+import type { StatsCardProps } from "./Card.vue";
 
 vi.mock("~/composables/useApi", () => ({
   useApi: vi.fn(() => ({
@@ -21,9 +23,8 @@ describe("OverviewStats", () => {
     expect(cards).toHaveLength(4);
   });
 
-  const cards = [
+  const cards: StatsCardProps[] = [
     {
-      index: 0,
       title: "Total Income",
       icon: "flowbite:chart-mixed-dollar-solid",
       money: true,
@@ -31,7 +32,6 @@ describe("OverviewStats", () => {
       invertedSentiment: false,
     },
     {
-      index: 1,
       title: "Total Outcome",
       icon: "flowbite:chart-line-down-outline",
       money: true,
@@ -39,7 +39,6 @@ describe("OverviewStats", () => {
       data: { last_30_days: 50000, previous_90_days_average: 55000 },
     },
     {
-      index: 2,
       title: "Total Profit",
       icon: "flowbite:dollar-solid",
       money: true,
@@ -47,7 +46,6 @@ describe("OverviewStats", () => {
       data: { last_30_days: 50000, previous_90_days_average: 35000 },
     },
     {
-      index: 3,
       title: "New Customers",
       icon: "flowbite:users-group-solid",
       data: { last_30_days: 150, previous_90_days_average: 120 },
@@ -56,7 +54,7 @@ describe("OverviewStats", () => {
     },
   ];
 
-  it.each(cards)(
+  it.each(cards.map((props, index) => ({ index, ...props })))(
     "renders $title in the correct card with appropriate props",
     async ({ index, ...props }) => {
       const wrapper = await mountSuspended(Index);

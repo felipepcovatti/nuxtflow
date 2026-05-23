@@ -1,14 +1,16 @@
 <script lang="ts" setup>
 import type { Metric } from "~/types/stats";
 
-const props = defineProps<{
+export interface StatsCardProps {
   icon: string;
   title: string;
   data?: Metric;
   money?: boolean;
   invertedSentiment?: boolean;
   loading?: boolean;
-}>();
+}
+
+const props = defineProps<StatsCardProps>();
 
 const { formatAsCompactMoney } = useMoneyFormatter();
 const { formatAsNumber } = useNumberFormatter();
