@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from "vitest";
-import { ref, type Ref } from "vue";
+import { ref } from "vue";
 import type { ChartItem, ChartType } from "~/types/chart";
 import { useChart, type UseChartOptions } from "./useChart";
 
