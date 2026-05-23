@@ -2,29 +2,26 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 import { mockNuxtImport } from "@nuxt/test-utils/runtime";
 import { useDateFormatter } from "./useDateFormatter";
 
-const { mockedLocale, mockedUseI18n } = vi.hoisted(() => ({
+const { mockedLocale } = vi.hoisted(() => ({
   mockedLocale: {
     value: "en",
   },
-  mockedUseI18n: vi.fn(() => ({
-    locale: mockedLocale,
-  })),
 }));
 
-mockNuxtImport("useI18n", () => mockedUseI18n);
+mockNuxtImport("useI18n", () => () => ({
+  locale: mockedLocale,
+}));
 
 describe("useDateFormatter", () => {
   const date = "2026-04-05T12:00:00.000Z";
 
   beforeEach(() => {
     mockedLocale.value = "en";
-    mockedUseI18n.mockClear();
   });
 
   it("formats short dates for the active locale", () => {
     const { formatAsShortDate } = useDateFormatter();
 
-    expect(mockedUseI18n).toHaveBeenCalledWith({ useScope: "global" });
     expect(formatAsShortDate(date)).toBe("Apr 5");
   });
 

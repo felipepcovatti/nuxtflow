@@ -10,11 +10,9 @@ vi.mock("@unovis/ts", async () => {
   };
 });
 
-mockNuxtImport("useI18n", () =>
-  vi.fn(() => ({
-    t: (key: string) => (key === "visits" ? "Visits" : key),
-  })),
-);
+mockNuxtImport("useI18n", () => () => ({
+  t: (key: string) => key,
+}));
 
 describe("useVisitsMap", () => {
   it("tooltip trigger renders country name and formatted visits", () => {
@@ -40,7 +38,7 @@ describe("useVisitsMap", () => {
     expect(tooltip).toBeInstanceOf(HTMLDivElement);
     expect(tooltip.textContent).toContain("Spain");
     expect(tooltip.textContent).toContain("1,234");
-    expect(tooltip.textContent).toContain("Visits");
+    expect(tooltip.textContent).toContain("visits");
   });
 
   it('tooltip trigger renders "0" visits when data is missing', () => {
@@ -58,6 +56,6 @@ describe("useVisitsMap", () => {
     expect(tooltip).toBeInstanceOf(HTMLDivElement);
     expect(tooltip.textContent).toContain("FR");
     expect(tooltip.textContent).toContain("0");
-    expect(tooltip.textContent).toContain("Visits");
+    expect(tooltip.textContent).toContain("visits");
   });
 });

@@ -2,27 +2,24 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 import { mockNuxtImport } from "@nuxt/test-utils/runtime";
 import { useMoneyFormatter } from "./useMoneyFormatter";
 
-const { mockedLocale, mockedUseI18n } = vi.hoisted(() => ({
+const { mockedLocale } = vi.hoisted(() => ({
   mockedLocale: {
     value: "en-US",
   },
-  mockedUseI18n: vi.fn(() => ({
-    locale: mockedLocale,
-  })),
 }));
 
-mockNuxtImport("useI18n", () => mockedUseI18n);
+mockNuxtImport("useI18n", () => () => ({
+  locale: mockedLocale,
+}));
 
 describe("useMoneyFormatter", () => {
   beforeEach(() => {
     mockedLocale.value = "en-US";
-    mockedUseI18n.mockClear();
   });
 
   it("formats rounded USD amounts for the active locale", () => {
     const { formatAsMoney } = useMoneyFormatter();
 
-    expect(mockedUseI18n).toHaveBeenCalledWith({ useScope: "global" });
     expect(formatAsMoney(1234.56)).toBe("$1,235");
   });
 

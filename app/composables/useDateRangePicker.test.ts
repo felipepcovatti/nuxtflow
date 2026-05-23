@@ -9,11 +9,9 @@ const { onRangeSelected } = vi.hoisted(() => ({
   onRangeSelected: vi.fn(),
 }));
 
-mockNuxtImport("useI18n", () => {
-  return () => ({
-    locale: { value: "en" },
-  });
-});
+mockNuxtImport("useI18n", () => () => ({
+  locale: { value: "en" },
+}));
 
 vi.mock("@internationalized/date", async () => {
   const actual = await vi.importActual("@internationalized/date");
