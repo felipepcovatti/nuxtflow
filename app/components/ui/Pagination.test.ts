@@ -64,13 +64,13 @@ describe("Pagination", () => {
     const prevButton = await wrapper.findByRole("button", {
       name: "Previous page",
     });
-    fireEvent.click(prevButton);
+    await fireEvent.click(prevButton);
     expect(wrapper.emitted("update:page").at(0)).toEqual([1]);
 
     const nextButton = await wrapper.findByRole("button", {
       name: "Next page",
     });
-    fireEvent.click(nextButton);
+    await fireEvent.click(nextButton);
     expect(wrapper.emitted("update:page").at(1)).toEqual([2]);
   });
 
@@ -104,7 +104,7 @@ describe("Pagination", () => {
       name: "Previous page",
     });
 
-    fireEvent.click(prevButton);
+    await fireEvent.click(prevButton);
 
     expect(wrapper.emitted("update:page")).toBeUndefined();
   });
@@ -122,7 +122,7 @@ describe("Pagination", () => {
       name: "Next page",
     });
 
-    fireEvent.click(nextButton);
+    await fireEvent.click(nextButton);
 
     expect(wrapper.emitted("update:page")).toBeUndefined();
   });
