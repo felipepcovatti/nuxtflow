@@ -1,6 +1,6 @@
 import { describe, it, expect, afterEach } from "vitest";
 import { mountSuspended, renderSuspended } from "@nuxt/test-utils/runtime";
-import { cleanup, fireEvent, screen } from "@testing-library/vue";
+import { cleanup, fireEvent } from "@testing-library/vue";
 import Select from "./Select.vue";
 import type { SelectOption } from "./Select.vue";
 

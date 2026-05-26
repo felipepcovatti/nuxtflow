@@ -1,4 +1,4 @@
-import { describe, expect, it, vi } from "vitest";
+import { describe, expect, it } from "vitest";
 import { mountSuspended, mockNuxtImport } from "@nuxt/test-utils/runtime";
 import VisitsByCountry from "./VisitsByCountry.vue";
 import type { Country } from "~/types/visits";

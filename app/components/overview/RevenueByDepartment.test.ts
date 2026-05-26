@@ -1,4 +1,4 @@
-import { describe, it, expect, vi, afterEach } from "vitest";
+import { describe, it, expect } from "vitest";
 import { mountSuspended, mockNuxtImport } from "@nuxt/test-utils/runtime";
 import RevenueByDepartment from "./RevenueByDepartment.vue";
 import type { RevenuesByDepartmentResponse } from "~/types/revenue";
