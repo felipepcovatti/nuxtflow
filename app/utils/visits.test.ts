@@ -1,15 +1,14 @@
 import { describe, expect, it, vi } from "vitest";
-
-vi.mock("~/constants/visits", () => ({
-  COUNTRY_COLORS: ["#111111", "#222222", "#333333"],
-  DEFAULT_COUNTRY_COLOR: "#000000",
-}));
-
 import {
   visitsMapCountryCodeGetter,
   visitsMapCountryColorGetter,
   generateCountryColorGetter,
 } from "./visits";
+
+vi.mock("~/constants/visits", () => ({
+  COUNTRY_COLORS: ["#111111", "#222222", "#333333"],
+  DEFAULT_COUNTRY_COLOR: "#000000",
+}));
 
 describe("utils/visits", () => {
   describe("generateCountryColorGetter", () => {

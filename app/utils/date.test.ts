@@ -1,4 +1,8 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
+import {
+  getLocalTodayCalendarDate,
+  getLocalCalendarDateFromDate,
+} from "./date";
 
 const { mockedToday } = vi.hoisted(() => ({
   mockedToday: vi.fn(() => ({ year: 2026, month: 5, day: 14 })),
@@ -11,11 +15,6 @@ vi.mock("@internationalized/date", async () => {
     today: mockedToday,
   };
 });
-
-import {
-  getLocalTodayCalendarDate,
-  getLocalCalendarDateFromDate,
-} from "./date";
 
 describe("app/utils/date", () => {
   beforeEach(() => {
