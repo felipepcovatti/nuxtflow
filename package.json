@@ -1,5 +1,5 @@
 {
-  "name": "flowbite-homepage-vue",
+  "name": "nuxtflow",
   "type": "module",
   "private": true,
   "scripts": {
