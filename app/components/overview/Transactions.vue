@@ -34,7 +34,7 @@ const {
       />
     </template>
     <div v-if="transactions.length" class="-mx-6 overflow-x-auto">
-      <table class="table">
+      <table class="table w-200 lg:w-full">
         <thead class="bg-gray-700">
           <tr class="text-left">
             <th scope="col" class="sticky left-0 w-16 bg-gray-700">
@@ -49,7 +49,7 @@ const {
                 />
               </div>
             </th>
-            <th scope="col">{{ $t("description") }}</th>
+            <th scope="col" class="w-60 lg:w-auto">{{ $t("description") }}</th>
             <th scope="col">{{ $t("date") }}</th>
             <th scope="col">{{ $t("amount") }}</th>
             <th scope="col">{{ $t("status") }}</th>
@@ -82,7 +82,7 @@ const {
             <td class="text-white">
               {{ transaction.description }}
             </td>
-            <td class="min-w-30">
+            <td>
               {{ formatAsShortDateWithYear(transaction.datetime) }}
             </td>
             <td class="font-semibold text-white">
