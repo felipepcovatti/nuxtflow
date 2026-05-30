@@ -10,7 +10,7 @@ const { formatAsNumber } = useNumberFormatter();
     :loading="pending"
     :title="totalVisits !== undefined ? formatAsNumber(totalVisits) : ''"
     :subtitle="$t('visitsByCountry')"
-    class="min-h-314.75"
+    class="@5xl:min-h-314.75"
     :link="{ label: $t('viewCountryReport'), to: '/visits-report' }"
   >
     <template #headerEnd>
