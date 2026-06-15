@@ -50,7 +50,7 @@ I started the project in Visual Studio Code and at some point migrated to Zed.
 
 ### Artificial Intelligence (AI)
 
-AI tools were used for optimizing the development process, as well as for experimenting and exploring the available options and its capabilities. The AI providers, models and tools used include:
+AI tools were used for optimizing the development process, as well as for experimenting and exploring the available options and their capabilities. The AI providers, models and tools used include:
 
 - Copilot
 - Gemini
