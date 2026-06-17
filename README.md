@@ -1,6 +1,6 @@
 # NuxtFlow
 
-A dashboard demo project, built with Nuxt 4, Tailwind 4, and Reka UI.
+A dashboard mock project built with Nuxt 4, Tailwind 4, and Reka UI.
 
 View it live: [https://nuxtflow.vercel.app](https://nuxtflow.vercel.app/)
 
